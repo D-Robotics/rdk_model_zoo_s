@@ -232,8 +232,10 @@ hrt_model_exec perf --model_file cn_PP-OCRv3_rec_infer-deploy_48x320_rgb.hbm
 ## 精度验证
 
 - **检测模型量化后余弦相似度**  
+
   ![det_cosine](source/data/image1.png)
 
 - **识别模型量化后余弦相似度**  
+
   ![rec_cosine](source/data/image2.png)
 

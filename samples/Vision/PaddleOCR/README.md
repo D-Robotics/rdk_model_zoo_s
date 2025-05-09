@@ -237,9 +237,11 @@ hrt_model_exec perf --model_file cn_PP-OCRv3_rec_infer-deploy_48x320_rgb.hbm
 ## Accuracy Evaluation
 
 * **Cosine Similarity After Detection Model Quantization**
+
   ![det\_cosine](source/data/image1.png)
 
 * **Cosine Similarity After Recognition Model Quantization**
+
   ![rec\_cosine](source/data/image2.png)
 
 ---
