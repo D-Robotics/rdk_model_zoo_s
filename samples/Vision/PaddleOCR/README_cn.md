@@ -6,6 +6,9 @@
 
 算法论文：[https://arxiv.org/abs/2206.03001](https://arxiv.org/abs/2206.03001)
 
+**github 地址**：https://github.com/PaddlePaddle/PaddleOCR
+![alt text](source/data/paddleocr.png)
+
 ## 工作流程
 
 1. **图像预处理**：如去噪、尺寸调整等。
@@ -26,8 +29,15 @@ pip install paddlepaddle
 ---
 
 ## 模型下载与验证
+可以使用脚本 [download.sh](source/scripts/download.sh) 一键下载所有此模型结构的 `.hbm` 模型文件：
 
-下载 `.hmb` 文件后，可通过 Python/Jupyter 文件进行模型推理。更换测试图片时，需修改脚本中的路径。
+```shell
+wget -P $(dirname $0) https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/paddle_ocr/cn_PP-OCRv3_det_infer-deploy_640x640_nv12.hbm
+wget -P $(dirname $0) https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/paddle_ocr/cn_PP-OCRv3_rec_infer-deploy_48x320_rgb.hbm
+```
+
+下载 `.hmb` 文件后，可通过 Python文件paddle_ocr.py或者Jupyter 文件进行模型推理。更换测试图片时，需修改脚本中的路径。运行结果如下
+![result](source/data/result.jpg)
 
 ---
 
@@ -93,10 +103,9 @@ paddle2onnx --model_dir ./inference/ch_PP-OCRv3_rec_infer \
 下载地址：[点击下载](https://ai.baidu.com/broad/download?dataset=lsvt)
 
 ### 校准数据处理
-
+改好数据集的路径，运行以下代码，生成的校准数据存放在/det_calibration_data目录下
 ```bash
-python process_data.py --src_dir your_dataset --dst_dir det_calibration_data \
---read_mode opencv --cal_img_num 100 --saved_data_type float32
+python get_det_calibration_data.py
 ```
 
 ---
@@ -134,7 +143,7 @@ compiler_parameters:
   debug: False
   optimize_level: 'O2'
 ```
-
+服务器运行以下命令开始转化det模型
 ```bash
 hb_compile -c yaml_det_configs100.yaml
 ```
@@ -185,7 +194,7 @@ compiler_parameters:
   debug: False
   optimize_level: 'O2'
 ```
-
+服务器运行一下命令开始转化rec模型
 ```bash
 hb_compile -c yaml_rec_configs100.yaml
 ```
@@ -223,11 +232,8 @@ hrt_model_exec perf --model_file cn_PP-OCRv3_rec_infer-deploy_48x320_rgb.hbm
 ## 精度验证
 
 - **检测模型量化后余弦相似度**  
-  ![det_cosine](图片路径)
+  ![det_cosine](source/data/image1.png)
 
 - **识别模型量化后余弦相似度**  
-  ![rec_cosine](图片路径)
+  ![rec_cosine](source/data/image2.png)
 
----
-
-是否需要我为这份 Markdown 文件生成 `.md` 文件下载？
