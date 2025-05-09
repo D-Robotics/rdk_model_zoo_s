@@ -1,8 +1,4 @@
-Here's the English translation of your document:
-
----
-
-[English](./README.md) | 简体中文
+[English](./README_cn.md) | 简体中文
 
 # Introduction to PaddleOCR
 
