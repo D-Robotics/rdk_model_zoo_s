@@ -1,0 +1,403 @@
+2025-05-07 09:00:14,919 file: tool_utils.py func: tool_utils line No: 79 log will be stored in /open_explorer/hb_compile.log
+2025-05-07 09:00:14,919 file: hb_compile.py func: hb_compile line No: 276 Start hb_compile...
+2025-05-07 09:00:14,919 file: hb_compile.py func: hb_compile line No: 277 hbdk version: 4.1.17
+2025-05-07 09:00:14,920 file: hb_compile.py func: hb_compile line No: 278 hmct version: 2.1.9
+2025-05-07 09:00:14,920 file: hb_compile.py func: hb_compile line No: 279 hb_compile version: 3.3.11
+2025-05-07 09:00:15,614 file: yaml_builder.py func: yaml_builder line No: 72 {'model_parameters': {'layer_out_dump': False, 'working_dir': '.hb_compile'}, 'input_parameters': {'input_name': '', 'input_shape': '', 'input_space_and_range': '', 'input_type_rt': 'featuremap', 'input_type_train': 'featuremap', 'norm_type': 'no_preprocess'}, 'calibration_parameters': {'calibration_type': 'skip', 'per_channel': False, 'run_on_bpu': '', 'run_on_cpu': ''}, 'compiler_parameters': {'compile_mode': 'latency', 'core_num': 1, 'debug': True, 'jobs': 32, 'max_time_per_fc': 0, 'optimize_level': 'O0'}}
+2025-05-07 09:00:15,614 file: yaml_builder.py func: yaml_builder line No: 73 check template yaml load success
+2025-05-07 09:00:15,614 file: yaml_builder.py func: yaml_builder line No: 224 Updated yaml config info: {'model_parameters': {'layer_out_dump': False, 'working_dir': '/open_explorer/.hb_compile', 'onnx_model': '/open_explorer/ws_yolo11_notranspose/yolo11n_notranspose.onnx', 'march': 'nash-m', 'output_model_file_prefix': 'yolo11n_notranspose'}, 'input_parameters': {'input_name': 'images', 'input_shape': '1x3x640x640', 'input_space_and_range': '', 'input_type_rt': 'featuremap', 'input_type_train': 'featuremap', 'norm_type': 'no_preprocess'}, 'calibration_parameters': {'calibration_type': 'skip', 'per_channel': False, 'run_on_bpu': '', 'run_on_cpu': ''}, 'compiler_parameters': {'compile_mode': 'latency', 'core_num': 1, 'debug': True, 'jobs': 32, 'max_time_per_fc': 0, 'optimize_level': 'O0'}}
+2025-05-07 09:00:15,617 file: hb_compile.py func: hb_compile line No: 33 Start verifying yaml
+2025-05-07 09:00:15,631 file: params_parser.py func: params_parser line No: 171 Using onnx model file: /open_explorer/ws_yolo11_notranspose/yolo11n_notranspose.onnx
+2025-05-07 09:00:15,632 file: onnx_parser.py func: onnx_parser line No: 39 Model input names: ['images']
+2025-05-07 09:00:15,632 file: params_parser.py func: params_parser line No: 181 Model has 1 inputs according to model file
+2025-05-07 09:00:15,632 file: params_parser.py func: params_parser line No: 329 node_dict: {}
+2025-05-07 09:00:15,632 file: params_parser.py func: params_parser line No: 565 norm_type parameter is deprecated and will be determined by the configuration of mean/scale/std parameter
+2025-05-07 09:00:15,632 file: params_parser.py func: params_parser line No: 688 Parameter calibration_type is skip. cal_data_dir check skipped
+2025-05-07 09:00:15,633 file: params_parser.py func: params_parser line No: 827 Input node images's input_source not set, it will be set to None by default
+2025-05-07 09:00:15,633 file: params_parser.py func: params_parser line No: 889 Parameter compile_mode is set to latency, balance_factor will set to 100.
+2025-05-07 09:00:15,633 file: hb_compile.py func: hb_compile line No: 36 End verifying yaml
+2025-05-07 09:00:15,633 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hmct.custom.op_registration.op_register.
+2025-05-07 09:00:15,633 file: wrap_utils.py func: wrap_utils line No: 43 hmct.custom.op_registration.op_register input args ()
+2025-05-07 09:00:15,633 file: wrap_utils.py func: wrap_utils line No: 46 hmct.custom.op_registration.op_register input kwargs {}
+2025-05-07 09:00:15,633 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hmct.custom.op_registration.op_register.
+2025-05-07 09:00:15,634 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hmct.api.build_model.
+2025-05-07 09:00:15,634 file: wrap_utils.py func: wrap_utils line No: 43 hmct.api.build_model input args ()
+2025-05-07 09:00:15,634 file: wrap_utils.py func: wrap_utils line No: 46 hmct.api.build_model input kwargs {'params': {'cali_dict': {'calibration_type': ''}, 'input_dict': {'images': {'input_shape': [1, 3, 640, 640]}}, 'node_dict': {}, 'debug_methods': [], 'output_nodes': [], 'optimization_methods': None, 'quant_config': None, 'check_mode': True}}
+2025-05-07 09:00:15,634 file: model_builder.py func: model_builder line No: 34 Start to Horizon NN Model Convert.
+2025-05-07 09:00:15,652 file: model_debugger.py func: model_debugger line No: 67 Loading horizon_nn debug methods: set().
+2025-05-07 09:00:15,652 file: model_builder.py func: model_builder line No: 209 The specified model compilation architecture: nash.
+2025-05-07 09:00:15,653 file: model_builder.py func: model_builder line No: 223 The specified model compilation optimization parameters: [].
+2025-05-07 09:00:15,653 file: model_builder.py func: model_builder line No: 34 Start to prepare the onnx model.
+2025-05-07 09:00:15,671 file: prepare.py func: prepare line No: 116 Input ONNX Model Information:
+ONNX IR version:          9
+Opset version:            ['ai.onnx v19', 'horizon v1']
+Producer:                 pytorch v2.5.0
+Domain:                   None
+Version:                  None
+Graph input:
+    images:               shape=[1, 3, 640, 640], dtype=FLOAT32
+Graph output:
+    output0:              shape=[1, 80, 80, 80], dtype=FLOAT32
+    492:                  shape=[1, 80, 80, 64], dtype=FLOAT32
+    506:                  shape=[1, 40, 40, 80], dtype=FLOAT32
+    514:                  shape=[1, 40, 40, 64], dtype=FLOAT32
+    528:                  shape=[1, 20, 20, 80], dtype=FLOAT32
+    536:                  shape=[1, 20, 20, 64], dtype=FLOAT32
+2025-05-07 09:00:15,878 file: model_builder.py func: model_builder line No: 37 End to prepare the onnx model.
+2025-05-07 09:00:15,907 file: model_builder.py func: model_builder line No: 268 Saving model to: /open_explorer/.hb_compile/yolo11n_notranspose_original_float_model.onnx.
+2025-05-07 09:00:15,907 file: model_builder.py func: model_builder line No: 34 Start to optimize the onnx model.
+2025-05-07 09:00:16,047 file: constant_folding.py func: constant_folding line No: 68 Summary info for constant_folding:
+2025-05-07 09:00:16,047 file: constant_folding.py func: constant_folding line No: 69   After constant_folding, the number of nodes has changed from 313 to 302.
+2025-05-07 09:00:16,047 file: constant_folding.py func: constant_folding line No: 73   After constant_folding, the number of parameters has changed from 2616264 to 2616264.
+2025-05-07 09:00:16,047 file: constant_folding.py func: constant_folding line No: 78 Detailed info for constant_folding:
+2025-05-07 09:00:16,048 file: constant_folding.py func: constant_folding line No: 90 
+2025-05-07 09:00:16,163 file: model_builder.py func: model_builder line No: 37 End to optimize the onnx model.
+2025-05-07 09:00:16,193 file: model_builder.py func: model_builder line No: 268 Saving model to: /open_explorer/.hb_compile/yolo11n_notranspose_optimized_float_model.onnx.
+2025-05-07 09:00:16,193 file: quant_config.py func: quant_config line No: 322 The activation calibration parameters:
+    calibration_type:     fixed
+2025-05-07 09:00:16,194 file: model_builder.py func: model_builder line No: 34 Start to calibrate the model.
+2025-05-07 09:00:16,413 file: dataset.py func: dataset line No: 128 input name: images, number_of_samples: 1
+2025-05-07 09:00:16,414 file: dataset.py func: dataset line No: 138 There are 1 samples in the dataset.
+2025-05-07 09:00:16,414 file: calibrate.py func: calibrate line No: 44 No calibration data provided, using random data.
+2025-05-07 09:00:16,414 file: fixed_calibrater.py func: fixed_calibrater line No: 33 Run calibration model with fixed thresholds method.
+2025-05-07 09:00:16,767 file: model_builder.py func: model_builder line No: 37 End to calibrate the model.
+2025-05-07 09:00:16,848 file: model_builder.py func: model_builder line No: 268 Saving model to: /open_explorer/.hb_compile/yolo11n_notranspose_calibrated_model.onnx.
+2025-05-07 09:00:16,849 file: model_builder.py func: model_builder line No: 34 Start to precompile the model.
+2025-05-07 09:00:17,747 file: model_builder.py func: model_builder line No: 37 End to precompile the model.
+2025-05-07 09:00:17,836 file: model_builder.py func: model_builder line No: 268 Saving model to: /open_explorer/.hb_compile/yolo11n_notranspose_ptq_model.onnx.
+2025-05-07 09:00:17,909 file: model_builder.py func: model_builder line No: 37 End to Horizon NN Model Convert.
+2025-05-07 09:00:17,910 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hmct.api.build_model.
+2025-05-07 09:00:17,910 file: hbm_builder.py func: hbm_builder line No: 270 Start to export model.
+2025-05-07 09:00:17,910 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hbdk.export.
+2025-05-07 09:00:17,910 file: wrap_utils.py func: wrap_utils line No: 43 hbdk.export input args ()
+2025-05-07 09:00:17,910 file: wrap_utils.py func: wrap_utils line No: 46 hbdk.export input kwargs {'output_prefix_name': 'yolo11n_notranspose'}
+2025-05-07 09:00:18,331 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hbdk.export.
+2025-05-07 09:00:18,331 file: hbm_builder.py func: hbm_builder line No: 274 Successful export model.
+2025-05-07 09:00:18,364 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hbdk.set_func_desc.
+2025-05-07 09:00:18,364 file: wrap_utils.py func: wrap_utils line No: 43 hbdk.set_func_desc input args ()
+2025-05-07 09:00:18,365 file: wrap_utils.py func: wrap_utils line No: 46 hbdk.set_func_desc input kwargs {'config_info': ConfigInfo(model=<horizon_tc_ui.parser.onnx_parser.OnnxModel object at 0x7f3467ee6500>, onnx_model='/open_explorer/ws_yolo11_notranspose/yolo11n_notranspose.onnx', caffemodel_file=None, load_model=None, prototxt_file=None, model_type='onnx', march='nash-m', input_num=1, working_dir='/open_explorer/.hb_compile', output_model_file_prefix_full='/open_explorer/.hb_compile/yolo11n_notranspose', output_model_file_prefix='yolo11n_notranspose', output_nodes=[], model_debug_mode=[], node_dict={}, layer_out_dump=False, input_names=['images'], input_shapes=[[1, 3, 640, 640]], input_batches=[], separate_batch=False, separate_names=[], input_type_rt=['featuremap'], input_type_train=['featuremap'], input_space_and_range=['regular'], input_layout_train=[], input_layout_rt=[], from_color=['FEATUREMAP'], to_color=['FEATUREMAP'], norm_type=['no_preprocess'], mean=[[]], scale=[[]], std=[[]], calibration_type='skip', per_channel=False, max_percentile=None, run_on_cpu=[], run_on_bpu=[], calibration_optimization=None, cal_data_type=[], cal_data_dir=[], quant_config=None, compile_mode='latency', balance_factor=100, optimize_level='O0', compile_debug_mode=True, hbdk3_compatible_mode=False, ability_entry=None, core_num=1, max_time_per_fc=0, jobs=32, advice=0, custom_op=False, custom_op_method=None, cop_register_files=[], custom_op_dir=None, remove_node_name=[], remove_node_type=[], input_source={'images': 'ddr'}, first_cali_data={}, cali_extra_param={}, compile_extra_params={}, enable_vpu=False)}
+2025-05-07 09:00:18,365 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hbdk.set_func_desc.
+2025-05-07 09:00:18,365 file: hbm_builder.py func: hbm_builder line No: 170 current input_names: ['images']
+2025-05-07 09:00:18,365 file: hbm_builder.py func: hbm_builder line No: 176 images input_source ddr
+2025-05-07 09:00:18,366 file: hbm_builder.py func: hbm_builder line No: 284 Start to convert model.
+2025-05-07 09:00:18,366 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hbdk.convert.
+2025-05-07 09:00:18,366 file: wrap_utils.py func: wrap_utils line No: 43 hbdk.convert input args ('nash-m',)
+2025-05-07 09:00:18,366 file: wrap_utils.py func: wrap_utils line No: 46 hbdk.convert input kwargs {'advice': True, 'advice_path': '/open_explorer/.hb_compile/', 'enable_vpu': False}
+2025-05-07 09:00:19,962 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hbdk.convert.
+2025-05-07 09:00:19,963 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hbdk.save.
+2025-05-07 09:00:19,963 file: wrap_utils.py func: wrap_utils line No: 43 hbdk.save input args (<hbdk4.compiler.overlay.Module object at 0x7f3467ee6710>,)
+2025-05-07 09:00:19,963 file: wrap_utils.py func: wrap_utils line No: 46 hbdk.save input kwargs {'suffix': '_quantized_model.bc'}
+2025-05-07 09:00:20,018 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hbdk.save.
+2025-05-07 09:00:20,018 file: hbm_builder.py func: hbm_builder line No: 291 Successful convert model.
+2025-05-07 09:00:20,044 file: tool_utils.py func: tool_utils line No: 570 +----------------------------------------------------+------------+------+------------------+
+2025-05-07 09:00:20,045 file: tool_utils.py func: tool_utils line No: 565 | Node                                               | NodeType   | ON   | Output Data Type |
+2025-05-07 09:00:20,045 file: tool_utils.py func: tool_utils line No: 570 +----------------------------------------------------+------------+------+------------------+
+2025-05-07 09:00:20,045 file: tool_utils.py func: tool_utils line No: 565 | /model.0/conv/Conv                                 | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,045 file: tool_utils.py func: tool_utils line No: 565 | /model.0/act/Mul                                   | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,045 file: tool_utils.py func: tool_utils line No: 565 | /model.1/conv/Conv                                 | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,045 file: tool_utils.py func: tool_utils line No: 565 | /model.1/act/Mul                                   | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,045 file: tool_utils.py func: tool_utils line No: 565 | /model.2/cv1/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,046 file: tool_utils.py func: tool_utils line No: 565 | /model.2/cv1/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,046 file: tool_utils.py func: tool_utils line No: 565 | /model.2/Split                                     | Split      | BPU  | si8              |
+2025-05-07 09:00:20,046 file: tool_utils.py func: tool_utils line No: 565 | /model.2/m.0/cv1/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,046 file: tool_utils.py func: tool_utils line No: 565 | /model.2/m.0/cv1/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,046 file: tool_utils.py func: tool_utils line No: 565 | /model.2/m.0/cv2/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,046 file: tool_utils.py func: tool_utils line No: 565 | /model.2/m.0/cv2/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,046 file: tool_utils.py func: tool_utils line No: 565 | /model.2/m.0/Add                                   | Add        | BPU  | si8              |
+2025-05-07 09:00:20,046 file: tool_utils.py func: tool_utils line No: 565 | /model.2/Concat                                    | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,047 file: tool_utils.py func: tool_utils line No: 565 | /model.2/cv2/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,047 file: tool_utils.py func: tool_utils line No: 565 | /model.2/cv2/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,047 file: tool_utils.py func: tool_utils line No: 565 | /model.3/conv/Conv                                 | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,047 file: tool_utils.py func: tool_utils line No: 565 | /model.3/act/Mul                                   | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,047 file: tool_utils.py func: tool_utils line No: 565 | /model.4/cv1/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,047 file: tool_utils.py func: tool_utils line No: 565 | /model.4/cv1/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,048 file: tool_utils.py func: tool_utils line No: 565 | /model.4/Split                                     | Split      | BPU  | si8              |
+2025-05-07 09:00:20,048 file: tool_utils.py func: tool_utils line No: 565 | /model.4/m.0/cv1/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,048 file: tool_utils.py func: tool_utils line No: 565 | /model.4/m.0/cv1/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,048 file: tool_utils.py func: tool_utils line No: 565 | /model.4/m.0/cv2/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,048 file: tool_utils.py func: tool_utils line No: 565 | /model.4/m.0/cv2/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,048 file: tool_utils.py func: tool_utils line No: 565 | /model.4/m.0/Add                                   | Add        | BPU  | si8              |
+2025-05-07 09:00:20,048 file: tool_utils.py func: tool_utils line No: 565 | /model.4/Concat                                    | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,049 file: tool_utils.py func: tool_utils line No: 565 | /model.4/cv2/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,049 file: tool_utils.py func: tool_utils line No: 565 | /model.4/cv2/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,049 file: tool_utils.py func: tool_utils line No: 565 | /model.5/conv/Conv                                 | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,049 file: tool_utils.py func: tool_utils line No: 565 | /model.5/act/Mul                                   | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,049 file: tool_utils.py func: tool_utils line No: 565 | /model.6/cv1/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,049 file: tool_utils.py func: tool_utils line No: 565 | /model.6/cv1/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,049 file: tool_utils.py func: tool_utils line No: 565 | /model.6/Split                                     | Split      | BPU  | si8              |
+2025-05-07 09:00:20,050 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/cv1/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,050 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/cv1/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,050 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.0/cv1/conv/Conv                   | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,050 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.0/cv1/act/Mul                     | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,050 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.0/cv2/conv/Conv                   | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,050 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.0/cv2/act/Mul                     | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,050 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.0/Add                             | Add        | BPU  | si8              |
+2025-05-07 09:00:20,051 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.1/cv1/conv/Conv                   | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,051 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.1/cv1/act/Mul                     | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,051 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.1/cv2/conv/Conv                   | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,051 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.1/cv2/act/Mul                     | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,051 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/m/m.1/Add                             | Add        | BPU  | si8              |
+2025-05-07 09:00:20,051 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/cv2/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,051 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/cv2/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,051 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/Concat                                | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,052 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/cv3/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,052 file: tool_utils.py func: tool_utils line No: 565 | /model.6/m.0/cv3/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,052 file: tool_utils.py func: tool_utils line No: 565 | /model.6/Concat                                    | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,052 file: tool_utils.py func: tool_utils line No: 565 | /model.6/cv2/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,052 file: tool_utils.py func: tool_utils line No: 565 | /model.6/cv2/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,052 file: tool_utils.py func: tool_utils line No: 565 | /model.7/conv/Conv                                 | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,052 file: tool_utils.py func: tool_utils line No: 565 | /model.7/act/Mul                                   | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,053 file: tool_utils.py func: tool_utils line No: 565 | /model.8/cv1/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,053 file: tool_utils.py func: tool_utils line No: 565 | /model.8/cv1/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,053 file: tool_utils.py func: tool_utils line No: 565 | /model.8/Split                                     | Split      | BPU  | si8              |
+2025-05-07 09:00:20,053 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/cv1/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,053 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/cv1/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,053 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.0/cv1/conv/Conv                   | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,054 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.0/cv1/act/Mul                     | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,054 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.0/cv2/conv/Conv                   | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,054 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.0/cv2/act/Mul                     | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,054 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.0/Add                             | Add        | BPU  | si8              |
+2025-05-07 09:00:20,055 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.1/cv1/conv/Conv                   | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,055 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.1/cv1/act/Mul                     | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,055 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.1/cv2/conv/Conv                   | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,055 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.1/cv2/act/Mul                     | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,056 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/m/m.1/Add                             | Add        | BPU  | si8              |
+2025-05-07 09:00:20,056 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/cv2/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,056 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/cv2/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,056 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/Concat                                | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,056 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/cv3/conv/Conv                         | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,056 file: tool_utils.py func: tool_utils line No: 565 | /model.8/m.0/cv3/act/Mul                           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,057 file: tool_utils.py func: tool_utils line No: 565 | /model.8/Concat                                    | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,057 file: tool_utils.py func: tool_utils line No: 565 | /model.8/cv2/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,057 file: tool_utils.py func: tool_utils line No: 565 | /model.8/cv2/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,057 file: tool_utils.py func: tool_utils line No: 565 | /model.9/cv1/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,057 file: tool_utils.py func: tool_utils line No: 565 | /model.9/cv1/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,057 file: tool_utils.py func: tool_utils line No: 565 | /model.9/m/MaxPool                                 | MaxPool    | BPU  | si8              |
+2025-05-07 09:00:20,057 file: tool_utils.py func: tool_utils line No: 565 | /model.9/m_1/MaxPool                               | MaxPool    | BPU  | si8              |
+2025-05-07 09:00:20,058 file: tool_utils.py func: tool_utils line No: 565 | /model.9/m_2/MaxPool                               | MaxPool    | BPU  | si8              |
+2025-05-07 09:00:20,058 file: tool_utils.py func: tool_utils line No: 565 | /model.9/Concat                                    | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,058 file: tool_utils.py func: tool_utils line No: 565 | /model.9/cv2/conv/Conv                             | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,058 file: tool_utils.py func: tool_utils line No: 565 | /model.9/cv2/act/Mul                               | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,058 file: tool_utils.py func: tool_utils line No: 565 | /model.10/cv1/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,058 file: tool_utils.py func: tool_utils line No: 565 | /model.10/cv1/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,058 file: tool_utils.py func: tool_utils line No: 565 | /model.10/Split                                    | Split      | BPU  | si8              |
+2025-05-07 09:00:20,059 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/qkv/conv/Conv                 | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,059 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/Reshape                       | Reshape    | BPU  | si8              |
+2025-05-07 09:00:20,059 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/Split                         | Split      | BPU  | si8              |
+2025-05-07 09:00:20,059 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/Transpose                     | Transpose  | BPU  | si8              |
+2025-05-07 09:00:20,059 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/MatMul                        | MatMul     | BPU  | si8              |
+2025-05-07 09:00:20,059 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/Mul                           | Mul        | BPU  | si16             |
+2025-05-07 09:00:20,059 file: tool_utils.py func: tool_utils line No: 565 | ...tmax_reducemax_FROM_QUANTIZED_SOFTMAX           | ReduceMax  | BPU  | si16             |
+2025-05-07 09:00:20,060 file: tool_utils.py func: tool_utils line No: 565 | ...tn/Softmax_sub_FROM_QUANTIZED_SOFTMAX           | Sub        | BPU  | si16             |
+2025-05-07 09:00:20,060 file: tool_utils.py func: tool_utils line No: 565 | ...tn/Softmax_exp_FROM_QUANTIZED_SOFTMAX           | Exp        | NULL | si16             |
+2025-05-07 09:00:20,060 file: tool_utils.py func: tool_utils line No: 565 | ...tmax_reducesum_FROM_QUANTIZED_SOFTMAX           | ReduceSum  | BPU  | si16             |
+2025-05-07 09:00:20,060 file: tool_utils.py func: tool_utils line No: 565 | ...max_reciprocal_FROM_QUANTIZED_SOFTMAX           | Reciprocal | NULL | si16             |
+2025-05-07 09:00:20,060 file: tool_utils.py func: tool_utils line No: 565 | ...tn/Softmax_mul_FROM_QUANTIZED_SOFTMAX           | Mul        | BPU  | si8              |
+2025-05-07 09:00:20,060 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/Transpose_1                   | Transpose  | BPU  | si8              |
+2025-05-07 09:00:20,060 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/MatMul_1                      | MatMul     | BPU  | si8              |
+2025-05-07 09:00:20,060 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/Reshape_1                     | Reshape    | BPU  | si8              |
+2025-05-07 09:00:20,061 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/Reshape_2                     | Reshape    | BPU  | si8              |
+2025-05-07 09:00:20,061 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/pe/conv/Conv                  | Conv       | BPU  | si32             |
+2025-05-07 09:00:20,061 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/Add                           | Add        | CPU  | si8              |
+2025-05-07 09:00:20,061 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/attn/proj/conv/Conv                | Conv       | BPU  | si32             |
+2025-05-07 09:00:20,061 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/Add                                | Add        | CPU  | si8              |
+2025-05-07 09:00:20,061 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/ffn/ffn.0/conv/Conv                | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,061 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/ffn/ffn.0/act/Mul                  | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,062 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/ffn/ffn.1/conv/Conv                | Conv       | BPU  | si32             |
+2025-05-07 09:00:20,062 file: tool_utils.py func: tool_utils line No: 565 | /model.10/m/m.0/Add_1                              | Add        | CPU  | si8              |
+2025-05-07 09:00:20,062 file: tool_utils.py func: tool_utils line No: 565 | /model.10/Concat                                   | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,062 file: tool_utils.py func: tool_utils line No: 565 | /model.10/cv2/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,062 file: tool_utils.py func: tool_utils line No: 565 | /model.10/cv2/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,062 file: tool_utils.py func: tool_utils line No: 565 | /model.11/Resize                                   | Resize     | BPU  | si8              |
+2025-05-07 09:00:20,062 file: tool_utils.py func: tool_utils line No: 565 | /model.12/Concat                                   | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,062 file: tool_utils.py func: tool_utils line No: 565 | /model.13/cv1/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,063 file: tool_utils.py func: tool_utils line No: 565 | /model.13/cv1/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,063 file: tool_utils.py func: tool_utils line No: 565 | /model.13/Split                                    | Split      | BPU  | si8              |
+2025-05-07 09:00:20,063 file: tool_utils.py func: tool_utils line No: 565 | /model.13/m.0/cv1/conv/Conv                        | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,063 file: tool_utils.py func: tool_utils line No: 565 | /model.13/m.0/cv1/act/Mul                          | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,063 file: tool_utils.py func: tool_utils line No: 565 | /model.13/m.0/cv2/conv/Conv                        | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,063 file: tool_utils.py func: tool_utils line No: 565 | /model.13/m.0/cv2/act/Mul                          | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,063 file: tool_utils.py func: tool_utils line No: 565 | /model.13/m.0/Add                                  | Add        | BPU  | si8              |
+2025-05-07 09:00:20,063 file: tool_utils.py func: tool_utils line No: 565 | /model.13/Concat                                   | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,064 file: tool_utils.py func: tool_utils line No: 565 | /model.13/cv2/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,064 file: tool_utils.py func: tool_utils line No: 565 | /model.13/cv2/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,064 file: tool_utils.py func: tool_utils line No: 565 | /model.14/Resize                                   | Resize     | BPU  | si8              |
+2025-05-07 09:00:20,064 file: tool_utils.py func: tool_utils line No: 565 | /model.15/Concat                                   | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,064 file: tool_utils.py func: tool_utils line No: 565 | /model.16/cv1/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,064 file: tool_utils.py func: tool_utils line No: 565 | /model.16/cv1/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,064 file: tool_utils.py func: tool_utils line No: 565 | /model.16/Split                                    | Split      | BPU  | si8              |
+2025-05-07 09:00:20,064 file: tool_utils.py func: tool_utils line No: 565 | /model.16/m.0/cv1/conv/Conv                        | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,065 file: tool_utils.py func: tool_utils line No: 565 | /model.16/m.0/cv1/act/Mul                          | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,065 file: tool_utils.py func: tool_utils line No: 565 | /model.16/m.0/cv2/conv/Conv                        | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,065 file: tool_utils.py func: tool_utils line No: 565 | /model.16/m.0/cv2/act/Mul                          | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,065 file: tool_utils.py func: tool_utils line No: 565 | /model.16/m.0/Add                                  | Add        | BPU  | si8              |
+2025-05-07 09:00:20,065 file: tool_utils.py func: tool_utils line No: 565 | /model.16/Concat                                   | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,065 file: tool_utils.py func: tool_utils line No: 565 | /model.16/cv2/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,065 file: tool_utils.py func: tool_utils line No: 565 | /model.16/cv2/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,066 file: tool_utils.py func: tool_utils line No: 565 | /model.17/conv/Conv                                | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,066 file: tool_utils.py func: tool_utils line No: 565 | /model.17/act/Mul                                  | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,066 file: tool_utils.py func: tool_utils line No: 565 | /model.18/Concat                                   | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,066 file: tool_utils.py func: tool_utils line No: 565 | /model.19/cv1/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,066 file: tool_utils.py func: tool_utils line No: 565 | /model.19/cv1/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,066 file: tool_utils.py func: tool_utils line No: 565 | /model.19/Split                                    | Split      | BPU  | si8              |
+2025-05-07 09:00:20,066 file: tool_utils.py func: tool_utils line No: 565 | /model.19/m.0/cv1/conv/Conv                        | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,066 file: tool_utils.py func: tool_utils line No: 565 | /model.19/m.0/cv1/act/Mul                          | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,067 file: tool_utils.py func: tool_utils line No: 565 | /model.19/m.0/cv2/conv/Conv                        | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,067 file: tool_utils.py func: tool_utils line No: 565 | /model.19/m.0/cv2/act/Mul                          | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,067 file: tool_utils.py func: tool_utils line No: 565 | /model.19/m.0/Add                                  | Add        | BPU  | si8              |
+2025-05-07 09:00:20,067 file: tool_utils.py func: tool_utils line No: 565 | /model.19/Concat                                   | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,067 file: tool_utils.py func: tool_utils line No: 565 | /model.19/cv2/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,067 file: tool_utils.py func: tool_utils line No: 565 | /model.19/cv2/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,067 file: tool_utils.py func: tool_utils line No: 565 | /model.20/conv/Conv                                | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,068 file: tool_utils.py func: tool_utils line No: 565 | /model.20/act/Mul                                  | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,068 file: tool_utils.py func: tool_utils line No: 565 | /model.21/Concat                                   | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,068 file: tool_utils.py func: tool_utils line No: 565 | /model.22/cv1/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,068 file: tool_utils.py func: tool_utils line No: 565 | /model.22/cv1/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,068 file: tool_utils.py func: tool_utils line No: 565 | /model.22/Split                                    | Split      | BPU  | si8              |
+2025-05-07 09:00:20,068 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/cv1/conv/Conv                        | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,068 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/cv1/act/Mul                          | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,069 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.0/cv1/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,069 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.0/cv1/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,069 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.0/cv2/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,069 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.0/cv2/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,069 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.0/Add                            | Add        | BPU  | si8              |
+2025-05-07 09:00:20,070 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.1/cv1/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,070 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.1/cv1/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,070 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.1/cv2/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,070 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.1/cv2/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,070 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/m/m.1/Add                            | Add        | BPU  | si8              |
+2025-05-07 09:00:20,070 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/cv2/conv/Conv                        | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,070 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/cv2/act/Mul                          | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,070 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/Concat                               | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,071 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/cv3/conv/Conv                        | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,071 file: tool_utils.py func: tool_utils line No: 565 | /model.22/m.0/cv3/act/Mul                          | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,071 file: tool_utils.py func: tool_utils line No: 565 | /model.22/Concat                                   | Concat     | BPU  | si8              |
+2025-05-07 09:00:20,071 file: tool_utils.py func: tool_utils line No: 565 | /model.22/cv2/conv/Conv                            | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,071 file: tool_utils.py func: tool_utils line No: 565 | /model.22/cv2/act/Mul                              | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,071 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.0/cv3.0.0/cv3.0.0.0/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,071 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.0/cv3.0.0/cv3.0.0.0/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,072 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.0/cv3.0.0/cv3.0.0.1/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,072 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.0/cv3.0.0/cv3.0.0.1/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,072 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.0/cv3.0.1/cv3.0.1.0/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,072 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.0/cv3.0.1/cv3.0.1.0/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,072 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.0/cv3.0.1/cv3.0.1.1/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,072 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.0/cv3.0.1/cv3.0.1.1/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,072 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv3.0/cv3.0.2/Conv                       | Conv       | BPU  | si32             |
+2025-05-07 09:00:20,073 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv3.0/cv3.0.2/Conv+/model.23/Transpose   | Transpose  | NULL | f32              |
+2025-05-07 09:00:20,073 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.0/cv2.0.0/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,073 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.0/cv2.0.0/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,073 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.0/cv2.0.1/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,073 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.0/cv2.0.1/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,073 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.0/cv2.0.2/Conv                       | Conv       | BPU  | si32             |
+2025-05-07 09:00:20,074 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.0/cv2.0.2/Conv+/model.23/Transpose_1 | Transpose  | NULL | f32              |
+2025-05-07 09:00:20,074 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.1/cv3.1.0/cv3.1.0.0/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,074 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.1/cv3.1.0/cv3.1.0.0/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,074 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.1/cv3.1.0/cv3.1.0.1/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,074 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.1/cv3.1.0/cv3.1.0.1/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,074 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.1/cv3.1.1/cv3.1.1.0/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,075 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.1/cv3.1.1/cv3.1.1.0/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,075 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.1/cv3.1.1/cv3.1.1.1/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,075 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.1/cv3.1.1/cv3.1.1.1/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,075 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv3.1/cv3.1.2/Conv                       | Conv       | BPU  | si32             |
+2025-05-07 09:00:20,075 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv3.1/cv3.1.2/Conv+/model.23/Transpose_2 | Transpose  | NULL | f32              |
+2025-05-07 09:00:20,075 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.1/cv2.1.0/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,075 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.1/cv2.1.0/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,076 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.1/cv2.1.1/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,076 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.1/cv2.1.1/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,076 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.1/cv2.1.2/Conv                       | Conv       | BPU  | si32             |
+2025-05-07 09:00:20,076 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.1/cv2.1.2/Conv+/model.23/Transpose_3 | Transpose  | NULL | f32              |
+2025-05-07 09:00:20,076 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.2/cv3.2.0/cv3.2.0.0/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,076 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.2/cv3.2.0/cv3.2.0.0/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,076 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.2/cv3.2.0/cv3.2.0.1/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,076 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.2/cv3.2.0/cv3.2.0.1/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,077 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.2/cv3.2.1/cv3.2.1.0/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,077 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.2/cv3.2.1/cv3.2.1.0/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,077 file: tool_utils.py func: tool_utils line No: 565 | ....23/cv3.2/cv3.2.1/cv3.2.1.1/conv/Conv           | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,077 file: tool_utils.py func: tool_utils line No: 565 | ...el.23/cv3.2/cv3.2.1/cv3.2.1.1/act/Mul           | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,077 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv3.2/cv3.2.2/Conv                       | Conv       | BPU  | si32             |
+2025-05-07 09:00:20,077 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv3.2/cv3.2.2/Conv+/model.23/Transpose_4 | Transpose  | NULL | f32              |
+2025-05-07 09:00:20,077 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.2/cv2.2.0/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,078 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.2/cv2.2.0/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,078 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.2/cv2.2.1/conv/Conv                  | Conv       | BPU  | si8              |
+2025-05-07 09:00:20,078 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.2/cv2.2.1/act/Mul                    | HzSwish    | NULL | si8              |
+2025-05-07 09:00:20,078 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.2/cv2.2.2/Conv                       | Conv       | BPU  | si32             |
+2025-05-07 09:00:20,078 file: tool_utils.py func: tool_utils line No: 565 | /model.23/cv2.2/cv2.2.2/Conv+/model.23/Transpose_5 | Transpose  | NULL | f32              |
+2025-05-07 09:00:20,078 file: tool_utils.py func: tool_utils line No: 570 +----------------------------------------------------+------------+------+------------------+
+2025-05-07 09:00:20,095 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hbdk.overlay.remove_io_op.
+2025-05-07 09:00:20,095 file: wrap_utils.py func: wrap_utils line No: 43 hbdk.overlay.remove_io_op input args ()
+2025-05-07 09:00:20,095 file: wrap_utils.py func: wrap_utils line No: 46 hbdk.overlay.remove_io_op input kwargs {'remove_node_types': [], 'remove_node_names': []}
+2025-05-07 09:00:20,116 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hbdk.overlay.remove_io_op.
+2025-05-07 09:00:20,117 file: hbm_builder.py func: hbm_builder line No: 64 Compile params: {'jobs': 32, 'balance': 100, 'hbdk3_compatible_mode': False, 'progress_bar': True, 'opt': 0, 'max_time_per_fc': 0, 'debug': True}
+2025-05-07 09:00:20,129 file: hbm_builder.py func: hbm_builder line No: 304 Start to compile model.
+2025-05-07 09:00:20,130 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hbdk.compile.
+2025-05-07 09:00:20,130 file: wrap_utils.py func: wrap_utils line No: 43 hbdk.compile input args ()
+2025-05-07 09:00:20,130 file: wrap_utils.py func: wrap_utils line No: 46 hbdk.compile input kwargs {'save_path': '/open_explorer/.hb_compile/yolo11n_notranspose.hbm', 'march': 'nash-m', 'compile_params': {'jobs': 32, 'balance': 100, 'hbdk3_compatible_mode': False, 'progress_bar': True, 'opt': 0, 'max_time_per_fc': 0, 'debug': True}}
+2025-05-07 09:00:52,448 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hbdk.compile.
+2025-05-07 09:00:52,448 file: hbm_builder.py func: hbm_builder line No: 308 Successful compile hbm /open_explorer/.hb_compile/yolo11n_notranspose.hbm
+2025-05-07 09:00:52,448 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hbdk.compiler.hbm_perf.
+2025-05-07 09:00:52,449 file: wrap_utils.py func: wrap_utils line No: 43 hbdk.compiler.hbm_perf input args ()
+2025-05-07 09:00:52,449 file: wrap_utils.py func: wrap_utils line No: 46 hbdk.compiler.hbm_perf input kwargs {}
+2025-05-07 09:00:53,126 file: hbm_builder.py func: hbm_builder line No: 320 Successful perf model, result generate at /open_explorer/.hb_compile
+2025-05-07 09:00:53,127 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hbdk.compiler.hbm_perf.
+2025-05-07 09:00:53,127 file: hbm_handle.py func: hbm_handle line No: 36 hbm_path: /open_explorer/.hb_compile/yolo11n_notranspose.hbm
+2025-05-07 09:00:53,132 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hbdk.hbm_extract_desc.
+2025-05-07 09:00:53,132 file: wrap_utils.py func: wrap_utils line No: 43 hbdk.hbm_extract_desc input args ()
+2025-05-07 09:00:53,132 file: wrap_utils.py func: wrap_utils line No: 46 hbdk.hbm_extract_desc input kwargs {}
+2025-05-07 09:00:53,185 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hbdk.hbm_extract_desc.
+2025-05-07 09:00:53,185 file: hb_model_info.py func: hb_model_info line No: 129 {'desc': None, 'desc_type': None, 'march': 'NashM', 'models': {'yolo11n_notranspose': {'desc': '{"BUILDER_VERSION": "3.3.11", "HBDK_VERSION": "4.1.17", "HBDK_RUNTIME_VERSION": null, "HORIZON_NN_VERSION": "2.1.9", "CAFFE_MODEL": null, "PROTOTXT": null, "ONNX_MODEL": "/open_explorer/ws_yolo11_notranspose/yolo11n_notranspose.onnx", "MARCH": "nash-m", "LAYER_OUT_DUMP": "False", "LOG_LEVEL": null, "WORKING_DIR": "/open_explorer/.hb_compile", "MODEL_PREFIX": "yolo11n_notranspose", "OUTPUT_NODES": "", "REMOVE_NODE_TYPE": "", "REMOVE_NODE_NAME": "", "DEBUG_MODE": "", "NODE_INFO": "{}", "INPUT_NAMES": "images", "INPUT_SPACE_AND_RANGE": "regular", "INPUT_TYPE_RT": "featuremap", "INPUT_TYPE_TRAIN": "featuremap", "INPUT_LAYOUT_TRAIN": "", "INPUT_LAYOUT_RT": "", "NORM_TYPE": "no_preprocess", "MEAN_VALUE": "[]", "SCALE_VALUE": "[]", "STD_VALUE": "[]", "INPUT_SHAPE": "1x3x640x640", "INPUT_BATCH": "", "SEPARATE_BATCH": "False", "SEPARATE_NAME": "", "CUSTOM_OP_METHOD": null, "CUSTOM_OP_DIR": null, "CUSTOM_OP_REGISTER_FILES": "", "OPTIMIZATION": "", "CALI_TYPE": "skip", "CAL_DATA_DIR": "", "PER_CHANNEL": "False", "MAX_PERCENTILE": "None", "RUN_ON_CPU": "", "RUN_ON_BPU": "", "QUANT_CONFIG": null, "ADVICE": 0, "DEBUG": "True", "OPTIMIZE_LEVEL": "O0", "COMPILE_MODE": "latency", "CORE_NUM": 1, "MAX_TIME_PER_FC": 0, "BALANCE_FACTOR": 100, "ABILITY_ENTRY": null, "INPUT_SOURCE": {"images": "ddr"}, "hbdk3_compatible_mode": "False", "CALI_EXTRA_PARAM": {}, "EXTRA_PARAMS": {}}', 'desc_type': 'string', 'input_features': {'images': {'desc': None, 'desc_type': None}}, 'output_features': {'492': {'desc': None, 'desc_type': None}, '506': {'desc': None, 'desc_type': None}, '514': {'desc': None, 'desc_type': None}, '528': {'desc': None, 'desc_type': None}, '536': {'desc': None, 'desc_type': None}, 'output0': {'desc': None, 'desc_type': None}}}}}
+2025-05-07 09:00:53,185 file: hb_model_info.py func: hb_model_info line No: 142 ************* yolo11n_notranspose *************
+2025-05-07 09:00:53,185 file: hb_model_info.py func: hb_model_info line No: 147 hbm yolo11n_notranspose desc: {'BUILDER_VERSION': '3.3.11', 'HBDK_VERSION': '4.1.17', 'HBDK_RUNTIME_VERSION': None, 'HORIZON_NN_VERSION': '2.1.9', 'CAFFE_MODEL': None, 'PROTOTXT': None, 'ONNX_MODEL': '/open_explorer/ws_yolo11_notranspose/yolo11n_notranspose.onnx', 'MARCH': 'nash-m', 'LAYER_OUT_DUMP': 'False', 'LOG_LEVEL': None, 'WORKING_DIR': '/open_explorer/.hb_compile', 'MODEL_PREFIX': 'yolo11n_notranspose', 'OUTPUT_NODES': '', 'REMOVE_NODE_TYPE': '', 'REMOVE_NODE_NAME': '', 'DEBUG_MODE': '', 'NODE_INFO': '{}', 'INPUT_NAMES': 'images', 'INPUT_SPACE_AND_RANGE': 'regular', 'INPUT_TYPE_RT': 'featuremap', 'INPUT_TYPE_TRAIN': 'featuremap', 'INPUT_LAYOUT_TRAIN': '', 'INPUT_LAYOUT_RT': '', 'NORM_TYPE': 'no_preprocess', 'MEAN_VALUE': '[]', 'SCALE_VALUE': '[]', 'STD_VALUE': '[]', 'INPUT_SHAPE': '1x3x640x640', 'INPUT_BATCH': '', 'SEPARATE_BATCH': 'False', 'SEPARATE_NAME': '', 'CUSTOM_OP_METHOD': None, 'CUSTOM_OP_DIR': None, 'CUSTOM_OP_REGISTER_FILES': '', 'OPTIMIZATION': '', 'CALI_TYPE': 'skip', 'CAL_DATA_DIR': '', 'PER_CHANNEL': 'False', 'MAX_PERCENTILE': 'None', 'RUN_ON_CPU': '', 'RUN_ON_BPU': '', 'QUANT_CONFIG': None, 'ADVICE': 0, 'DEBUG': 'True', 'OPTIMIZE_LEVEL': 'O0', 'COMPILE_MODE': 'latency', 'CORE_NUM': 1, 'MAX_TIME_PER_FC': 0, 'BALANCE_FACTOR': 100, 'ABILITY_ENTRY': None, 'INPUT_SOURCE': {'images': 'ddr'}, 'hbdk3_compatible_mode': 'False', 'CALI_EXTRA_PARAM': {}, 'EXTRA_PARAMS': {}}
+2025-05-07 09:00:53,185 file: hb_model_info.py func: hb_model_info line No: 194 ############# model deps info #############
+2025-05-07 09:00:53,186 file: hb_model_info.py func: hb_model_info line No: 198 builder version     : 3.3.11
+2025-05-07 09:00:53,186 file: hb_model_info.py func: hb_model_info line No: 198 hbdk version        : 4.1.17
+2025-05-07 09:00:53,186 file: hb_model_info.py func: hb_model_info line No: 198 horizon nn version  : 2.1.9
+2025-05-07 09:00:53,186 file: hb_model_info.py func: hb_model_info line No: 203 ############# model_parameters info #############
+2025-05-07 09:00:53,186 file: hb_model_info.py func: hb_model_info line No: 221 onnx_model          : /open_explorer/ws_yolo11_notranspose/yolo11n_notranspose.onnx
+2025-05-07 09:00:53,186 file: hb_model_info.py func: hb_model_info line No: 221 BPU march           : nash-m
+2025-05-07 09:00:53,186 file: hb_model_info.py func: hb_model_info line No: 221 layer_out_dump      : False
+2025-05-07 09:00:53,186 file: hb_model_info.py func: hb_model_info line No: 221 working dir         : /open_explorer/.hb_compile
+2025-05-07 09:00:53,187 file: hb_model_info.py func: hb_model_info line No: 221 output_model_file_prefix: yolo11n_notranspose
+2025-05-07 09:00:53,187 file: hb_model_info.py func: hb_model_info line No: 221 node_info           : {}
+2025-05-07 09:00:53,187 file: hb_model_info.py func: hb_model_info line No: 248 ############# input_parameters info #############
+2025-05-07 09:00:53,187 file: hb_model_info.py func: hb_model_info line No: 267 ------------------------------------------
+2025-05-07 09:00:53,187 file: hb_model_info.py func: hb_model_info line No: 269 ---------input info : images ---------
+2025-05-07 09:00:53,187 file: hb_model_info.py func: hb_model_info line No: 277 input_name          : images
+2025-05-07 09:00:53,187 file: hb_model_info.py func: hb_model_info line No: 277 input_type_rt       : featuremap
+2025-05-07 09:00:53,187 file: hb_model_info.py func: hb_model_info line No: 277 input_space&range   : regular
+2025-05-07 09:00:53,188 file: hb_model_info.py func: hb_model_info line No: 277 input_type_train    : featuremap
+2025-05-07 09:00:53,188 file: hb_model_info.py func: hb_model_info line No: 277 norm_type           : no_preprocess
+2025-05-07 09:00:53,188 file: hb_model_info.py func: hb_model_info line No: 277 input_shape         : 1x3x640x640
+2025-05-07 09:00:53,188 file: hb_model_info.py func: hb_model_info line No: 277 mean_value          : []
+2025-05-07 09:00:53,188 file: hb_model_info.py func: hb_model_info line No: 277 scale_value         : []
+2025-05-07 09:00:53,188 file: hb_model_info.py func: hb_model_info line No: 277 std_value           : []
+2025-05-07 09:00:53,188 file: hb_model_info.py func: hb_model_info line No: 277 separate_batch      : False
+2025-05-07 09:00:53,188 file: hb_model_info.py func: hb_model_info line No: 278 ---------input info : images end -------
+2025-05-07 09:00:53,189 file: hb_model_info.py func: hb_model_info line No: 279 ------------------------------------------
+2025-05-07 09:00:53,189 file: hb_model_info.py func: hb_model_info line No: 284 ############# calibration_parameters info #############
+2025-05-07 09:00:53,189 file: hb_model_info.py func: hb_model_info line No: 302 calibration_type    : skip
+2025-05-07 09:00:53,189 file: hb_model_info.py func: hb_model_info line No: 302 max_percentile      : None
+2025-05-07 09:00:53,189 file: hb_model_info.py func: hb_model_info line No: 302 per_channel         : False
+2025-05-07 09:00:53,189 file: hb_model_info.py func: hb_model_info line No: 310 ############# compiler_parameters info #############
+2025-05-07 09:00:53,189 file: hb_model_info.py func: hb_model_info line No: 326 debug               : True
+2025-05-07 09:00:53,190 file: hb_model_info.py func: hb_model_info line No: 326 optimize_level      : O0
+2025-05-07 09:00:53,190 file: hb_model_info.py func: hb_model_info line No: 326 compile_mode        : latency
+2025-05-07 09:00:53,190 file: hb_model_info.py func: hb_model_info line No: 326 core_num            : 1
+2025-05-07 09:00:53,190 file: hb_model_info.py func: hb_model_info line No: 326 balance_factor      : 100
+2025-05-07 09:00:53,190 file: hb_model_info.py func: hb_model_info line No: 326 input_source        : {'images': 'ddr'}
+2025-05-07 09:00:53,190 file: hb_model_info.py func: hb_model_info line No: 326 hbdk3_compatible_mode: False
+2025-05-07 09:00:53,190 file: hbm_handle.py func: hbm_handle line No: 36 hbm_path: /open_explorer/.hb_compile/yolo11n_notranspose.hbm
+2025-05-07 09:00:53,196 file: wrap_utils.py func: wrap_utils line No: 40 Start to execute hbdk.compiler.hbm.
+2025-05-07 09:00:53,197 file: wrap_utils.py func: wrap_utils line No: 43 hbdk.compiler.hbm input args ()
+2025-05-07 09:00:53,197 file: wrap_utils.py func: wrap_utils line No: 46 hbdk.compiler.hbm input kwargs {}
+2025-05-07 09:00:53,197 file: wrap_utils.py func: wrap_utils line No: 50 End to execute hbdk.compiler.hbm.
+2025-05-07 09:00:53,197 file: hb_model_info.py func: hb_model_info line No: 189 ############# Model input/output info #############
+2025-05-07 09:00:53,197 file: tool_utils.py func: tool_utils line No: 528 NAME    TYPE   SHAPE            DATA_TYPE
+2025-05-07 09:00:53,197 file: tool_utils.py func: tool_utils line No: 528 ------- ------ ---------------- ---------
+2025-05-07 09:00:53,197 file: tool_utils.py func: tool_utils line No: 528 images  input  [1, 3, 640, 640] FLOAT32
+2025-05-07 09:00:53,198 file: tool_utils.py func: tool_utils line No: 528 output0 output [1, 80, 80, 80]  FLOAT32
+2025-05-07 09:00:53,198 file: tool_utils.py func: tool_utils line No: 528 492     output [1, 80, 80, 64]  FLOAT32
+2025-05-07 09:00:53,198 file: tool_utils.py func: tool_utils line No: 528 506     output [1, 40, 40, 80]  FLOAT32
+2025-05-07 09:00:53,198 file: tool_utils.py func: tool_utils line No: 528 514     output [1, 40, 40, 64]  FLOAT32
+2025-05-07 09:00:53,198 file: tool_utils.py func: tool_utils line No: 528 528     output [1, 20, 20, 80]  FLOAT32
+2025-05-07 09:00:53,199 file: tool_utils.py func: tool_utils line No: 528 536     output [1, 20, 20, 64]  FLOAT32
+2025-05-07 09:00:53,201 file: hb_compile.py func: hb_compile line No: 231 The hb_compile completes running
