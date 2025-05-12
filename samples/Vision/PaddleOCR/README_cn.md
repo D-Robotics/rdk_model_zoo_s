@@ -29,14 +29,15 @@ pip install paddlepaddle
 ---
 
 ## 模型下载与验证
-可以使用脚本 [download.sh](source/scripts/download.sh) 一键下载所有此模型结构的 `.hbm` 模型文件：
+可以使用脚本 [download.sh](source/scripts/download.sh) 一键下载所有此模型结构的 `.hbm` 模型文件和字体：
 
 ```shell
 wget -P $(dirname $0) https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/paddle_ocr/cn_PP-OCRv3_det_infer-deploy_640x640_nv12.hbm
 wget -P $(dirname $0) https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/paddle_ocr/cn_PP-OCRv3_rec_infer-deploy_48x320_rgb.hbm
+curl -O https://raw.githubusercontent.com/dolbydu/font/master/unicode/FangSong.ttf
 ```
 
-下载 `.hmb` 文件后，可通过 Python文件paddle_ocr.py或者Jupyter 文件进行模型推理。更换测试图片时，需修改脚本中的路径。运行结果如下
+下载 `.hmb` 文件后，可通过 Python文件paddle_ocr.py或者Jupyter 文件进行模型推理，注意需要修改模型文件和字体的路径。更换测试图片时，需修改脚本中的路径。运行结果如下
 ![result](source/data/result.jpg)
 
 ---
@@ -67,6 +68,7 @@ cd ./inference && tar xf ch_PP-OCRv3_det_infer.tar && cd ..
 # 下载识别模型
 wget -nc -P ./inference https://paddleocr.bj.bcebos.com/PP-OCRv3/chinese/ch_PP-OCRv3_rec_infer.tar
 cd ./inference && tar xf ch_PP-OCRv3_rec_infer.tar && cd ..
+
 ```
 
 ```bash

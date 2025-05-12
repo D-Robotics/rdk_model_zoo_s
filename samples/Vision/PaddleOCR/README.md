@@ -34,8 +34,9 @@ You can use the script [download.sh](source/scripts/download.sh) to download all
 ```shell
 wget -P $(dirname $0) https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/paddle_ocr/cn_PP-OCRv3_det_infer-deploy_640x640_nv12.hbm
 wget -P $(dirname $0) https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/paddle_ocr/cn_PP-OCRv3_rec_infer-deploy_48x320_rgb.hbm
+curl -O https://raw.githubusercontent.com/dolbydu/font/master/unicode/FangSong.ttf
 ```
-After downloading the `.hmb` files, you can perform inference using either the `paddle_ocr.py` Python script or a Jupyter notebook. When changing the test image, update the path in the script accordingly. Example output:
+After downloading the `.hmb` files, you can perform inference using either the `paddle_ocr.py` Python script or a Jupyter notebook.Before you run the code, please modify the path of the modle and font.When changing the test image, update the path in the script accordingly. Example output:
 ![result](source/data/result.jpg)
 
 ---

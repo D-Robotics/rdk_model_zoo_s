@@ -224,7 +224,7 @@ for i, img in enumerate(cropped_images):
     recognized_texts.append(sim_pred)
     print(f"Prediction: {sim_pred} \n")
 
-font_path = "/usr/share/fonts/truetype/fangsong.ttf"
+font_path = "fangsong.ttf"
 white_image = np.ones(origin_img.shape, dtype=np.uint8) * 255
 img_with_text = draw_text_on_image(white_image, recognized_texts, boxes_list, font_path, font_size=35, color=(0, 0, 255))
 combined_image = np.hstack((img_boxes, img_with_text))
