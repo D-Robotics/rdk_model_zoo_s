@@ -8,7 +8,11 @@ Support: YOLOv5u-Detect, YOLOv8-Detect, YOLO11-Detect, YOLO12-Detect
 
 ## YOLO介绍
 
-YOLO(You Only Look Once)是一种流行的物体检测和图像分割模型，由华盛顿大学的约瑟夫-雷德蒙(Joseph Redmon)和阿里-法哈迪(Ali Farhadi)开发。YOLO 于 2015 年推出，因其高速度和高精确度而迅速受到欢迎。
+![](source/imgs/ultralytics_yolo_detect_performance_comparison.png)
+
+
+YOLO(You Only Look Once)是一种流行的物体检测和图像分割模型,由华盛顿大学的约瑟夫-雷德蒙(Joseph Redmon)和阿里-法哈迪(Ali Farhadi)开发。YOLO 于 2015 年推出,因其高速度和高精确度而迅速受到欢迎。
+
 
  - 2016 年发布的YOLOv2 通过纳入批量归一化、锚框和维度集群改进了原始模型。
 2018 年推出的YOLOv3 使用更高效的骨干网络、多锚和空间金字塔池进一步增强了模型的性能。
@@ -18,8 +22,9 @@ YOLO(You Only Look Once)是一种流行的物体检测和图像分割模型，�
  - YOLOv7增加了额外的任务，如 COCO 关键点数据集的姿势估计。
  - YOLOv8是YOLO 的最新版本，由Ultralytics 提供。YOLOv8 YOLOv8 支持全方位的视觉 AI 任务，包括检测、分割、姿态估计、跟踪和分类。这种多功能性使用户能够在各种应用和领域中利用YOLOv8 的功能。
  - YOLOv9 引入了可编程梯度信息(PGI) 和广义高效层聚合网络(GELAN)等创新方法。
- - YOLOv10是由清华大学的研究人员使用该软件包创建的。 UltralyticsPython 软件包创建的。该版本通过引入端到端头(End-to-End head),消除了非最大抑制(NMS)要求，实现了实时目标检测的进步。
+ - YOLOv10是由清华大学的研究人员使用Ultralytics Python 软件包创建的。该版本通过引入端到端头(End-to-End head),消除了非最大抑制(NMS)要求，实现了实时目标检测的进步。
  - YOLO11 NEW 🚀：Ultralytics的最新YOLO模型在多个任务上实现了最先进的（SOTA）性能。
+ - YOLO12构建以注意力为核心的YOLO框架，通过创新方法和架构改进，打破CNN模型在YOLO系列中的主导地位，实现具有快速推理速度和更高检测精度的实时目标检测。
 
 
 ## 快速体验
@@ -33,38 +38,12 @@ python3 py/ultralytics_YOLO_Detect_YUV420SP.py
 
 
 
-# BenchMarks
 
-## Performance
-
-### RDK S100
-
-| Model | Size(Pixels) | Classes |  BPU Task Latency/BPU Throughput (Threads) | CPU Single Core Latency | params(M) | FLOPs(B) |
-|----------|---------|----|---------|---------|----------|----------|
-| YOLOv5nu | 640×640 | 80 | 2.0 ms / 487.0 FPS (1 thread  ) <br/> 2.2 ms / 864.5 FPS (2 threads) <br/> 3.2 ms / 896.6 FPS (3 threads) |         |  2.6  M  |  7.7   B |  
-| YOLOv5su | 640×640 | 80 | 2.9 ms / 340.5 FPS (1 thread  ) <br/> 3.9 ms / 498.2 FPS (2 threads)   |         |  9.1  M  |  24.0  B |  
-| YOLOv5mu | 640×640 | 80 | 5.0 ms / 196.2 FPS (1 thread  ) <br/> 8.2 ms / 239.9 FPS (2 threads)   |         |  25.1 M  |  64.2  B |  
-| YOLOv5lu | 640×640 | 80 | 9.5 ms / 104.0 FPS (1 thread  ) <br/> 17.2 ms / 115.5 FPS (2 threads)  |         |  53.2 M  |  135.0 B |  
-| YOLOv5xu | 640×640 | 80 | 16.9 ms / 58.9 FPS (1 thread  ) <br/> 31.8 ms / 62.6 FPS (2 threads)   |         |  97.2 M  |  246.4 B |  
-| YOLOv8n  | 640×640 | 80 | 2.0 ms / 485.1 FPS (1 thread  ) <br/> 2.4 ms / 798.0 FPS (2 threads)   |         |  3.2  M  |  8.7   B |  
-| YOLOv8s  | 640×640 | 80 | 3.1 ms / 312.7 FPS (1 thread  ) <br/> 4.7 ms / 416.7 FPS (2 threads)   |         |  11.2 M  |  28.6  B |  
-| YOLOv8m  | 640×640 | 80 | 5.8 ms / 170.0 FPS (1 thread  ) <br/> 10.0 ms / 198.3 FPS (2 threads)  |         |  25.9 M  |  78.9  B |  
-| YOLOv8l  | 640×640 | 80 | 11.1 ms / 89.1 FPS (1 thread  ) <br/> 20.4 ms / 97.3 FPS (2 threads)   |         |  43.7 M  |  165.2 B |  
-| YOLOv8x  | 640×640 | 80 | 17.0 ms / 58.6 FPS (1 thread  ) <br/> 31.9 ms / 62.3 FPS (2 threads)   |         |  68.2 M  |  257.8 B |  
-| YOLO11n  | 640×640 | 80 | 2.1 ms / 466.6 FPS (1 thread  ) <br/> 2.6 ms / 741.0 FPS (2 threads)   |         |  2.6  M  |  6.5   B |  
-| YOLO11s  | 640×640 | 80 | 3.1 ms / 313.9 FPS (1 thread  ) <br/> 4.7 ms / 419.8 FPS (2 threads)   |         |  9.4  M  |  21.5  B |  
-| YOLO11m  | 640×640 | 80 | 6.3 ms / 157.3 FPS (1 thread  ) <br/> 10.9 ms / 181.9 FPS (2 threads)  |         |  20.1 M  |  68.0  B |  
-| YOLO11l  | 640×640 | 80 | 7.9 ms / 125.8 FPS (1 thread  ) <br/> 14.0 ms / 141.5 FPS (2 threads)  |         |  25.3 M  |  86.9  B |  
-| YOLO11x  | 640×640 | 80 | 14.1 ms / 70.3 FPS (1 thread  ) <br/> 26.4 ms / 75.4 FPS (2 threads)   |         |  56.9 M  |  194.9 B |  
-| YOLO12n  | 640×640 | 80 | 3.3 ms / 293.3 FPS (1 thread  ) <br/> 5.2 ms / 382.1 FPS (2 threads)   |         |  2.6  M  |  6.5   B |  
-| YOLO12s  | 640×640 | 80 | 5.6 ms / 174.7 FPS (1 thread  ) <br/> 9.7 ms / 204.7 FPS (2 threads)   |         |  9.3  M  |  21.4  B |  
-| YOLO12m  | 640×640 | 80 | 10.4 ms / 95.7 FPS (1 thread  ) <br/> 18.9 ms / 104.8 FPS (2 threads)  |         |  20.2 M  |  67.5  B |  
-| YOLO12l  | 640×640 | 80 | 16.6 ms / 60.1 FPS (1 thread  ) <br/> 31.2 ms / 63.8 FPS (2 threads)   |         |  26.4 M  |  88.9  B |  
-| YOLO12x  | 640×640 | 80 | 27.6 ms / 36.1 FPS (1 thread  ) <br/> 53.2 ms / 37.4 FPS (2 threads)   |         |  59.1 M  |  199.0 B |  
+## BenchMark - Performance
 
 ### RDK S100P
 
-| Model | Size(Pixels) | Classes |  BPU Task Latency/<br>BPU Throughput (Threads) | CPU Latency<br>(Single Core) | params(M) | FLOPs(B) |
+| Model | Size(Pixels) | Classes |  BPU Task Latency  /<br>BPU Throughput (Threads) | CPU Latency<br>(Single Core) | params(M) | FLOPs(B) |
 |----------|---------|----|---------|---------|----------|----------|
 | YOLOv5nu | 640×640 | 80 | 1.5 ms / 650.9 FPS (1 thread  ) <br/> 1.7 ms / 1097.7 FPS (2 threads) <br/> 2.3 ms / 1240.9 FPS (3 threads) |         |  2.6  M  |  7.7   B |  
 | YOLOv5su | 640×640 | 80 | 2.1 ms / 461.0 FPS (1 thread  ) <br/> 2.7 ms / 709.4 FPS (2 threads)   |         |  9.1  M  |  24.0  B |  
@@ -87,7 +66,36 @@ python3 py/ultralytics_YOLO_Detect_YUV420SP.py
 | YOLO12l  | 640×640 | 80 | 11.2 ms / 88.4 FPS (1 thread  ) <br/> 20.9 ms / 95.0 FPS (2 threads)   |         |  26.4 M  |  88.9  B |  
 | YOLO12x  | 640×640 | 80 | 18.9 ms / 52.7 FPS (1 thread  ) <br/> 36.2 ms / 55.0 FPS (2 threads)   |         |  59.1 M  |  199.0 B |  
 
-## Performance Test Instructions
+
+
+### RDK S100
+
+| Model | Size(Pixels) | Classes |  BPU Task Latency  /<br>BPU Throughput (Threads) | CPU Latency<br>(Single Core) | params(M) | FLOPs(B) |
+|----------|---------|----|---------|---------|----------|----------|
+| YOLOv5nu | 640×640 | 80 | 2.0 ms / 487.0 FPS (1 thread  ) <br/> 2.2 ms / 864.5 FPS (2 threads) <br/> 3.2 ms / 896.6 FPS (3 threads) |         |  2.6  M  |  7.7   B |  
+| YOLOv5su | 640×640 | 80 | 2.9 ms / 340.5 FPS (1 thread  ) <br/> 3.9 ms / 498.2 FPS (2 threads)   |         |  9.1  M  |  24.0  B |  
+| YOLOv5mu | 640×640 | 80 | 5.0 ms / 196.2 FPS (1 thread  ) <br/> 8.2 ms / 239.9 FPS (2 threads)   |         |  25.1 M  |  64.2  B |  
+| YOLOv5lu | 640×640 | 80 | 9.5 ms / 104.0 FPS (1 thread  ) <br/> 17.2 ms / 115.5 FPS (2 threads)  |         |  53.2 M  |  135.0 B |  
+| YOLOv5xu | 640×640 | 80 | 16.9 ms / 58.9 FPS (1 thread  ) <br/> 31.8 ms / 62.6 FPS (2 threads)   |         |  97.2 M  |  246.4 B |  
+| YOLOv8n  | 640×640 | 80 | 2.0 ms / 485.1 FPS (1 thread  ) <br/> 2.4 ms / 798.0 FPS (2 threads)   |         |  3.2  M  |  8.7   B |  
+| YOLOv8s  | 640×640 | 80 | 3.1 ms / 312.7 FPS (1 thread  ) <br/> 4.7 ms / 416.7 FPS (2 threads)   |         |  11.2 M  |  28.6  B |  
+| YOLOv8m  | 640×640 | 80 | 5.8 ms / 170.0 FPS (1 thread  ) <br/> 10.0 ms / 198.3 FPS (2 threads)  |         |  25.9 M  |  78.9  B |  
+| YOLOv8l  | 640×640 | 80 | 11.1 ms / 89.1 FPS (1 thread  ) <br/> 20.4 ms / 97.3 FPS (2 threads)   |         |  43.7 M  |  165.2 B |  
+| YOLOv8x  | 640×640 | 80 | 17.0 ms / 58.6 FPS (1 thread  ) <br/> 31.9 ms / 62.3 FPS (2 threads)   |         |  68.2 M  |  257.8 B |  
+| YOLO11n  | 640×640 | 80 | 2.1 ms / 466.6 FPS (1 thread  ) <br/> 2.6 ms / 741.0 FPS (2 threads)   |         |  2.6  M  |  6.5   B |  
+| YOLO11s  | 640×640 | 80 | 3.1 ms / 313.9 FPS (1 thread  ) <br/> 4.7 ms / 419.8 FPS (2 threads)   |         |  9.4  M  |  21.5  B |  
+| YOLO11m  | 640×640 | 80 | 6.3 ms / 157.3 FPS (1 thread  ) <br/> 10.9 ms / 181.9 FPS (2 threads)  |         |  20.1 M  |  68.0  B |  
+| YOLO11l  | 640×640 | 80 | 7.9 ms / 125.8 FPS (1 thread  ) <br/> 14.0 ms / 141.5 FPS (2 threads)  |         |  25.3 M  |  86.9  B |  
+| YOLO11x  | 640×640 | 80 | 14.1 ms / 70.3 FPS (1 thread  ) <br/> 26.4 ms / 75.4 FPS (2 threads)   |         |  56.9 M  |  194.9 B |  
+| YOLO12n  | 640×640 | 80 | 3.3 ms / 293.3 FPS (1 thread  ) <br/> 5.2 ms / 382.1 FPS (2 threads)   |         |  2.6  M  |  6.5   B |  
+| YOLO12s  | 640×640 | 80 | 5.6 ms / 174.7 FPS (1 thread  ) <br/> 9.7 ms / 204.7 FPS (2 threads)   |         |  9.3  M  |  21.4  B |  
+| YOLO12m  | 640×640 | 80 | 10.4 ms / 95.7 FPS (1 thread  ) <br/> 18.9 ms / 104.8 FPS (2 threads)  |         |  20.2 M  |  67.5  B |  
+| YOLO12l  | 640×640 | 80 | 16.6 ms / 60.1 FPS (1 thread  ) <br/> 31.2 ms / 63.8 FPS (2 threads)   |         |  26.4 M  |  88.9  B |  
+| YOLO12x  | 640×640 | 80 | 27.6 ms / 36.1 FPS (1 thread  ) <br/> 53.2 ms / 37.4 FPS (2 threads)   |         |  59.1 M  |  199.0 B |  
+
+
+
+### Performance Test Instructions
 1. 此处测试的均为YUV420SP (nv12) 输入的模型的性能数据. NCHWRGB输入的模型的性能数据与其无明显差距.
 2. BPU延迟与BPU吞吐量。
  - 单线程延迟为单帧,单线程,单BPU核心的延迟,BPU推理一个任务最理想的情况。
@@ -100,16 +108,19 @@ hrt_model_exec perf --thread_num 2 --model_file yolov8n_detect_bayese_640x640_nv
 python3 ../../../resource/tools/batch_perf/batch_perf.py --max 3 --file source/reference_hbm_models/
 ```
 3. 测试板卡为最佳状态。
- - S100的状态为最佳状态：CPU为6 × A78AE @ 1.5GHz, 全核心Performance调度, BPU为1 × Nash-e @ 1.0GHz, 80TOPS @ int8.
+
  - S100P的状态为最佳状态：CPU为6 × A78AE @ 2.0GHz, 全核心Performance调度, BPU为1 × Nash-m @ 1.5GHz, 128TOPS @ int8.
+ - S100的状态为最佳状态：CPU为6 × A78AE @ 1.5GHz, 全核心Performance调度, BPU为1 × Nash-e @ 1.0GHz, 80TOPS @ int8.
+
 ```bash
 sudo bash -c "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
 sudo bash -c "echo performance > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor"
 sudo bash -c "echo performance > /sys/devices/system/bpu/bpu0/devfreq/28108000.bpu/governor"
 ```
 
-## Accuracy
+## Benchmark - Accuracy
 
+### RDK S100 / RDK S100P
 Object Detection (COCO2017)
 | Model | Pytorch | YUV420SP<br/>Python | YUV420SP<br/>C/C++ | NCHWRGB<br/>C/C++ |
 |---------|---------|-------|---------|---------|
@@ -134,7 +145,7 @@ Object Detection (COCO2017)
 | YOLO12l  | 0.454 | 0.430 (94.71%) | (%) | (%) |
 | YOLO12x  | 0.466 | 0.439 (94.21%) | (%) | (%) |
 
-## Accuracy Test Instructions
+### Accuracy Test Instructions
 
 1. 所有的精度数据使用微软官方的无修改的`pycocotools`库进行计算，取的精度标准为`Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ]`的数据。
 2. 所有的测试数据均使用`COCO2017`数据集的val验证集的5000张照片, 在板端直接推理, dump保存为json文件, 送入第三方测试工具`pycocotools`库进行计算，分数的阈值为0.25, nms的阈值为0.7。
@@ -143,8 +154,6 @@ Object Detection (COCO2017)
 5. Python接口和C/C++接口的精度结果有细微差异, 主要在于Python和C/C++的一些数据结构进行memcpy和转化的过程中, 对浮点数的处理方式不同, 导致的细微差异.
 6. 测试脚本请参考RDK Model Zoo的eval部分: https://github.com/D-Robotics/rdk_model_zoo/tree/main/demos/tools/eval_pycocotools
 7. 本表格是使用PTQ(训练后量化)使用50张图片进行校准和编译的结果, 用于模拟普通开发者第一次直接编译的精度情况, 并没有进行精度调优或者QAT(量化感知训练), 满足常规使用验证需求, 不代表精度上限.
-
-所有的路径基于: `./samples/Vision/ultralytics_YOLO_Detect.`
 
 
 # 进阶开发

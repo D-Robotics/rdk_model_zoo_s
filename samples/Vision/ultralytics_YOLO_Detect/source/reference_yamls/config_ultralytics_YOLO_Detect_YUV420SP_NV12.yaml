@@ -4,8 +4,10 @@ model_parameters:
   layer_out_dump: False
   working_dir: 'ultralytcs_YOLO_output'
   output_model_file_prefix: 'ultralytcs_YOLO'
-  remove_node_name: "YOLO11: /model.23/cv2.0/cv2.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;"  # Depend on your onnx model.
-  # Reference Names
+  remove_node_name: "/model.23/cv2.0/cv2.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;"
+  # Reference remove_node_name
+  # YOLOv5u: /model.24/cv2.0/cv2.0.2/Conv;/model.24/cv2.1/cv2.1.2/Conv;/model.24/cv2.2/cv2.2.2/Conv;
+  # YOLOv8: /model.22/cv2.0/cv2.0.2/Conv;/model.22/cv2.1/cv2.1.2/Conv;/model.22/cv2.2/cv2.2.2/Conv;
   # YOLO11: /model.23/cv2.0/cv2.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;
   # YOLO12: /model.21/cv2.0/cv2.0.2/Conv;/model.21/cv2.1/cv2.1.2/Conv;/model.21/cv2.2/cv2.2.2/Conv;
 input_parameters:
