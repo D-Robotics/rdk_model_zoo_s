@@ -94,9 +94,21 @@ sudo bash -c "echo performance > /sys/devices/system/bpu/bpu0/devfreq/28108000.b
 ## Benchmark - Accuracy
 
 ### RDK S100 / RDK S100P
-Object Detection (COCO2017)
-| Model | Pytorch | YUV420SP<br/>Python | YUV420SP<br/>C/C++ | NCHWRGB<br/>C/C++ |
+
+Instance Segmentation (COCO2017)
+
+| Model | Pytorch<br/>BBox / Mask | YUV420SP - Python<br/>BBox / Mask | YUV420SP - C/C++<br/>BBox / Mask | NCHWRGB - C/C++<br/>BBox / Mask |
 |---------|---------|-------|---------|---------|
+| YOLOv8n-Seg | 0.300 / 0.241 | 0.283(94.33%) / 0.218(90.46%) |  |  |
+| YOLOv8s-Seg | 0.380 / 0.299 | 0.361(95.00%) / 0.281(93.98%) |  |  |
+| YOLOv8m-Seg | 0.423 / 0.330 | 0.407(96.22%) / 0.316(95.76%) |  |  |
+| YOLOv8l-Seg | 0.444 / 0.344 | 0.426(95.95%) / 0.333(96.80%) |  |  |
+| YOLOv8x-Seg | 0.456 / 0.351 | 0.436(95.61%) / 0.335(95.44%) |  |  |
+| YOLO11n-Seg | 0.319 / 0.258 | 0.294(92.16%) / 0.227(87.98%) |  |  |
+| YOLO11s-Seg | 0.388 / 0.306 | 0.367(94.59%) / 0.285(93.14%) |  |  |
+| YOLO11m-Seg | 0.436 / 0.340 | 0.414(94.95%) / 0.318(93.53%) |  |  |
+| YOLO11l-Seg | 0.452 / 0.350 | 0.430(95.13%) / 0.329(94.00%) |  |  |
+| YOLO11x-Seg | 0.466 / 0.358 | 0.443(95.06%) / 0.337(94.13%) |  |  |
 
 ### Accuracy Test Instructions
 

@@ -36,7 +36,7 @@ import os
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model-path', type=str, default='source/reference_hbm_models/yolov8x_seg_nashe_640x640_nv12.hbm', 
+    parser.add_argument('--model-path', type=str, default='source/reference_hbm_models/yolov8m_seg_nashe_640x640_nv12.hbm', 
                         help="""Path to BPU Quantized *.hbm Model.
                                 RDK X3(Module): Bernoulli2.
                                 RDK Ultra: Bayes.
@@ -55,7 +55,7 @@ def main():
     parser.add_argument('--image-path', type=str, default="../../../resource/datasets/COCO2017/val2017", help='COCO2017 val source image path.')
     parser.add_argument('--result-image-dump', type=bool, default=False, help='dump image result or not')
     parser.add_argument('--result-image-path', type=str, default="coco2017_image_result", help='COCO2017 val image result saving path.')
-    parser.add_argument('--json-path', type=str, default="yolov8x_seg_nashe_640x640_nv12_coco2017_val_pridect.json", help='convert to json save path.')
+    parser.add_argument('--json-path', type=str, default="yolov8m_seg_nashe_640x640_nv12_coco2017_val_pridect.json", help='convert to json save path.')
     parser.add_argument('--max-num', type=int, default=5000000, help='max num of images which will be precessed.')
     opt = parser.parse_args()
     logger.info(opt)
