@@ -2,9 +2,12 @@
 
 # Ultralytics YOLO Detect
 
-Support: YOLOv5u-Detect, YOLOv8-Detect, YOLO11-Detect, YOLO12-Detect
+## Support
 
-
+- YOLOv5u-Detect
+- YOLOv8-Detect
+- YOLO11-Detect
+- YOLO12-Detect
 
 ## YOLO介绍
 
