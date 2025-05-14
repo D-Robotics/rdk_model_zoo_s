@@ -1,13 +1,18 @@
 [English](./README.md) | 简体中文
 
-# Ultralytics YOLO Detect
+# Ultralytics YOLO Pose
 
-Support: YOLOv8 - Pose, YOLO11 - Pose
+## Support
 
+- YOLO11-Pose
+- YOLOv8-Pose
 
 ## YOLO介绍
 
-YOLO(You Only Look Once)是一种流行的物体检测和图像分割模型，由华盛顿大学的约瑟夫-雷德蒙(Joseph Redmon)和阿里-法哈迪(Ali Farhadi)开发。YOLO 于 2015 年推出，因其高速度和高精确度而迅速受到欢迎。
+
+
+YOLO(You Only Look Once)是一种流行的物体检测和图像分割模型,由华盛顿大学的约瑟夫-雷德蒙(Joseph Redmon)和阿里-法哈迪(Ali Farhadi)开发。YOLO 于 2015 年推出,因其高速度和高精确度而迅速受到欢迎。
+
 
  - 2016 年发布的YOLOv2 通过纳入批量归一化、锚框和维度集群改进了原始模型。
 2018 年推出的YOLOv3 使用更高效的骨干网络、多锚和空间金字塔池进一步增强了模型的性能。
@@ -17,8 +22,71 @@ YOLO(You Only Look Once)是一种流行的物体检测和图像分割模型，�
  - YOLOv7增加了额外的任务，如 COCO 关键点数据集的姿势估计。
  - YOLOv8是YOLO 的最新版本，由Ultralytics 提供。YOLOv8 YOLOv8 支持全方位的视觉 AI 任务，包括检测、分割、姿态估计、跟踪和分类。这种多功能性使用户能够在各种应用和领域中利用YOLOv8 的功能。
  - YOLOv9 引入了可编程梯度信息(PGI) 和广义高效层聚合网络(GELAN)等创新方法。
- - YOLOv10是由清华大学的研究人员使用该软件包创建的。 UltralyticsPython 软件包创建的。该版本通过引入端到端头(End-to-End head),消除了非最大抑制(NMS)要求，实现了实时目标检测的进步。
+ - YOLOv10是由清华大学的研究人员使用Ultralytics Python 软件包创建的。该版本通过引入端到端头(End-to-End head),消除了非最大抑制(NMS)要求，实现了实时目标检测的进步。
  - YOLO11 NEW 🚀：Ultralytics的最新YOLO模型在多个任务上实现了最先进的（SOTA）性能。
+ - YOLO12构建以注意力为核心的YOLO框架，通过创新方法和架构改进，打破CNN模型在YOLO系列中的主导地位，实现具有快速推理速度和更高检测精度的实时目标检测。
+
+## 快速体验
+
+## BenchMark - Performance
+
+### RDK S100P
+
+| Model | Size(Pixels) | Classes |  BPU Task Latency  /<br>BPU Throughput (Threads) | CPU Latency<br>(Single Core) | params(M) | FLOPs(B) |
+|----------|---------|----|---------|---------|----------|----------|
+| YOLOv8n-Pose | 640×640 | 80 | 1.8 ms / 527.3 FPS (1 thread  ) <br/> 2.0 ms / 951.9 FPS (2 threads) <br/> 2.7 ms / 1062.4 FPS (3 threads) | ms | 3.3  M | 9.2   B |
+| YOLOv8s-Pose | 640×640 | 80 | 2.6 ms / 374.3 FPS (1 thread  ) <br/> 3.4 ms / 577.9 FPS (2 threads)  | ms | 11.6 M | 30.2  B |
+| YOLOv8m-Pose | 640×640 | 80 | 4.4 ms / 224.5 FPS (1 thread  ) <br/> 6.9 ms / 285.2 FPS (2 threads)  | ms | 26.4 M | 81.0  B |
+| YOLOv8l-Pose | 640×640 | 80 | 8.1 ms / 122.7 FPS (1 thread  ) <br/> 14.3 ms / 138.8 FPS (2 threads) | ms | 44.4 M | 168.6 B |
+| YOLOv8x-Pose | 640×640 | 80 | 12.1 ms / 82.4 FPS (1 thread  ) <br/> 22.2 ms / 89.4 FPS (2 threads)  | ms | 69.4 M | 263.2 B |
+| YOLO11n-Pose | 640×640 | 80 | 1.8 ms / 524.8 FPS (1 thread  ) <br/> 2.1 ms / 924.0 FPS (2 threads) <br/> 2.9 ms / 1005.0 FPS (3 threads) | ms | 2.9  M | 7.6   B |
+| YOLO11s-Pose | 640×640 | 80 | 2.6 ms / 370.9 FPS (1 thread  ) <br/> 3.4 ms / 573.7 FPS (2 threads)  | ms | 9.9  M | 23.2  B |
+| YOLO11m-Pose | 640×640 | 80 | 4.8 ms / 204.7 FPS (1 thread  ) <br/> 7.7 ms / 256.5 FPS (2 threads)  | ms | 20.9 M | 71.7  B |
+| YOLO11l-Pose | 640×640 | 80 | 5.9 ms / 167.6 FPS (1 thread  ) <br/> 9.9 ms / 199.4 FPS (2 threads)  | ms | 26.2 M | 90.7  B |
+| YOLO11x-Pose | 640×640 | 80 | 10.4 ms / 95.3 FPS (1 thread  ) <br/> 18.8 ms / 105.3 FPS (2 threads) | ms | 58.8 M | 203.3 B |
+
+### RDK S100
+
+| Model | Size(Pixels) | Classes |  BPU Task Latency  /<br>BPU Throughput (Threads) | CPU Latency<br>(Single Core) | params(M) | FLOPs(B) |
+|----------|---------|----|---------|---------|----------|----------|
+| YOLOv8n-Pose | 640×640 | 80 | 2.4 ms / 406.9 FPS (1 thread  ) <br/> 2.6 ms / 736.2 FPS (2 threads) <br/> 3.6 ms / 795.1 FPS (3 threads) | ms | 3.3  M | 9.2   B |
+| YOLOv8s-Pose | 640×640 | 80 |  3.5 ms / 276.9 FPS (1 thread  ) <br/> 4.7 ms / 411.5 FPS (2 threads) | ms | 11.6 M | 30.2  B |
+| YOLOv8m-Pose | 640×640 | 80 |  6.1 ms / 161.0 FPS (1 thread  ) <br/> 9.9 ms / 200.5 FPS (2 threads) | ms | 26.4 M | 81.0  B |
+| YOLOv8l-Pose | 640×640 | 80 |  11.3 ms / 88.0 FPS (1 thread  ) <br/> 20.1 ms / 98.8 FPS (2 threads) | ms | 44.4 M | 168.6 B |
+| YOLOv8x-Pose | 640×640 | 80 |  17.2 ms / 57.9 FPS (1 thread  ) <br/> 31.8 ms / 62.5 FPS (2 threads) | ms | 69.4 M | 263.2 B |
+| YOLO11n-Pose | 640×640 | 80 | 2.4 ms / 395.2 FPS (1 thread  ) <br/> 2.7 ms / 714.3 FPS (2 threads) <br/> 3.9 ms / 749.0 FPS (3 threads) | ms | 2.9  M | 7.6   B |
+| YOLO11s-Pose | 640×640 | 80 |  3.5 ms / 276.2 FPS (1 thread  ) <br/> 4.8 ms / 411.1 FPS (2 threads) | ms | 9.9  M | 23.2  B |
+| YOLO11m-Pose | 640×640 | 80 | 6.6 ms / 149.7 FPS (1 thread  ) <br/> 10.9 ms / 181.8 FPS (2 threads) | ms | 20.9 M | 71.7  B |
+| YOLO11l-Pose | 640×640 | 80 | 8.1 ms / 121.6 FPS (1 thread  ) <br/> 13.8 ms / 143.1 FPS (2 threads) | ms | 26.2 M | 90.7  B |
+| YOLO11x-Pose | 640×640 | 80 |  14.5 ms / 68.8 FPS (1 thread  ) <br/> 26.6 ms / 74.8 FPS (2 threads) | ms | 58.8 M | 203.3 B |
+
+
+
+### Performance Test Instructions
+1. 此处测试的均为YUV420SP (nv12) 输入的模型的性能数据. NCHWRGB输入的模型的性能数据与其无明显差距.
+2. BPU延迟与BPU吞吐量。
+ - 单线程延迟为单帧,单线程,单BPU核心的延迟,BPU推理一个任务最理想的情况。
+ - 多线程帧率为多个线程同时向BPU塞任务, 每个BPU核心可以处理多个线程的任务, 一般工程中4个线程可以控制单帧延迟较小,同时吃满所有BPU到100%,在吞吐量(FPS)和帧延迟间得到一个较好的平衡。S100 / S100P的BPU整体比较厉害, 一般2个线程就可以将BPU吃满, 帧延迟和吞吐量都非常出色。
+ - 表格中一般记录到吞吐量不再随线程数明显增加的数据。
+ - BPU延迟和BPU吞吐量使用以下命令在板端测试
+```bash
+hrt_model_exec perf --thread_num 2 --model_file yolov8n_detect_bayese_640x640_nv12_modified.bin
+
+python3 ../../../resource/tools/batch_perf/batch_perf.py --max 3 --file source/reference_hbm_models/
+```
+3. 测试板卡为最佳状态。
+
+ - S100P的状态为最佳状态：CPU为6 × A78AE @ 2.0GHz, 全核心Performance调度, BPU为1 × Nash-m @ 1.5GHz, 128TOPS @ int8.
+ - S100的状态为最佳状态：CPU为6 × A78AE @ 1.5GHz, 全核心Performance调度, BPU为1 × Nash-e @ 1.0GHz, 80TOPS @ int8.
+
+```bash
+sudo bash -c "echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor"
+sudo bash -c "echo performance > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor"
+sudo bash -c "echo performance > /sys/devices/system/bpu/bpu0/devfreq/28108000.bpu/governor"
+```
+
+
+# 进阶开发
 
 ## 快速体验
 ```bash
