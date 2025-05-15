@@ -1,0 +1,1 @@
+wget https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/EfficientNet/efficientnet_lite1_240x240_nv12.hbm
