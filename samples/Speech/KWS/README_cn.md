@@ -43,6 +43,12 @@ cd samples\Speech\KWS\python
 pip install -r requirements.txt
 ```
 
+下载模型：
+
+```
+wget https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/kws/kws.hbm
+```
+
 ## 效果验证
 
 完成相关依赖安装后，我们看到当前目录下有一个`sample.wav`，这个.wav音频文件包含了唤醒关键词：`hey snips`

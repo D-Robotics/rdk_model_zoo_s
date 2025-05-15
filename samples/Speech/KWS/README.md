@@ -43,6 +43,12 @@ Install relevant dependencies:
 pip install -r requirements.txt
 ```
 
+Download model:
+
+```
+wget https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/kws/kws.hbm
+```
+
 ## Effect verification
 
 After completing the installation of the relevant dependencies, we see a sample.wav in the current directory, and this .wav audio file contains the wake-up keyword: hey snips
