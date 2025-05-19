@@ -72,7 +72,7 @@ python main.py
 我们使用如下命令对地瓜异构模型.hbm进行速度的验证
 
 ```
-hrt_model_exec perf --model_file /root/kws/kws.hbm --frame_count 100
+hrt_model_exec perf --model_file kws.hbm --frame_count 100
 ```
 
 我们得到如下结果
