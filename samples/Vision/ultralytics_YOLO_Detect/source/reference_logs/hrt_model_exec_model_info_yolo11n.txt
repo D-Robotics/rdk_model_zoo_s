@@ -1,4 +1,4 @@
-# hrt_model_exec model_info --model_file yolo11n_detect_nashe_640x640_nv12.hbm 
+hrt_model_exec model_info --model_file ws_yolo11n/bpu_outputs/yolo11n_detect_nashe_640x640_nv12.hbm 
 [UCP]: log level = 3
 [UCP]: UCP version = 3.3.3
 [VP]: log level = 3
@@ -6,9 +6,9 @@
 [HPL]: log level = 3
 [UCPT]: log level = 6
 [DSP]: log level = 3
-hrt_model_exec model_info --model_file yolo11n_detect_nashe_640x640_nv12.hbm
+hrt_model_exec model_info --model_file ws_yolo11n/bpu_outputs/yolo11n_detect_nashe_640x640_nv12.hbm
 [DNN]: 3.3.3_(4.1.17 HBRT)
-Load model to DDR cost 211.537ms.
+Load model to DDR cost 38.242ms.
 This model file has 1 model:
 [yolo11n_detect_nashe_640x640_nv12]
 ---------------------------------------------------------------------
