@@ -102,32 +102,32 @@ The program automatically downloads the BPU HBM model of YOLO11n - Seg and compl
 
 | Model | Size(Pixels) | Classes |  BPU Task Latency  /<br>BPU Throughput (Threads) | CPU Latency<br>(Single Core) | params(M) | FLOPs(B) |
 |----------|---------|----|---------|---------|----------|----------|
-| YOLOv8n-Seg | 640×640 | 80 | 1.7 ms / 547.5 FPS (1 thread  ) <br/> 2.1 ms / 923.0 FPS (2 threads) <br/> 3.1 ms / 941.6 FPS (3 threads) | ms | 3.4  M | 12.6  B |
-| YOLOv8s-Seg | 640×640 | 80 | 2.8 ms / 348.5 FPS (1 thread  ) <br/> 4.0 ms / 485.5 FPS (2 threads)  | ms | 11.8 M | 42.6  B |
-| YOLOv8m-Seg | 640×640 | 80 | 4.9 ms / 198.7 FPS (1 thread  ) <br/> 8.3 ms / 236.6 FPS (2 threads)  | ms | 27.3 M | 100.2 B |
-| YOLOv8l-Seg | 640×640 | 80 | 9.2 ms / 107.4 FPS (1 thread  ) <br/> 16.8 ms / 117.7 FPS (2 threads) | ms | 46.0 M | 220.5 B |
-| YOLOv8x-Seg | 640×640 | 80 | 14.1 ms / 70.5 FPS (1 thread  ) <br/> 26.5 ms / 75.0 FPS (2 threads)  | ms | 71.8 M | 344.1 B |
-| YOLO11n-Seg | 640×640 | 80 | 1.8 ms / 528.8 FPS (1 thread  ) <br/> 2.1 ms / 912.7 FPS (2 threads)  | ms | 2.9  M | 10.4  B |
-| YOLO11s-Seg | 640×640 | 80 | 2.8 ms / 346.2 FPS (1 thread  ) <br/> 4.1 ms / 475.9 FPS (2 threads)  | ms | 10.1 M | 35.5  B |
-| YOLO11m-Seg | 640×640 | 80 | 6.0 ms / 163.9 FPS (1 thread  ) <br/> 10.5 ms / 188.6 FPS (2 threads) | ms | 22.4 M | 123.3 B |
-| YOLO11l-Seg | 640×640 | 80 | 7.1 ms / 138.5 FPS (1 thread  ) <br/> 12.6 ms / 156.2 FPS (2 threads) | ms | 27.6 M | 142.2 B |
-| YOLO11x-Seg | 640×640 | 80 | 13.1 ms / 76.0 FPS (1 thread  ) <br/> 24.4 ms / 81.3 FPS (2 threads)  | ms | 62.1 M | 319.0 B |
+| YOLOv8n-Seg | 640×640 | 80 | 1.7 ms / 547.5 FPS (1 thread  ) <br/> 2.1 ms / 923.0 FPS (2 threads) <br/> 3.1 ms / 941.6 FPS (3 threads) | 5 ms | 3.4  M | 12.6  B |
+| YOLOv8s-Seg | 640×640 | 80 | 2.8 ms / 348.5 FPS (1 thread  ) <br/> 4.0 ms / 485.5 FPS (2 threads)  | 5 ms | 11.8 M | 42.6  B |
+| YOLOv8m-Seg | 640×640 | 80 | 4.9 ms / 198.7 FPS (1 thread  ) <br/> 8.3 ms / 236.6 FPS (2 threads)  | 5 ms | 27.3 M | 100.2 B |
+| YOLOv8l-Seg | 640×640 | 80 | 9.2 ms / 107.4 FPS (1 thread  ) <br/> 16.8 ms / 117.7 FPS (2 threads) | 5 ms | 46.0 M | 220.5 B |
+| YOLOv8x-Seg | 640×640 | 80 | 14.1 ms / 70.5 FPS (1 thread  ) <br/> 26.5 ms / 75.0 FPS (2 threads)  | 5 ms | 71.8 M | 344.1 B |
+| YOLO11n-Seg | 640×640 | 80 | 1.8 ms / 528.8 FPS (1 thread  ) <br/> 2.1 ms / 912.7 FPS (2 threads)  | 5 ms | 2.9  M | 10.4  B |
+| YOLO11s-Seg | 640×640 | 80 | 2.8 ms / 346.2 FPS (1 thread  ) <br/> 4.1 ms / 475.9 FPS (2 threads)  | 5 ms | 10.1 M | 35.5  B |
+| YOLO11m-Seg | 640×640 | 80 | 6.0 ms / 163.9 FPS (1 thread  ) <br/> 10.5 ms / 188.6 FPS (2 threads) | 5 ms | 22.4 M | 123.3 B |
+| YOLO11l-Seg | 640×640 | 80 | 7.1 ms / 138.5 FPS (1 thread  ) <br/> 12.6 ms / 156.2 FPS (2 threads) | 5 ms | 27.6 M | 142.2 B |
+| YOLO11x-Seg | 640×640 | 80 | 13.1 ms / 76.0 FPS (1 thread  ) <br/> 24.4 ms / 81.3 FPS (2 threads)  | 5 ms | 62.1 M | 319.0 B |
 
 
 ### RDK S100
 
 | Model | Size(Pixels) | Classes |  BPU Task Latency  /<br>BPU Throughput (Threads) | CPU Latency<br>(Single Core) | params(M) | FLOPs(B) |
 |----------|---------|----|---------|---------|----------|----------|
-| YOLOv8n-Seg | 640×640 | 80 |  2.3 ms / 407.1 FPS (1 thread  ) <br/> 2.8 ms / 685.7 FPS (2 threads) | ms | 3.4  M | 12.6  B |
-| YOLOv8s-Seg | 640×640 | 80 |  3.7 ms / 259.3 FPS (1 thread  ) <br/> 5.7 ms / 341.6 FPS (2 threads) | ms | 11.8 M | 42.6  B |
-| YOLOv8m-Seg | 640×640 | 80 | 7.0 ms / 141.4 FPS (1 thread  ) <br/> 12.0 ms / 165.2 FPS (2 threads) | ms | 27.3 M | 100.2 B |
-| YOLOv8l-Seg | 640×640 | 80 |  13.0 ms / 76.3 FPS (1 thread  ) <br/> 23.9 ms / 83.0 FPS (2 threads) | ms | 46.0 M | 220.5 B |
-| YOLOv8x-Seg | 640×640 | 80 |  20.1 ms / 49.6 FPS (1 thread  ) <br/> 38.1 ms / 52.1 FPS (2 threads) | ms | 71.8 M | 344.1 B |
-| YOLO11n-Seg | 640×640 | 80 |  2.4 ms / 405.4 FPS (1 thread  ) <br/> 2.9 ms / 659.8 FPS (2 threads) | ms | 2.9  M | 10.4  B |
-| YOLO11s-Seg | 640×640 | 80 |  3.8 ms / 254.2 FPS (1 thread  ) <br/> 5.8 ms / 339.0 FPS (2 threads) | ms | 10.1 M | 35.5  B |
-| YOLO11m-Seg | 640×640 | 80 | 8.5 ms / 116.5 FPS (1 thread  ) <br/> 15.0 ms / 132.3 FPS (2 threads) | ms | 22.4 M | 123.3 B |
-| YOLO11l-Seg | 640×640 | 80 |  9.9 ms / 99.5 FPS (1 thread  ) <br/> 17.9 ms / 110.6 FPS (2 threads) | ms | 27.6 M | 142.2 B |
-| YOLO11x-Seg | 640×640 | 80 |  18.5 ms / 53.9 FPS (1 thread  ) <br/> 34.9 ms / 57.0 FPS (2 threads) | ms | 62.1 M | 319.0 B |
+| YOLOv8n-Seg | 640×640 | 80 |  2.3 ms / 407.1 FPS (1 thread  ) <br/> 2.8 ms / 685.7 FPS (2 threads) | 5 ms | 3.4  M | 12.6  B |
+| YOLOv8s-Seg | 640×640 | 80 |  3.7 ms / 259.3 FPS (1 thread  ) <br/> 5.7 ms / 341.6 FPS (2 threads) | 5 ms | 11.8 M | 42.6  B |
+| YOLOv8m-Seg | 640×640 | 80 | 7.0 ms / 141.4 FPS (1 thread  ) <br/> 12.0 ms / 165.2 FPS (2 threads) | 5 ms | 27.3 M | 100.2 B |
+| YOLOv8l-Seg | 640×640 | 80 |  13.0 ms / 76.3 FPS (1 thread  ) <br/> 23.9 ms / 83.0 FPS (2 threads) | 5 ms | 46.0 M | 220.5 B |
+| YOLOv8x-Seg | 640×640 | 80 |  20.1 ms / 49.6 FPS (1 thread  ) <br/> 38.1 ms / 52.1 FPS (2 threads) | 5 ms | 71.8 M | 344.1 B |
+| YOLO11n-Seg | 640×640 | 80 |  2.4 ms / 405.4 FPS (1 thread  ) <br/> 2.9 ms / 659.8 FPS (2 threads) | 5 ms | 2.9  M | 10.4  B |
+| YOLO11s-Seg | 640×640 | 80 |  3.8 ms / 254.2 FPS (1 thread  ) <br/> 5.8 ms / 339.0 FPS (2 threads) | 5 ms | 10.1 M | 35.5  B |
+| YOLO11m-Seg | 640×640 | 80 | 8.5 ms / 116.5 FPS (1 thread  ) <br/> 15.0 ms / 132.3 FPS (2 threads) | 5 ms | 22.4 M | 123.3 B |
+| YOLO11l-Seg | 640×640 | 80 |  9.9 ms / 99.5 FPS (1 thread  ) <br/> 17.9 ms / 110.6 FPS (2 threads) | 5 ms | 27.6 M | 142.2 B |
+| YOLO11x-Seg | 640×640 | 80 |  18.5 ms / 53.9 FPS (1 thread  ) <br/> 34.9 ms / 57.0 FPS (2 threads) | 5 ms | 62.1 M | 319.0 B |
 
 
 ### Performance Test Instructions
