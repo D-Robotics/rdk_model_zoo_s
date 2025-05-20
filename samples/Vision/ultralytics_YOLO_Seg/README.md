@@ -210,7 +210,7 @@ Please refer to the documentation for the Ultralytics YOLO Detect section for th
 Note: Any errors such as "No such file or directory", "No module named 'xxx'", "command not found" should be carefully checked. Do not copy and run commands one by one if you do not understand the modification process; instead, visit the developer community starting from YOLOv5 for better understanding.
 
 - Download the `ultralytics/ultralytics` repository and set up the environment according to the official YOLO11 documentation.
-- 
+  
 ```bash
 git clone https://github.com/ultralytics/ultralytics.git
 ```
