@@ -19,6 +19,7 @@ YOLOE-v8 Instance Segmentation Prompt Free
 
 ## Introduction to YOLOE
 
+
 ![](source/imgs/visualization.svg)
 
 
