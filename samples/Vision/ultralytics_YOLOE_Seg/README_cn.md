@@ -1,32 +1,97 @@
 [English](./README.md) | 简体中文
 
 
-
-[English](./README.md) | 简体中文
-
 # YOLOE-11 Instance Segmentation Prompt Free
+
+## Abstract
+
+```bash
+D-Robotics OpenExplore Version: >= 3.0.31
+Ultralytics YOLO Version: >= 8.3.0
+```
 
 ## Support
 
+```bash
+YOLOE-11 Instance Segmentation Prompt Free
+YOLOE-v8 Instance Segmentation Prompt Free
+```
 
 ## YOLOE介绍
 
 ![](./imgs/visualization.svg)
+
 YOLOE（实时看见一切）是零样本、可提示的 YOLO 模型的一项新进展，专为开放词汇检测和分割设计。与以往只能局限于固定类别的 YOLO 模型不同，YOLOE 使用文本、图像或内部词汇提示，能够实现实时检测任何对象类别。YOLOE 基于 YOLOv10 构建，并受到 YOLO-World 的启发，在几乎不影响速度和精度的情况下实现了最先进的零样本性能。
 
 清华的论文: https://arxiv.org/pdf/2503.07465v1
 
 本目录尝试导出其Prompt Free的模型, 不需要输入文本的提示词, 可以检测4585个类别, 并对其进行实例分割, 运行效果参考以下图, 可以观察到, 感知到的信息还是非常丰富的.
 
-![](imgs/demo_rdkx5_indoor.jpg)
-![](imgs/demo_rdkx5_indoor2.jpg)
-![](imgs/demo_rdkx5_outdoor.jpg)
+![](source/imgs/demo_rdkx5_indoor.jpg)
+![](source/imgs/demo_rdkx5_indoor2.jpg)
+![](source/imgs/demo_rdkx5_outdoor.jpg)
 
 
 注: 本案例为探索性案例, 仅供社区参考, 未做深入优化, 不代表任何商业量产交付的最终效果, 不代表板卡应用开发的上限.
 
 
 ## 快速体验
+
+```bash
+# Make Sure your are in this file
+$ cd samples/Vision/ultralytics_YOLOE_Seg/
+
+# Check your workspace
+$ tree -L 2
+.
+|-- README.md      # English Document
+|-- README_cn.md   # Chinese Document
+|-- py
+|   |-- cauchy_yoloe_seg_pf_export.py       # Advance Evaluation
+|   `-- ultralytics_YOLOE_Seg_YUV420SP.py   # Quick Start
+`-- source
+    |-- imgs
+    |-- reference_hbm_model               # Reference HBM Models
+    |-- reference_logs                    # Reference logs
+    |-- reference_yamls                   # Reference yaml configs
+    `-- thu_yoloe_prompt_free_names.list  # 4585 names list
+```
+
+直接运行, 会自动下载模型文件.
+
+```bash
+$ python3 py/ultralytics_YOLOE_Seg_YUV420SP.py
+```
+
+如果您想替换其他的模型, 或者使用其他的图片, 可以修改脚本文件内的参数.
+```bash
+$ python3 py/ultralytics_YOLOE_Seg_YUV420SP.py -h
+
+options:
+  -h, --help            show this help message and exit
+  --model-path MODEL_PATH
+                        Path to BPU Quantized *.hbm Model. RDK X3(Module): Bernoulli2. RDK Ultra: Bayes. RDK X5(Module): Bayes-e. RDK S100: Nash-e. RDK S100P: Nash-m.
+  --test-img TEST_IMG   Path to Load Test Image.
+  --img-save-path IMG_SAVE_PATH
+                        Path to Load Test Image.
+  --classes-num CLASSES_NUM
+                        Classes Num to Detect.
+  --nms-thres NMS_THRES
+                        IoU threshold.
+  --score-thres SCORE_THRES
+                        confidence threshold.
+  --reg REG             DFL reg layer.
+  --mc MC               Mask Coefficients
+  --is-open IS_OPEN     Ture: morphologyEx
+  --is-point IS_POINT   Ture: Draw edge points
+```
+
+
+## 结果分析
+
+![](source/imgs/ultralytics_YOLOE_Seg_demo.jpg)
+
+程序自动下载 YOLOE 11s Seg 的 BPU HBM 模型, 并完成了对图片的目标检测任务, 可视化结果保存在当前目录下的'py_result.jpg'文件.
 
 ## BenchMark - Performance
 
@@ -78,32 +143,19 @@ sudo bash -c "echo performance > /sys/devices/system/bpu/bpu0/devfreq/28108000.b
 ```
 
 
-# 进阶开发
-
-
-## 步骤参考
-
+## 进阶开发
 
 ### 导出为onnx
 
 使用RDK Model Zoo提供的导出脚本：`https://github.com/D-Robotics/rdk_model_zoo/blob/main/demos/Seg/YOLOE-11-Seg-Prompt-Free/YOLOE-11-Seg-Prompt-Free_YUV420SP/cauchy_yoloe11segPF_export.py`，该脚本内会自动等价替换相关模块, 并且不需要重新训练.
 
+请有兴趣深入探索的读者自行阅读源码.
+
+### 其他步骤
+
 其他步骤除类别数从80变为4585外, 和Ultralytics YOLO Seg无明显区别.
-
-## 反馈
-本文如果有表达不清楚的地方欢迎前往地瓜开发者社区进行提问和交流.
-
-[地瓜机器人开发者社区](developer.d-robotics.cc).
 
 ## 参考
 
 [ultralytics](https://docs.ultralytics.com/)
 
-
-
-
-
-
-## Reference
-
-Ultralytics Version: 8.3.128 or higher.

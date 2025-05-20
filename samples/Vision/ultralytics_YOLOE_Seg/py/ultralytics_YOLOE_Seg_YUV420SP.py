@@ -17,11 +17,23 @@
 # 注意: 此程序在RDK板端端运行
 # Attention: This program runs on RDK board.
 
+import os
 import cv2
 import numpy as np
-from scipy.special import softmax
-# from scipy.special import expit as sigmoid
-from hobot_dnn import pyeasy_dnn as dnn  # BSP Python API
+# scipy
+try:
+    from scipy.special import softmax
+except:
+    print("scipy is  not installed, installing.")
+    os.system("pip install scipy")
+    from scipy.special import softmax
+
+# hobot_dnn
+try:
+    from hobot_dnn import pyeasy_dnn as dnn  # BSP Python API
+except:
+    print("Your python environment is not ready, please use system python3 to run this program.")
+    exit()
 
 from time import time
 import argparse
@@ -37,7 +49,7 @@ logger = logging.getLogger("RDK_YOLO")
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model-path', type=str, default='source/reference_hbm_model/yoloe11l_seg_pf_nashe_640x640_nv12.hbm', 
+    parser.add_argument('--model-path', type=str, default='source/reference_hbm_model/-yoloe11l_seg_pf_nashe_640x640_nv12.hbm', 
                         help="""Path to BPU Quantized *.hbm Model.
                                 RDK X3(Module): Bernoulli2.
                                 RDK Ultra: Bayes.
@@ -57,10 +69,19 @@ def main():
     opt = parser.parse_args()
     logger.info(opt)
 
+    # quick demo
+    if not os.path.exists(opt.model_path):
+        print(f"file {opt.model_path} does not exist. download yolo12n model.")
+        os.system("wget -c https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/ultralytics_YOLO/yoloe_11s_seg_pf_nashe_640x640_nv12.hbm")
+        opt.model_path = 'yoloe_11s_seg_pf_nashe_640x640_nv12.hbm'
+
     # 实例化
     model = Ultralytics_YOLOE_Seg(opt)
     # 读图
     img = cv2.imread(opt.test_img)
+    if img is None:
+        raise ValueError(f"Load image failed: {opt.test_img}")
+        exit()
     # 准备输入数据
     input_tensor = model.preprocess_yuv420sp(img)
     # 推理

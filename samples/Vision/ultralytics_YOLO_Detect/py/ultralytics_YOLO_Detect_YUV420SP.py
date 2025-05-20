@@ -19,15 +19,28 @@
 
 # pip install scipy
 
+import os
 import cv2
 import numpy as np
-from scipy.special import softmax
-# from scipy.special import expit as sigmoid
-from hobot_dnn import pyeasy_dnn as dnn  # BSP Python API
+# scipy
+try:
+    from scipy.special import softmax
+except:
+    print("scipy is  not installed, installing.")
+    os.system("pip install scipy")
+    from scipy.special import softmax
+
+# hobot_dnn
+try:
+    from hobot_dnn import pyeasy_dnn as dnn  # BSP Python API
+except:
+    print("Your python environment is not ready, please use system python3 to run this program.")
+    exit()
 
 from time import time
 import argparse
 import logging
+
 
 # 日志模块配置
 # logging configs
@@ -39,7 +52,7 @@ logger = logging.getLogger("RDK_YOLO")
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model-path', type=str, default='source/reference_hbm_models/yolo11m_detect_nashe_640x640_nv12.hbm', 
+    parser.add_argument('--model-path', type=str, default='source/reference_hbm_models/yolo12x_detect_nashe_640x640_nv12.hbm', 
                         help="""Path to BPU Quantized *.bin Model.
                                 RDK X3(Module): Bernoulli2.
                                 RDK Ultra: Bayes.
@@ -47,22 +60,27 @@ def main():
                                 RDK S100: Nash-e.
                                 RDK S100P: Nash-m.""") 
     parser.add_argument('--test-img', type=str, default='../../../resource/datasets/COCO2017/assets/bus.jpg', help='Path to Load Test Image.')
-
     parser.add_argument('--img-save-path', type=str, default='py_result.jpg', help='Path to Load Test Image.')
     parser.add_argument('--classes-num', type=int, default=80, help='Classes Num to Detect.')
     parser.add_argument('--nms-thres', type=float, default=0.7, help='IoU threshold.')
     parser.add_argument('--score-thres', type=float, default=0.25, help='confidence threshold.')
     parser.add_argument('--reg', type=int, default=16, help='DFL reg layer.')
-    parser.add_argument('--mc', type=int, default=32, help='Mask Coefficients')
-    parser.add_argument('--is-open', type=bool, default=True, help='Ture: morphologyEx')
-    parser.add_argument('--is-point', type=bool, default=True, help='Ture: Draw edge points')
     opt = parser.parse_args()
     logger.info(opt)
+
+    # quick demo
+    if not os.path.exists(opt.model_path):
+        print(f"file {opt.model_path} does not exist. download yolo12n model.")
+        os.system("wget -c https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/ultralytics_YOLO/yolo12n_detect_nashe_640x640_nv12.hbm")
+        opt.model_path = 'yolo12n_detect_nashe_640x640_nv12.hbm'
 
     # 实例化
     model = YOLO11_Detect(opt)
     # 读图
     img = cv2.imread(opt.test_img)
+    if img is None:
+        raise ValueError(f"Load image failed: {opt.test_img}")
+        exit()
     # 准备输入数据
     input_tensor = model.preprocess_yuv420sp(img)
     # 推理
@@ -77,7 +95,6 @@ def main():
     # 保存结果
     cv2.imwrite(opt.img_save_path, img)
     logger.info("\033[1;32m" + f"saved in path: \"./{opt.img_save_path}\"" + "\033[0m")
-
 
 class YOLO11_Detect():
     def __init__(self, opt):
