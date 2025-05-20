@@ -17,7 +17,7 @@ Ultralytics YOLO Version: >= 8.3.0
 
 ## YOLO介绍
 
-![](source/imgs/pose-estimation-examples.avif)
+![](source/imgs/pose-estimation-examples.jpg)
 
 YOLO (You Only Look Once)是一种流行的物体检测和图像分割模型,由华盛顿大学的约瑟夫-雷德蒙(Joseph Redmon)和阿里-法哈迪(Ali Farhadi)开发.YOLO 于 2015 年推出,因其高速度和高精确度而迅速受到欢迎.
 

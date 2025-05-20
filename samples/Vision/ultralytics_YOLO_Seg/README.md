@@ -189,7 +189,7 @@ Instance Segmentation (COCO2017)
 
 ### High-Performance Computation Process Introduction
 
-[](source/imgs/ultralytics_YOLO_Seg_DataFlow.png)
+![](source/imgs/ultralytics_YOLO_Seg_DataFlow.png)
 
 - In the **Mask Coefficients** part, two GatherElements operations are used to obtain the final Mask Coefficients information of the Grid Cell that meets the requirements, i.e., 32 coefficients. These 32 coefficients are linearly combined with the Mask Protos part, which can also be considered as a weighted sum, to get the Mask information corresponding to the target of this Grid Cell.
 
