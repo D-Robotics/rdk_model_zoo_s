@@ -4,9 +4,10 @@ English | [简体中文](./README_cn.md)
 
 - [EfficientNet\_lite4](#efficientnet_lite4)
   - [1. Introduction](#1-introduction)
-  - [2. Model Download](#2-model-download)
-  - [3. Deployment Test](#3-deployment-test)
-  - [4. Quantization Experiments](#4-quantization-experiments)
+  - [2. Model Performance Data](#2-model-performance-data)
+  - [3. Model Download](#3-model-download)
+  - [4. Deployment Test](#4-deployment-test)
+  - [5. Quantization Experiments](#5-quantization-experiments)
     - [Dataset Preparation](#dataset-preparation)
     - [Calibration Data Processing](#calibration-data-processing)
     - [Model Verification](#model-verification)
@@ -49,7 +50,20 @@ Below are the checkpoints for each model, along with their accuracy, parameter c
 |efficientnet-lite3 [ckpt](https://storage.googleapis.com/cloud-tpu-checkpoints/efficientnet/lite/efficientnet-lite3.tar.gz) | 8.2M | 1.44B |  79.8% |  41ms | 23ms | 14ms  | 79.0% | 18ms | 9.7ms |
 |efficientnet-lite4 [ckpt](https://storage.googleapis.com/cloud-tpu-checkpoints/efficientnet/lite/efficientnet-lite4.tar.gz) |13.0M | 2.64B |  81.5% |  76ms | 36ms | 21ms  | 80.2% | 30ms | - |
 
-## 2. Model Download
+## 2. Model Performance Data
+
+The following table shows the actual performance data tested on the RDK S100 platform.
+
+| Model                | Input Size (pixels) | Classes | Params (M) | FP32 Top-1 | INT8 Top-1 | Latency/Throughput (Single Thread) | Latency/Throughput (Multi Thread) | FPS         |
+|----------------------|--------------------|---------|------------|------------|------------|-------------------------------------|------------------------------------|-------------|
+| EfficientNet_lite4   | 380x380            | 1000    | 13.0       | 81.5       | -          | 0.915 ms                            | 1.979 ms                           | 1487.055 FPS |
+
+Notes:
+1. The S100 was tested under optimal conditions.
+2. Single-thread latency refers to the latency per frame using a single thread and a single BPU core, representing the ideal inference scenario for one task on the BPU.
+3. FP32/INT8 Top-1: FP32 Top-1 is the inference accuracy of the ONNX model before quantization, while INT8 Top-1 is the actual inference accuracy after quantization.
+
+## 3. Model Download
 
 **.hbm File Download**:
 
@@ -87,7 +101,7 @@ Simplified model saved to tf_efficientnet_lite4.onnx
 Total number of parameters in the model: 12950386
 ```
 
-## 3. Deployment Test
+## 4. Deployment Test
 
 After downloading the .hbm file, you can run 'test_EfficientNet_lite4.ipynb' or 's100_inference.py' in the python folder to test the model on the board.
 
@@ -124,7 +138,7 @@ Perf result:
 - Frame rate is: 1487.055 FPS
 ```
 
-## 4. Quantization Experiments
+## 5. Quantization Experiments
 
 ### Dataset Preparation
 
@@ -205,8 +219,15 @@ The python directory provides demos for quick inference on both X86 and S100 pla
 * [s100_inference.py](python/s100_inference.py) supports HBM format for inference on the board.
 
 x86_inference.py requires -m and -i to specify the model and image paths, for example:
+
 ```shell
 python3 python/x86_inference.py -m model_output/efficientnet_lite4_380x380_nv12_quantized_model.bc -i data/zebra_cls.jpg
+```
+
+To perform accuracy validation with `x86_inference.py`, use the `--validate` option to enable validation mode. Example:
+
+```shell
+python3 python/x86_inference.py -m model_output/efficientnet_lite4_380x380_nv12_quantized_model.bc --validate -d ../../../imagenet/val -l ../../../imagenet/val.txt
 ```
 
 s100_inference.py requires modifying the model and image paths in the main function.
