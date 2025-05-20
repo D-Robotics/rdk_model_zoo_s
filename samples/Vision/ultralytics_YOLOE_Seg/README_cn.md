@@ -19,7 +19,7 @@ YOLOE-v8 Instance Segmentation Prompt Free
 
 ## YOLOE介绍
 
-![](./source/imgs/visualization.svg)
+![](./source/imgs/introduction_to_yoloe.jpg)
 
 YOLOE（实时看见一切）是零样本、可提示的 YOLO 模型的一项新进展，专为开放词汇检测和分割设计。与以往只能局限于固定类别的 YOLO 模型不同，YOLOE 使用文本、图像或内部词汇提示，能够实现实时检测任何对象类别。YOLOE 基于 YOLOv10 构建，并受到 YOLO-World 的启发，在几乎不影响速度和精度的情况下实现了最先进的零样本性能。
 

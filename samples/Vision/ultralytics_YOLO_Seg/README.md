@@ -18,7 +18,7 @@ Ultralytics YOLO Version: >= 8.3.0
 
 ## Introduction to YOLO
 
-![](source/imgs/instance-segmentation-examples.avif)
+![](source/imgs/instance-segmentation-examples.jpg)
 
 
 YOLO (You Only Look Once) is a popular object detection and image segmentation model developed by Joseph Redmon and Ali Farhadi of the University of Washington. YOLO was introduced in 2015 and quickly gained popularity due to its high speed and accuracy.
