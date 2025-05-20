@@ -1,0 +1,58 @@
+# hb_model_info ws_yolov8n/bpu_outputs/yolov8n_detect_nashe_640x640_nv12_quantized_model.bc 
+2025-05-19 06:30:35,024 INFO log will be stored in /open_explorer/ws_detect_0508/hb_model_info.log
+2025-05-19 06:30:35,024 INFO Start hb_model_info....
+2025-05-19 06:30:35,025 INFO hb_model_info version 3.3.11
+2025-05-19 06:30:35,075 INFO ############# model deps info #############
+2025-05-19 06:30:35,076 INFO builder version     : 3.3.11
+2025-05-19 06:30:35,076 INFO hbdk version        : 4.1.17
+2025-05-19 06:30:35,076 INFO horizon nn version  : 2.1.9
+2025-05-19 06:30:35,077 INFO ############# model_parameters info #############
+2025-05-19 06:30:35,077 INFO onnx_model          : /open_explorer/ws_0508/ws_yolov8n/yolov8n.onnx
+2025-05-19 06:30:35,077 INFO BPU march           : nash-e
+2025-05-19 06:30:35,077 INFO layer_out_dump      : False
+2025-05-19 06:30:35,077 INFO working dir         : /open_explorer/ws_0508/ws_yolov8n/bpu_outputs
+2025-05-19 06:30:35,077 INFO output_model_file_prefix: yolov8n_detect_nashe_640x640_nv12
+2025-05-19 06:30:35,077 INFO remove_node_name    : /model.22/cv2.0/cv2.0.2/Conv;/model.22/cv2.1/cv2.1.2/Conv;/model.22/cv2.2/cv2.2.2/Conv
+2025-05-19 06:30:35,078 INFO node_info           : {}
+2025-05-19 06:30:35,078 INFO ############# input_parameters info #############
+2025-05-19 06:30:35,078 INFO ------------------------------------------
+2025-05-19 06:30:35,078 INFO ---------input info : images ---------
+2025-05-19 06:30:35,078 INFO input_name          : images
+2025-05-19 06:30:35,078 INFO input_type_rt       : nv12
+2025-05-19 06:30:35,078 INFO input_space&range   : regular
+2025-05-19 06:30:35,078 INFO input_type_train    : rgb
+2025-05-19 06:30:35,078 INFO input_layout_train  : NCHW
+2025-05-19 06:30:35,079 INFO norm_type           : data_scale
+2025-05-19 06:30:35,079 INFO input_shape         : 1x3x640x640
+2025-05-19 06:30:35,079 INFO mean_value          : []
+2025-05-19 06:30:35,079 INFO scale_value         : [0.003921568627451]
+2025-05-19 06:30:35,079 INFO std_value           : []
+2025-05-19 06:30:35,079 INFO separate_batch      : False
+2025-05-19 06:30:35,079 INFO ---------input info : images end -------
+2025-05-19 06:30:35,079 INFO ------------------------------------------
+2025-05-19 06:30:35,080 INFO ############# calibration_parameters info #############
+2025-05-19 06:30:35,080 INFO calibration_type    : default
+2025-05-19 06:30:35,080 INFO max_percentile      : None
+2025-05-19 06:30:35,080 INFO per_channel         : False
+2025-05-19 06:30:35,080 INFO cal_data_dir        : /open_explorer/calibration_data_rgb_f32_640
+2025-05-19 06:30:35,080 INFO quant_config        : {'op_config': {'softmax': {'qtype': 'int8'}}}
+2025-05-19 06:30:35,151 INFO ############# Removable node info #############
+2025-05-19 06:30:35,152 INFO Node Name                    Node Type
+2025-05-19 06:30:35,152 INFO ---------------------------- ----------
+2025-05-19 06:30:35,152 INFO /model.22/cv3.0/cv3.0.2/Conv Dequantize
+2025-05-19 06:30:35,152 INFO /model.22/cv2.0/cv2.0.2/Conv Dequantize
+2025-05-19 06:30:35,152 INFO /model.22/cv3.1/cv3.1.2/Conv Dequantize
+2025-05-19 06:30:35,152 INFO /model.22/cv2.1/cv2.1.2/Conv Dequantize
+2025-05-19 06:30:35,152 INFO /model.22/cv3.2/cv3.2.2/Conv Dequantize
+2025-05-19 06:30:35,153 INFO /model.22/cv2.2/cv2.2.2/Conv Dequantize
+2025-05-19 06:30:35,381 INFO ############# Model input/output info #############
+2025-05-19 06:30:35,381 INFO NAME      TYPE   SHAPE            DATA_TYPE
+2025-05-19 06:30:35,381 INFO --------- ------ ---------------- ---------
+2025-05-19 06:30:35,382 INFO images_y  input  [1, 640, 640, 1] UINT8
+2025-05-19 06:30:35,382 INFO images_uv input  [1, 320, 320, 2] UINT8
+2025-05-19 06:30:35,382 INFO output0   output [1, 80, 80, 80]  FLOAT32
+2025-05-19 06:30:35,382 INFO 330       output [1, 80, 80, 64]  FLOAT32
+2025-05-19 06:30:35,382 INFO 338       output [1, 40, 40, 80]  FLOAT32
+2025-05-19 06:30:35,382 INFO 346       output [1, 40, 40, 64]  FLOAT32
+2025-05-19 06:30:35,382 INFO 354       output [1, 20, 20, 80]  FLOAT32
+2025-05-19 06:30:35,382 INFO 362       output [1, 20, 20, 64]  FLOAT32

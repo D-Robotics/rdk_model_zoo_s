@@ -34,16 +34,16 @@ def main():
     # 获取当前的目标目录文件
     file_names = os.listdir(opt.file)
 
-    # TODO: 获取所有*.bin文件对应的文件大小，并排序
+    # TODO: 获取所有*.hbm文件对应的文件大小，并排序
 
 
     # 输出hrut_somstatus的信息
     print(RED_BEGIN + "hrut_somstatus" + COLOR_END)
 
-    # TODO: 输出所有*.bin文件的名称和大小
+    # TODO: 输出所有*.hbm文件的名称和大小
     # 开始逐个perf
     for file_name in file_names:
-        if not file_name.endswith(".bin"):
+        if not file_name.endswith(".hbm"):
             continue
         print(GREEN_BEGIN + "Model: %s"%file_name + COLOR_END)
         for i in range(opt.max):

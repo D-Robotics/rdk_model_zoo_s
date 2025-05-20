@@ -1,0 +1,66 @@
+# hb_model_info seg_ws_yolo11n-seg/bpu_outputs/yolo11n_seg_nashe_640x640_nv12_quantized_model.bc 
+2025-05-19 06:41:16,354 INFO log will be stored in /open_explorer/ws_seg_0512/hb_model_info.log
+2025-05-19 06:41:16,355 INFO Start hb_model_info....
+2025-05-19 06:41:16,355 INFO hb_model_info version 3.3.11
+2025-05-19 06:41:16,459 INFO ############# model deps info #############
+2025-05-19 06:41:16,459 INFO builder version     : 3.3.11
+2025-05-19 06:41:16,459 INFO hbdk version        : 4.1.17
+2025-05-19 06:41:16,459 INFO horizon nn version  : 2.1.9
+2025-05-19 06:41:16,459 INFO ############# model_parameters info #############
+2025-05-19 06:41:16,460 INFO onnx_model          : /open_explorer/ws_seg_0512/seg_ws_yolo11n-seg/yolo11n-seg.onnx
+2025-05-19 06:41:16,460 INFO BPU march           : nash-e
+2025-05-19 06:41:16,460 INFO layer_out_dump      : False
+2025-05-19 06:41:16,460 INFO working dir         : /open_explorer/ws_seg_0512/seg_ws_yolo11n-seg/bpu_outputs
+2025-05-19 06:41:16,460 INFO output_model_file_prefix: yolo11n_seg_nashe_640x640_nv12
+2025-05-19 06:41:16,460 INFO remove_node_name    : /model.23/cv2.0/cv2.0.2/Conv;/model.23/cv4.0/cv4.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv4.1/cv4.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;/model.23/cv4.2/cv4.2.2/Conv;/model.23/proto/cv3/act/Mul_output_0_HzCalibration
+2025-05-19 06:41:16,460 INFO node_info           : {}
+2025-05-19 06:41:16,460 INFO ############# input_parameters info #############
+2025-05-19 06:41:16,461 INFO ------------------------------------------
+2025-05-19 06:41:16,461 INFO ---------input info : images ---------
+2025-05-19 06:41:16,461 INFO input_name          : images
+2025-05-19 06:41:16,461 INFO input_type_rt       : nv12
+2025-05-19 06:41:16,461 INFO input_space&range   : regular
+2025-05-19 06:41:16,461 INFO input_type_train    : rgb
+2025-05-19 06:41:16,461 INFO input_layout_train  : NCHW
+2025-05-19 06:41:16,461 INFO norm_type           : data_scale
+2025-05-19 06:41:16,462 INFO input_shape         : 1x3x640x640
+2025-05-19 06:41:16,462 INFO mean_value          : []
+2025-05-19 06:41:16,462 INFO scale_value         : [0.003921568627451]
+2025-05-19 06:41:16,462 INFO std_value           : []
+2025-05-19 06:41:16,462 INFO separate_batch      : False
+2025-05-19 06:41:16,462 INFO ---------input info : images end -------
+2025-05-19 06:41:16,462 INFO ------------------------------------------
+2025-05-19 06:41:16,462 INFO ############# calibration_parameters info #############
+2025-05-19 06:41:16,462 INFO calibration_type    : default
+2025-05-19 06:41:16,463 INFO max_percentile      : None
+2025-05-19 06:41:16,463 INFO per_channel         : False
+2025-05-19 06:41:16,463 INFO cal_data_dir        : /open_explorer/calibration_data_rgb_f32_640
+2025-05-19 06:41:16,463 INFO quant_config        : {'op_config': {'softmax': {'qtype': 'int8'}}}
+2025-05-19 06:41:13,643 INFO ############# Removable node info #############
+2025-05-19 06:41:13,643 INFO Node Name                                          Node Type
+2025-05-19 06:41:13,643 INFO -------------------------------------------------- ----------
+2025-05-19 06:41:13,643 INFO /model.23/cv3.0/cv3.0.2/Conv                       Dequantize
+2025-05-19 06:41:13,643 INFO /model.23/cv2.0/cv2.0.2/Conv                       Dequantize
+2025-05-19 06:41:13,643 INFO /model.23/cv4.0/cv4.0.2/Conv                       Dequantize
+2025-05-19 06:41:13,644 INFO /model.23/cv3.1/cv3.1.2/Conv                       Dequantize
+2025-05-19 06:41:13,644 INFO /model.23/cv2.1/cv2.1.2/Conv                       Dequantize
+2025-05-19 06:41:13,644 INFO /model.23/cv4.1/cv4.1.2/Conv                       Dequantize
+2025-05-19 06:41:13,644 INFO /model.23/cv3.2/cv3.2.2/Conv                       Dequantize
+2025-05-19 06:41:13,644 INFO /model.23/cv2.2/cv2.2.2/Conv                       Dequantize
+2025-05-19 06:41:13,644 INFO /model.23/cv4.2/cv4.2.2/Conv                       Dequantize
+2025-05-19 06:41:13,644 INFO /model.23/proto/cv3/act/Mul_output_0_HzCalibration Dequantize
+2025-05-19 06:41:14,707 INFO ############# Model input/output info #############
+2025-05-19 06:41:14,707 INFO NAME      TYPE   SHAPE             DATA_TYPE
+2025-05-19 06:41:14,707 INFO --------- ------ ----------------- ---------
+2025-05-19 06:41:14,707 INFO images_y  input  [1, 640, 640, 1]  UINT8
+2025-05-19 06:41:14,708 INFO images_uv input  [1, 320, 320, 2]  UINT8
+2025-05-19 06:41:14,708 INFO output0   output [1, 80, 80, 80]   FLOAT32
+2025-05-19 06:41:14,708 INFO output1   output [1, 80, 80, 64]   FLOAT32
+2025-05-19 06:41:14,708 INFO 526       output [1, 80, 80, 32]   FLOAT32
+2025-05-19 06:41:14,708 INFO 540       output [1, 40, 40, 80]   FLOAT32
+2025-05-19 06:41:14,708 INFO 548       output [1, 40, 40, 64]   FLOAT32
+2025-05-19 06:41:14,708 INFO 556       output [1, 40, 40, 32]   FLOAT32
+2025-05-19 06:41:14,709 INFO 570       output [1, 20, 20, 80]   FLOAT32
+2025-05-19 06:41:14,709 INFO 578       output [1, 20, 20, 64]   FLOAT32
+2025-05-19 06:41:14,709 INFO 586       output [1, 20, 20, 32]   FLOAT32
+2025-05-19 06:41:14,709 INFO 597       output [1, 160, 160, 32] FLOAT32
