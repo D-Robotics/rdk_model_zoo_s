@@ -20,7 +20,7 @@ YOLOE-v8 Instance Segmentation Prompt Free
 ## Introduction to YOLOE
 
 
-![](source/imgs/visualization.svg)
+![](./source/imgs/visualization.svg)
 
 
 **YOLOE (Real-Time Seeing Anything)** is a new advancement in zero-shot, promptable YOLO models, specifically designed for open-vocabulary detection and segmentation. Unlike previous YOLO models that were limited to fixed categories, YOLOE can detect any object category in real time using textual, visual, or internal vocabulary prompts. Built upon YOLOv10 and inspired by YOLO-World, YOLOE achieves state-of-the-art zero-shot performance with almost no impact on speed or accuracy.
