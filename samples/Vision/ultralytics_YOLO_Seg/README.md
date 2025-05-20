@@ -185,3 +185,181 @@ Instance Segmentation (COCO2017)
 
 
 
+## Advanced Development
+
+### High-Performance Computation Process Introduction
+
+[](source/imgs/ultralytics_YOLO_Seg_DataFlow.png)
+
+- In the **Mask Coefficients** part, two GatherElements operations are used to obtain the final Mask Coefficients information of the Grid Cell that meets the requirements, i.e., 32 coefficients. These 32 coefficients are linearly combined with the Mask Protos part, which can also be considered as a weighted sum, to get the Mask information corresponding to the target of this Grid Cell.
+
+Please refer to the documentation for the Ultralytics YOLO Detect section for the following:
+
+- The **Classify** part includes Dequantize operations.
+- The **Classify** part includes ReduceMax operations.
+- The **Classify** part includes Threshold (TopK) operations.
+- The **Classify** part includes GatherElements and ArgMax operations.
+- The **Bounding Box** part includes GatherElements and Dequantize operations.
+- The **Bounding Box** part includes DFL: SoftMax + Conv operations.
+- The **Bounding Box** part includes Decode: dist2bbox(ltrb2xyxy) operations.
+- nms operations.
+
+
+### Environment, Project Preparation
+
+Note: Any errors such as "No such file or directory", "No module named 'xxx'", "command not found" should be carefully checked. Do not copy and run commands one by one if you do not understand the modification process; instead, visit the developer community starting from YOLOv5 for better understanding.
+
+- Download the `ultralytics/ultralytics` repository and set up the environment according to the official YOLO11 documentation.
+- 
+```bash
+git clone https://github.com/ultralytics/ultralytics.git
+```
+
+- Navigate into the local repository and download the official pre-trained weights. Here, we use the YOLO11n-Seg model with 3.4 million parameters as an example.
+- 
+```bash
+cd ultralytics
+wget https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n-seg.pt
+```
+
+### Model Training
+
+- Refer to the official documentation of ultralytics for model training. This document is maintained by ultralytics and is of very high quality. There are also numerous reference materials online, making it not difficult to obtain a pre-trained weight model like the official one.
+- Please note, no modifications are needed to any program or the forward method during training.
+
+Official Documentation of Ultralytics YOLO: [https://docs.ultralytics.com/modes/train/](https://docs.ultralytics.com/modes/train/)
+
+### Export to ONNX
+
+- Uninstall the command-line commands related to yolo so that direct modifications to the `./ultralytics/ultralytics` directory can take effect.
+```bash
+$ conda list | grep ultralytics
+$ pip list | grep ultralytics # or
+# If exists, uninstall
+$ conda uninstall ultralytics 
+$ pip uninstall ultralytics   # or
+```
+
+If it does not go smoothly, you can confirm the location of the `ultralytics` directory that needs modification using the following Python command:
+
+```bash
+>>> import ultralytics
+>>> ultralytics.__path__
+['/home/wuchao/miniconda3/envs/yolo/lib/python3.11/site-packages/ultralytics']
+# or
+['/home/wuchao/YOLO11/ultralytics_v11/ultralytics']
+```
+
+- Modify the output head
+File Directory: `./ultralytics/ultralytics/nn/modules/head.py`, around line 180, replace the `forward` function of the `Segment` class with the following content. Besides the 6 heads for detection, there are also 3 mask coefficient tensors (`32×(80×80+40×40+20×20)`) and one `32×160×160` base tensor for synthesizing the result.
+
+```python
+def forward(self, x):  # RDK
+    result = []
+    for i in range(self.nl):
+        result.append(self.cv3[i](x[i]).permute(0, 2, 3, 1).contiguous())
+        result.append(self.cv2[i](x[i]).permute(0, 2, 3, 1).contiguous())
+        result.append(self.cv4[i](x[i]).permute(0, 2, 3, 1).contiguous())
+    result.append(self.proto(x[0]).permute(0, 2, 3, 1).contiguous())
+    return result
+
+# If the order of the exported ONNX is incorrect, you can adjust the order of each self.cv*[i] to correct it.
+## Then re-export the ONNX and compile it into an hbm model
+
+def forward(self, x):  # RDK
+    result = []
+    for i in range(self.nl):
+        result.append(self.cv2[i](x[i]).permute(0, 2, 3, 1).contiguous())
+        result.append(self.cv3[i](x[i]).permute(0, 2, 3, 1).contiguous())
+        result.append(self.cv4[i](x[i]).permute(0, 2, 3, 1).contiguous())
+    result.append(self.proto(x[0]).permute(0, 2, 3, 1).contiguous())
+    return result
+```
+
+- Run the following Python script. If there is a **No module named onnxsim** error, install it accordingly.
+
+```python
+from ultralytics import YOLO
+YOLO('yolo11n-seg.pt').export(imgsz=640, format='onnx', simplify=False, opset=11)
+```
+
+### Prepare Calibration Data
+
+Refer to the minimal calibration data preparation script provided by RDK Model Zoo S: `samples/Vision/ultralytics_YOLO_Detect/source/generate_cal_data.py` for preparing calibration data.
+
+### Confirm Removal of Dequantization Node Names
+
+Netron visualization tool: [https://netron.app/](https://netron.app/)
+
+Use Netron to visualize the ONNX model and confirm the names of nodes to be removed. A rule of thumb is to remove nodes containing "64" and "32". Note that different versions of Ultralytics may export ONNX models with different names, so do not directly apply previous node names.
+
+![](source/imgs/onnx_proto_example.jpeg)
+
+Specifically, the Mul operator should have the `_output_0_HzCalibration` suffix added, while others do not need this.
+
+![](source/imgs/onnx_conv_example.jpeg)
+
+For example, the names of seven outputs with sizes `[1, 80, 80, 64], [1, 80, 80, 32], [1, 40, 40, 64], [1, 40, 40, 32], [1, 20, 20, 64], [1, 20, 20, 32], [1, 320, 320, 32]` are `/model.23/cv2.0/cv2.0.2/Conv;/model.23/cv4.0/cv4.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv4.1/cv4.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;/model.23/cv4.2/cv4.2.2/Conv;/model.23/proto/cv3/act/Mul`.
+
+Corresponding YAML entries should include these names:
+```yaml
+model_parameters:
+    onnx_model: 'yolo11n-seg.onnx'
+    march: nash-e  # S100: nash-e, S100P: nash-m.
+    layer_out_dump: False
+    working_dir: 'bpu_outputs'
+    output_model_file_prefix: 'yolo11n_seg_nashe_640x640_nv12' 
+    remove_node_name: '/model.23/cv2.0/cv2.0.2/Conv;/model.23/cv4.0/cv4.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv4.1/cv4.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;/model.23/cv4.2/cv4.2.2/Conv;/model.23/proto/cv3/act/Mul_output_0_HzCalibration'
+    # YOLOv8-Seg: /model.22/cv2.0/cv2.0.2/Conv;/model.22/cv4.0/cv4.0.2/Conv;/model.22/cv2.1/cv2.1.2/Conv;/model.22/cv4.1/cv4.1.2/Conv;/model.22/cv2.2/cv2.2.2/Conv;/model.22/cv4.2/cv4.2.2/Conv;/model.22/proto/cv3/act/Mul_output_0_HzCalibration;
+    # YOLO11-Seg: /model.23/cv2.0/cv2.0.2/Conv;/model.23/cv4.0/cv4.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv4.1/cv4.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;/model.23/cv4.2/cv4.2.2/Conv;/model.23/proto/cv3/act/Mul_output_0_HzCalibration;
+
+```
+
+### Model Compilation
+```bash
+(bpu_docker) $ hb_compile --config config.yaml
+```
+
+### Exception Handling
+
+If the output of your model differs from the Model Zoo reference model, the reason might be incorrect removal of node names. You can confirm this by checking the bc model's information.
+
+```bash
+# Quickly generate a bc model
+hb_compile --fast-perf --march nash-e --skip compile --model yolo11n.onnx
+# Check the output node information of the bc model
+hb_model_info yolo11n_quantized_model.bc
+```
+
+You can find the following information:
+```bash
+INFO ############# Removable node info #############
+INFO Node Name                                          Node Type
+INFO -------------------------------------------------- ----------
+INFO /model.23/cv3.0/cv3.0.2/Conv                       Dequantize
+INFO /model.23/cv2.0/cv2.0.2/Conv                       Dequantize
+INFO /model.23/cv4.0/cv4.0.2/Conv                       Dequantize
+INFO /model.23/cv3.1/cv3.1.2/Conv                       Dequantize
+INFO /model.23/cv2.1/cv2.1.2/Conv                       Dequantize
+INFO /model.23/cv4.1/cv4.1.2/Conv                       Dequantize
+INFO /model.23/cv3.2/cv3.2.2/Conv                       Dequantize
+INFO /model.23/cv2.2/cv2.2.2/Conv                       Dequantize
+INFO /model.23/cv4.2/cv4.2.2/Conv                       Dequantize
+INFO /model.23/proto/cv3/act/Mul_output_0_HzCalibration Dequantize
+```
+
+Model Zoo provides compilation logs, bc model information logs, and hbm model logs for comparing your obtained model with the reference models from Model Zoo.
+
+```bash
+./samples/Vision/ultralytics_YOLO_Seg/source/reference_logs/
+|-- hb_combine_yolo11n_seg.txt
+|-- hb_combine_yolov8n_seg.txt
+|-- hb_model_info_yolo11n_seg.txt
+|-- hb_model_info_yolov8n_seg.txt
+|-- hrt_model_exec_model_info_yolo11n_seg.txt
+`-- hrt_model_exec_model_info_yolov8n_seg.txt
+```
+
+## Reference
+
+[ultralytics](https://docs.ultralytics.com/)

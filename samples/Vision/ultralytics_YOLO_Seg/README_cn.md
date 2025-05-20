@@ -195,14 +195,14 @@ Instance Segmentation (COCO2017)
 
 以下请参考Ultralytics YOLO Detect部分文档
 
-- Classify部分，Dequantize操作。
-- Classify部分，ReduceMax操作。
-- Classify部分，Threshold（TopK）操作。
-- Classify部分，GatherElements操作和ArgMax操作。
-- Bounding Box部分，GatherElements操作和Dequantize操作。
-- Bounding Box部分，DFL：SoftMax+Conv操作。
-- Bounding Box部分，Decode：dist2bbox(ltrb2xyxy)操作。
-- nms操作。
+ - Classify部分，Dequantize操作。
+ - Classify部分，ReduceMax操作。
+ - Classify部分，Threshold（TopK）操作。
+ - Classify部分，GatherElements操作和ArgMax操作。
+ - Bounding Box部分，GatherElements操作和Dequantize操作。
+ - Bounding Box部分，DFL：SoftMax+Conv操作。
+ - Bounding Box部分，Decode：dist2bbox(ltrb2xyxy)操作。
+ - nms操作。
 
 
 ## 步骤参考
@@ -219,6 +219,14 @@ git clone https://github.com/ultralytics/ultralytics.git
 cd ultralytics
 wget https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n-seg.pt
 ```
+
+### 模型训练
+
+ - 模型训练请参考ultralytics官方文档, 这个文档由ultralytics维护, 质量非常的高. 网络上也有非常多的参考材料, 得到一个像官方一样的预训练权重的模型并不困难. 
+ - 请注意, 训练时无需修改任何程序, 无需修改forward方法. 
+
+Ultralytics YOLO 官方文档: https://docs.ultralytics.com/modes/train/
+
 
 ### 导出为onnx
  - 卸载yolo相关的命令行命令，这样直接修改`./ultralytics/ultralytics`目录即可生效。
@@ -239,7 +247,7 @@ $ pip uninstall ultralytics   # 或者
 ['/home/wuchao/YOLO11/ultralytics_v11/ultralytics']
 ```
 
-
+ - 修改输出头
 文件目录：./ultralytics/ultralytics/nn/modules/head.py，约第180行，`Segment`类的`forward`函数替换成以下内容。除了检测部分的6个头外，还有3个`32×(80×80+40×40+20×20)`掩膜系数张量输出头，和一个`32×160×160`的`基底，用于合成结果.
 ```python
 def forward(self, x):  # RDK
@@ -270,14 +278,87 @@ from ultralytics import YOLO
 YOLO('yolo11n-seg.pt').export(imgsz=640, format='onnx', simplify=False, opset=11)
 ```
 
+
 ### 准备校准数据
-参考RDK Model Zoo提供的极简的校准数据准备脚本：`https://github.com/D-Robotics/rdk_model_zoo/blob/main/demos/tools/generate_calibration_data/generate_calibration_data.py `进行校准数据的准备。
 
-### PTQ方案量化转化
+参考RDK Model Zoo S提供的极简的校准数据准备脚本: `samples/Vision/ultralytics_YOLO_Detect/source/generate_cal_data.py `进行校准数据的准备. 
 
- - 参考天工开物工具链手册和OE包，对模型进行检查，所有算子均在BPU上，进行编译即可。对应的yaml文件在`./ptq_yamls`目录下。
 
-```bash
-(bpu_docker) $ hb_mapper checker --model-type onnx --march bayes-e --model yolo11n-seg.onnx
+### 确认移除反量化节点的名称
+
+Netron可视化工具:` https://netron.app/`
+
+通过Netron查看对ONNX模型进行可视化, 确认需要移除的节点名称, 这里有一个小口诀, 就是带64和32的都移除. 这里的64 = 4 * REG, REG = 16. 注意, 不同版本的Ultralytics导出的ONNX的名称是不同的, 请勿直接套用.
+
+![](source/imgs/onnx_proto_example.jpeg)
+
+特别的, Mul算子需要加上`_output_0_HzCalibration`后缀, 其他的不需要。
+
+![](source/imgs/onnx_conv_example.jpeg)
+
+看到大小为[1, 80, 80, 64], [1, 80, 80, 32], [1, 40, 40, 64], [1, 40, 40, 32], [1, 20, 20, 64], [1, 20, 20, 32], [1, 320, 320, 32]的七个输出的名称为/model.23/cv2.0/cv2.0.2/Conv;/model.23/cv4.0/cv4.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv4.1/cv4.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;/model.23/cv4.2/cv4.2.2/Conv;/model.23/proto/cv3/act/Mul;
+
+对应的yaml中填入对应的名称.
+
+```yaml
+model_parameters:
+    onnx_model: 'yolo11n-seg.onnx'
+    march: nash-e  # S100: nash-e, S100P: nash-m.
+    layer_out_dump: False
+    working_dir: 'bpu_outputs'
+    output_model_file_prefix: 'yolo11n_seg_nashe_640x640_nv12' 
+    remove_node_name: '/model.23/cv2.0/cv2.0.2/Conv;/model.23/cv4.0/cv4.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv4.1/cv4.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;/model.23/cv4.2/cv4.2.2/Conv;/model.23/proto/cv3/act/Mul_output_0_HzCalibration'
+    # YOLOv8-Seg: /model.22/cv2.0/cv2.0.2/Conv;/model.22/cv4.0/cv4.0.2/Conv;/model.22/cv2.1/cv2.1.2/Conv;/model.22/cv4.1/cv4.1.2/Conv;/model.22/cv2.2/cv2.2.2/Conv;/model.22/cv4.2/cv4.2.2/Conv;/model.22/proto/cv3/act/Mul_output_0_HzCalibration;
+    # YOLO11-Seg: /model.23/cv2.0/cv2.0.2/Conv;/model.23/cv4.0/cv4.0.2/Conv;/model.23/cv2.1/cv2.1.2/Conv;/model.23/cv4.1/cv4.1.2/Conv;/model.23/cv2.2/cv2.2.2/Conv;/model.23/cv4.2/cv4.2.2/Conv;/model.23/proto/cv3/act/Mul_output_0_HzCalibration;
+
 ```
 
+### 模型编译
+```bash
+(bpu_docker) $ hb_compile --config config.yaml
+```
+
+### 异常处理
+
+如果模型的输出情况与Model Zoo参考模型不一致, 原因可能是移除的节点名称错误, 可通过查看bc模型的信息来确认.
+
+```bash
+# 快速产生一个bc模型
+hb_compile --fast-perf --march nash-e --skip compile --model yolo11n.onnx
+# 查看bc模型的输出节点信息
+hb_model_info yolo11n_quantized_model.bc
+```
+
+可查阅到以下信息
+
+```bash
+INFO ############# Removable node info #############
+INFO Node Name                                          Node Type
+INFO -------------------------------------------------- ----------
+INFO /model.23/cv3.0/cv3.0.2/Conv                       Dequantize
+INFO /model.23/cv2.0/cv2.0.2/Conv                       Dequantize
+INFO /model.23/cv4.0/cv4.0.2/Conv                       Dequantize
+INFO /model.23/cv3.1/cv3.1.2/Conv                       Dequantize
+INFO /model.23/cv2.1/cv2.1.2/Conv                       Dequantize
+INFO /model.23/cv4.1/cv4.1.2/Conv                       Dequantize
+INFO /model.23/cv3.2/cv3.2.2/Conv                       Dequantize
+INFO /model.23/cv2.2/cv2.2.2/Conv                       Dequantize
+INFO /model.23/cv4.2/cv4.2.2/Conv                       Dequantize
+INFO /model.23/proto/cv3/act/Mul_output_0_HzCalibration Dequantize
+```
+
+Model Zoo提供编译日志, bc模型信息日志和hbm模型日志, 用于比较您自己获得的模型和Model Zoo参考模型的区别.
+
+```bash
+./samples/Vision/ultralytics_YOLO_Seg/source/reference_logs/
+|-- hb_combine_yolo11n_seg.txt
+|-- hb_combine_yolov8n_seg.txt
+|-- hb_model_info_yolo11n_seg.txt
+|-- hb_model_info_yolov8n_seg.txt
+|-- hrt_model_exec_model_info_yolo11n_seg.txt
+`-- hrt_model_exec_model_info_yolov8n_seg.txt
+```
+
+## 参考
+
+[ultralytics](https://docs.ultralytics.com/)
