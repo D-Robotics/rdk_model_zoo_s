@@ -34,12 +34,12 @@ try:
     from horizon_tc_ui import HB_ONNXRuntime, HBRuntime, __version__
     from horizon_tc_ui.data.dataloader import SingleImageDataLoader
     from horizon_tc_ui.data.transformer import (
-        PaddedCenterCropTransformer,
         HWC2CHWTransformer,
         MeanTransformer,
         ScaleTransformer,
-        ResizeTransformer,
-        RGB2NV12Transformer
+        RGB2NV12Transformer,
+        ShortSideResizeTransformer,
+        CenterCropTransformer
     )
     # 直接导入ImageNet验证集的类别名称列表
     from horizon_tc_ui.data.imagenet_val import imagenet_val as IMAGENET_VAL_CLASSES
@@ -55,12 +55,8 @@ def onnx_transformer():
     定义ONNX指定的图像预处理转换器列表。
     """
     transformers = [
-        PaddedCenterCropTransformer(300),
-        ResizeTransformer(
-            target_size=(300, 300),
-            mode='skimage',
-            method=3
-        ),
+        ShortSideResizeTransformer(short_size=300),
+        CenterCropTransformer(crop_size=300),
         HWC2CHWTransformer(),
         ScaleTransformer(scale_value=255.0),
         MeanTransformer(means=np.array([127.0, 127.0, 127.0])),
@@ -73,14 +69,13 @@ def quantied_transformers():
     定义.bc指定的图像预处理转换器列表。
     """
     transformers = [
-        PaddedCenterCropTransformer(300),
-        ResizeTransformer(target_size=(300, 300),
-                          mode='skimage',
-                          method=3),
+        ShortSideResizeTransformer(short_size=300),
+        CenterCropTransformer(crop_size=300),
         ScaleTransformer(scale_value=255),
         RGB2NV12Transformer(data_format="HWC"),
     ]
     return transformers
+
 
 def postprocess_classification_output(model_output: list, top_k: int = 5) -> list:
     """
@@ -167,7 +162,7 @@ def run_model_inference(image_path: str, sess: HBRuntime, top_k_for_output: int 
         if isinstance(sess.sess, HB_ONNXRuntime):
             feed_dict = {input_names[0]: data}
         else:
-            model_input_h, model_input_w = 224, 224
+            model_input_h, model_input_w = 300, 300
             if hasattr(sess.sess, 'get_hw'):
                  model_input_w, model_input_h = sess.sess.get_hw()
             

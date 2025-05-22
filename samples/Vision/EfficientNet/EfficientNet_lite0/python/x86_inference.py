@@ -34,12 +34,12 @@ try:
     from horizon_tc_ui import HB_ONNXRuntime, HBRuntime, __version__
     from horizon_tc_ui.data.dataloader import SingleImageDataLoader
     from horizon_tc_ui.data.transformer import (
-        PaddedCenterCropTransformer,
         HWC2CHWTransformer,
         MeanTransformer,
         ScaleTransformer,
-        ResizeTransformer,
-        RGB2NV12Transformer
+        RGB2NV12Transformer,
+        ShortSideResizeTransformer,
+        CenterCropTransformer
     )
     # 直接导入ImageNet验证集的类别名称列表
     from horizon_tc_ui.data.imagenet_val import imagenet_val as IMAGENET_VAL_CLASSES
@@ -55,12 +55,8 @@ def onnx_transformer():
     定义ONNX指定的图像预处理转换器列表。
     """
     transformers = [
-        PaddedCenterCropTransformer(224),
-        ResizeTransformer(
-            target_size=(224, 224),
-            mode='skimage',
-            method=3
-        ),
+        ShortSideResizeTransformer(short_size=224),
+        CenterCropTransformer(crop_size=224),
         HWC2CHWTransformer(),
         ScaleTransformer(scale_value=255.0),
         MeanTransformer(means=np.array([127.0, 127.0, 127.0])),
@@ -73,10 +69,8 @@ def quantied_transformers():
     定义.bc指定的图像预处理转换器列表。
     """
     transformers = [
-        PaddedCenterCropTransformer(224),
-        ResizeTransformer(target_size=(224, 224),
-                          mode='skimage',
-                          method=3),
+        ShortSideResizeTransformer(short_size=224),
+        CenterCropTransformer(crop_size=224),
         ScaleTransformer(scale_value=255),
         RGB2NV12Transformer(data_format="HWC"),
     ]

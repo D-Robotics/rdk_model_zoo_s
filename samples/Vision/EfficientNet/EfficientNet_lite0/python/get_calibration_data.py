@@ -27,11 +27,11 @@ import numpy as np
 import os
 import glob
 
-from horizon_tc_ui.data.transformer import (PaddedCenterCropTransformer,
-                                            HWC2CHWTransformer,
+from horizon_tc_ui.data.transformer import (HWC2CHWTransformer,
                                             MeanTransformer,
                                             ScaleTransformer,
-                                            ResizeTransformer)
+                                            ShortSideResizeTransformer,
+                                            CenterCropTransformer)
 
 def data_transformer():
     """
@@ -40,12 +40,8 @@ def data_transformer():
     包括均值和缩放归一化。
     """
     transformers = [
-        PaddedCenterCropTransformer(224),
-        ResizeTransformer(
-            target_size=(224, 224),
-            mode='skimage',
-            method=3
-        ),
+        ShortSideResizeTransformer(short_size=224),
+        CenterCropTransformer(crop_size=224),
         HWC2CHWTransformer(),
         ScaleTransformer(scale_value=255.0),
         MeanTransformer(means=np.array([127, 127, 127])),
