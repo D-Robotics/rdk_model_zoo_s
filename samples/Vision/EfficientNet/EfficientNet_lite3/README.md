@@ -56,7 +56,7 @@ The following table shows the actual performance data tested on the RDK S100.
 
 | Model                | Input Size (pixels) | Classes | Params (M) | FP32 Top-1 | INT8 Top-1 | Latency/Throughput (Single Thread) | Latency/Throughput (Multi-thread) | FPS         |
 |----------------------|--------------------|---------|------------|------------|------------|-------------------------------------|------------------------------------|-------------|
-| EfficientNet_lite3   | 300x300            | 1000    | 8.2        | 79.8       | -          | 0.668 ms                            | 1.249 ms                           | 2345.518 FPS |
+| EfficientNet_lite3   | 300x300            | 1000    | 8.2        | 79.8       | 79.2          | 0.668 ms                            | 1.249 ms                           | 2345.518 FPS |
 
 Notes:
 1. The S100 was tested under optimal conditions.
