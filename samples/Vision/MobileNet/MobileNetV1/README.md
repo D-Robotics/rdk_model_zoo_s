@@ -4,8 +4,9 @@ English | [简体中文](./README_cn.md)
 
 - [MobileNetV1](#mobilenetv1)
   - [1. Introduction](#1-introduction)
-  - [2. Model Download](#2-model-download)
-  - [3. Deployment and Testing](#3-deployment-and-testing)
+  - [2. Model Performance Data](#2-model-performance-data)
+  - [3. Model Download](#3-model-download)
+  - [4. Deployment and Testing](#4-deployment-and-testing)
 
 ## 1. Introduction
 
@@ -22,7 +23,20 @@ MobileNetV1 introduces a lightweight neural network designed for embedded device
 - **Depthwise Separable Convolutions**: MobileNet is based on depthwise separable convolutions, a form of **factorized convolution** that splits a standard convolution into a depthwise convolution and a 1×1 convolution called pointwise convolution, first introduced in InceptionV3.
 - **Hyperparameters**: The width multiplier $\alpha$ and resolution multiplier $\rho$ are used to reduce computational cost and model size.
 
-## 2. Model Download
+## 2. Model Performance Data
+
+The following table shows the performance data tested on the RDK S100.
+
+| Model         | Input Size (pixels) | Classes | Params (M) | FP Top-1 | Quantized Top-1 | Latency/Throughput (Single Thread) | Latency/Throughput (Multi Thread) | FPS   |
+| ------------- | ------------------ | ------- | ---------- | -------- | --------------- | ---------------------------------- | ---------------------------------- | ----- |
+| MobileNetV1   | 224x224            | 1000    | 4.7        | 70.8     | -               | -                                  | -                                  | -     |
+
+Notes:
+1. The S100 was tested in its optimal state.
+2. Single-thread latency refers to the latency for a single frame, single thread, and single BPU core—the ideal scenario for BPU inference of a single task.
+3. FP/Quantized Top-1: FP Top-1 refers to the Top-1 inference accuracy of the ONNX model before quantization, while Quantized Top-1 refers to the actual inference accuracy after quantization.
+
+## 3. Model Download
 
 **.hbm File Download:**
 
@@ -38,8 +52,28 @@ Model conversion uses the Caffe model: https://github.com/shicai/MobileNet-Caffe
 
 For quantization and conversion steps of MobileNetV1, refer to the conversion steps of other MobileNet models or directly use the samples in the OE development kit at samples/ai_toolchain/horizon_model_convert_sample/03_classification/01_mobilenetv1.
 
-## 3. Deployment and Testing
+## 4. Deployment and Testing
 
 After downloading the .hbm file, you can run the test_MobileNetV1.ipynb Jupyter notebook to test the MobileNetV1 model on the board. To change the test image, download the dataset and place it in the data folder, then update the image path in the Jupyter notebook.
 
 ![](./data/image.png)
+
+
+A demo for fast inference on both X86 and S100 platforms is provided in the `python` directory:
+
+- [`x86_inference.py`](python/x86_inference.py): Supports inference on X86 platforms using ONNX, HBIR (.bc), and HBM formats, as well as accuracy validation on the validation dataset.
+- [`s100_inference.py`](python/s100_inference.py): Supports inference on the board using the HBM format.
+
+For `x86_inference.py`, specify the model and image paths using the `-m` and `-i` options. Example:
+
+```shell
+python3 python/x86_inference.py -m model_output/mobilenetv1_224x224_nv12_quantized_model.bc -i data/zebra_cls.jpg
+```
+
+To enable accuracy validation with `x86_inference.py`, use the `--validate` option. Example:
+
+```shell
+python3 python/x86_inference.py -m model_output/mobilenetv1_224x224_nv12_quantized_model.bc --validate -d ../../../imagenet/val -l ../../../imagenet/val.txt
+```
+
+For `s100_inference.py`, modify the model and image paths directly in the `main` function.

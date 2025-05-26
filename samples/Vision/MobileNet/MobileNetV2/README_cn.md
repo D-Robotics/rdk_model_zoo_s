@@ -4,6 +4,7 @@
 
 - [MobileNetV2](#mobilenetv2)
   - [1. 简介](#1-简介)
+  - [2. 模型性能数据](#2-模型性能数据)
   - [2. 模型下载](#2-模型下载)
     - [选项一](#选项一)
     - [选项二](#选项二)
@@ -28,6 +29,21 @@ Mobilenetv2 在深度卷积前新加了一个点态卷积。这么做的原因�
 
 ![](./data/seperated_conv.png)
 ![](./data/mobilenetv2_architecture.png)
+
+## 2. 模型性能数据
+
+以下表格是在 RDK S100 上实际测试得到的性能数据
+
+
+| 模型          | 尺寸(像素)  | 类别数  | 参数量(M) | 浮点Top-1  | 量化Top-1  | 延迟/吞吐量(单线程) | 延迟/吞吐量(多线程) | 帧率     |
+| -----------  | ------- | ---- | ------ | ----- | ----- | ----------- | ----------- | ------ |
+| MobileNetV2   | 224x224 | 1000 | 3.5    | 71.9 | - | -       | -        | - |
+
+
+说明: 
+1. S100的状态为最佳状态
+2. 单线程延迟为单帧，单线程，单BPU核心的延迟，BPU推理一个任务最理想的情况。
+3. 浮点/定点Top-1：浮点Top-1使用的是模型未量化前onnx的 Top-1 推理精度，量化Top-1则为量化后模型实际推理的精度。
 
 
 ## 2. 模型下载
@@ -201,12 +217,18 @@ BPU conv original OPs per run: 601,548,544
 ### 模型推理
 
 在 python 目录下提供了在 X86 平台和 S100 平台快速进行推理的 demo， 其中：
-* [x86_inference.py](python/x86_inference.py) 支持 ONNX , HBIR(.bc) 和 HBM 格式在 X86 平台的推理。
+* [x86_inference.py](python/x86_inference.py) 支持 ONNX , HBIR(.bc) 和 HBM 格式在 X86 平台的推理以及在val数据集上的精度验证
 * [s100_inference.py](python/s100_inference.py) 支持 HBM 格式在板端的推理。
 
 x86_inference.py 需要通过 -m , -i 传入模型路径和图像路径，示例
 ```shell
 python3 python/x86_inference.py -m model_output/mobilenetv2_224x224_nv12_quantized_model.bc -i data/zebra_cls.jpg
+```
+
+x86_inference.py 使用精度验证需要设置 --validate 启动精度验证模式，示例
+
+```shell
+python3 python/x86_inference.py -m model_output/mobilenetv2_224x224_nv12_quantized_model.bc --validate -d ../../../imagenet/val -l ../../../imagenet/val.txt
 ```
 
 s100_inference.py 需要修改 main 函数中模型和图像路径

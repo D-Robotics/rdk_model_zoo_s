@@ -4,7 +4,8 @@ English | [简体中文](./README_cn.md)
 
 - [MobileNetV2](#mobilenetv2)
   - [1. Introduction](#1-introduction)
-  - [2. Model Download](#2-model-download)
+  - [2. Model Performance Data](#2-model-performance-data)
+  - [3. Model Download](#3-model-download)
     - [Option 1](#option-1)
     - [Option 2](#option-2)
   - [3. Deployment Test](#3-deployment-test)
@@ -28,7 +29,21 @@ Mobilenetv2 adds a point-state convolution before deep convolution. The reason f
 ![](./data/seperated_conv.png)
 ![](./data/mobilenetv2_architecture.png)
 
-## 2. Model Download
+## 2. Model Performance Data
+
+The following table shows the actual performance data tested on the RDK S100.
+
+| Model        | Input Size (pixels) | Classes | Parameters (M) | FP Top-1 | Quantized Top-1 | Latency/Throughput (Single Thread) | Latency/Throughput (Multi Thread) | FPS    |
+| ------------ | ------------------ | ------- | -------------- | -------- | --------------- | ---------------------------------- | ---------------------------------- | ------ |
+| MobileNetV2  | 224x224            | 1000    | 3.5            | 71.9     | -               | -                                  | -                                  | -      |
+
+Notes:
+1. The S100 is tested under optimal conditions.
+2. Single-thread latency refers to the latency per frame using a single thread and a single BPU core, representing the ideal scenario for BPU inference.
+3. FP/Quantized Top-1: FP Top-1 refers to the Top-1 inference accuracy of the ONNX model before quantization, while Quantized Top-1 refers to the actual inference accuracy after quantization.
+
+
+## 3. Model Download
 
 ### Option 1
 
@@ -198,12 +213,17 @@ BPU conv original OPs per run: 601,548,544
 ### Model Inference
 
 The python directory provides demos for quick inference on both X86 and S100 platforms:
-* [x86_inference.py](python/x86_inference.py) supports ONNX, HBIR (.bc), and HBM formats for inference on X86.
-* [s100_inference.py](python/s100_inference.py) supports HBM format for inference on the board.
+* [x86_inference.py](python/x86_inference.py) supports inference on the X86 platform using ONNX, HBIR (.bc), and HBM formats, as well as accuracy validation on the val dataset.
+* [s100_inference.py](python/s100_inference.py) supports inference on the board using the HBM format.
 
-x86_inference.py requires -m and -i to specify the model and image paths, for example:
+For `x86_inference.py`, specify the model and image paths using `-m` and `-i`. Example:
 ```shell
 python3 python/x86_inference.py -m model_output/mobilenetv2_224x224_nv12_quantized_model.bc -i data/zebra_cls.jpg
+```
+
+To run accuracy validation with `x86_inference.py`, use the `--validate` flag. Example:
+```shell
+python3 python/x86_inference.py -m model_output/mobilenetv2_224x224_nv12_quantized_model.bc --validate -d ../../../imagenet/val -l ../../../imagenet/val.txt
 ```
 
 s100_inference.py requires modifying the model and image paths in the main function.
