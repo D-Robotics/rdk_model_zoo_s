@@ -18,6 +18,8 @@ samples/
 |   `-- InternVL2
 |-- Planning
 |   `-- LeRobot_ACTpolicy
+|   `-- walk-these-ways-go2
+|   `-- ASAP
 |-- Speech
 |   |-- ASR
 |   |-- KWS
