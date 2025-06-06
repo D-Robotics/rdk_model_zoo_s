@@ -181,7 +181,7 @@ sudo ./lcm_position_go2 eth0
 python3 deploy_policy_s100.py
 ```
 ### 3.3.2 资源占用
-#### 3.3.2.1 使用bin模型推理
+#### 3.3.2.1 使用hbm模型推理
 ![](https://developer.d-robotics.cc/api/v1/static/imgData/1744198918662.jpg)
 模型推理+处理逻辑功能占用：单核CPU 28.5%，内存 3.5%，BPU 1%
 

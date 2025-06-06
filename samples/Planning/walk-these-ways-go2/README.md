@@ -227,7 +227,7 @@ python3 deploy_policy_s100.py
 
 ### 3.3.2 Resource Usage
 
-#### 3.3.2.1 Using .bin model
+#### 3.3.2.1 Using .hbm model
 
 ![](https://developer.d-robotics.cc/api/v1/static/imgData/1744198918662.jpg)
 
