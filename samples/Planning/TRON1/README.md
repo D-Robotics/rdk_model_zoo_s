@@ -1,7 +1,5 @@
 English| [简体中文](./README_cn.md)
 
-[English](./README.md) | 简体中文
-
 # 1. Introduction
 
 The sample in this repository is the whole process of deploying the foot motion control model of Zhujidongli based on RDK S100. 
