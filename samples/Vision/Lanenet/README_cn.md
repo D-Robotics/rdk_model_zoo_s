@@ -100,5 +100,6 @@ Perf result:
   Frame      rate       is: 69.894 FPS
 ```
 ## 精度验证
-模型量化后余弦相似度如下图所示，可见三输出个余弦相似度都非常高
+模型量化后余弦相似度如下图所示，可见三输出个余弦相似度都非常高:
+
 ![](source/data/source_image/result.jpg)
