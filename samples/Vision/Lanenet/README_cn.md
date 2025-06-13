@@ -20,7 +20,9 @@ wget -P $(dirname $0) https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_
 ```
 ## 算法验证
 1. 下载好模型后修改代码lanenet_s100_infer.py中模型和输入图片存放的路径,然后运行代码，即可看到ouput目录下输出的结果
+```
 python lanenet_s100_infer.py
+```
 ![](source/data/source_image/input.jpg)
 ![](source/data/source_image/binary_output.jpg)
 ![](source/data/source_image/instance_output.jpg)

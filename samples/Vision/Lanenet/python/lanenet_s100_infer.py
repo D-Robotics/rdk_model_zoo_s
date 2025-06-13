@@ -44,7 +44,7 @@ def main():
     import os
     os.makedirs(output_dir, exist_ok=True)
 
-       # 1. 加载图片
+    # 1. 加载图片
     origin_img = load_image(img_path)
     resize_height, resize_width = 256, 512
 
@@ -60,7 +60,6 @@ def main():
     outputs = model.forward(img_input)
 
     # 4. 处理输出
-    # 假设输出 shape = (1, H, W) 或 (H, W)
     instance_pred= np.array(outputs[0].buffer, dtype=np.float32).reshape((3,256, 512)).squeeze()   # 根据实际输出形状调整 # 根据实际输出形状调整
     binary_pred = np.array(outputs[1].buffer, dtype=np.float32).reshape((256, 512)) 
     
