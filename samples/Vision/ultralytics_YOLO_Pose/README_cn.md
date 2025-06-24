@@ -264,7 +264,7 @@ YOLO('yolo11n-pose.pt').export(imgsz=640, format='onnx', simplify=False, opset=1
 
 ### 准备校准数据
 
-参考RDK Model Zoo S提供的极简的校准数据准备脚本: `samples/Vision/ultralytics_YOLO_Detect/source/generate_cal_data.py `进行校准数据的准备。
+参考RDK Model Zoo S提供的极简的校准数据准备脚本: `https://github.com/D-Robotics/rdk_model_zoo_s/blob/s100/resource/tools/generate_calibration_data/generate_cal_data.py `进行校准数据的准备。
 
 ### 模型编译
 ```bash
