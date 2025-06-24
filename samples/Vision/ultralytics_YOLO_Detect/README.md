@@ -408,7 +408,7 @@ YOLO('yolov11n.pt').export(imgsz=640, format='onnx', simplify=False, opset=19)
 
 ### Prepare Calibration Data
 
-Refer to the minimalist calibration data preparation script provided in the RDK Model Zoo S: `samples/Vision/ultralytics_YOLO_Detect/source/generate_cal_data.py` for preparing calibration data.
+Refer to the minimalist calibration data preparation script provided in the RDK Model Zoo S: `https://github.com/D-Robotics/rdk_model_zoo_s/blob/s100/resource/tools/generate_calibration_data/generate_cal_data.py` for preparing calibration data.
 
 ### Confirm Removal of Dequantization Node Names
 
