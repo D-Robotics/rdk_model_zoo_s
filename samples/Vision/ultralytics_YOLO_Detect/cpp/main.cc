@@ -21,11 +21,11 @@ limitations under the License.
 
 // D-Robotics S100 *.hbm 模型路径
 // Path of D-Robotics S100 *.hbm model.
-#define MODEL_PATH "/root/ssd/SkyXZ/rdk_model_zoo_s/samples/Vision/ultralytics_YOLO_Detect/source/reference_hbm_models/yolov5nu_detect_nashe_640x640_nv12.hbm"
+#define MODEL_PATH "rdk_model_zoo_s/samples/Vision/ultralytics_YOLO_Detect/source/reference_hbm_models/yolov5nu_detect_nashe_640x640_nv12.hbm"
 
 // 推理使用的测试图片路径
 // Path of the test image used for inference.
-#define TEST_IMG_PATH "/root/ssd/SkyXZ/rdk_model_zoo_s/resource/datasets/COCO2017/assets/bus.jpg"
+#define TEST_IMG_PATH "rdk_model_zoo_s/resource/datasets/COCO2017/assets/bus.jpg"
 
 // 前处理方式选择, 0:Resize, 1:LetterBox
 // Preprocessing method selection, 0: Resize, 1: LetterBox
