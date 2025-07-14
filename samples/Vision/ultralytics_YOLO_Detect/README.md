@@ -88,6 +88,23 @@ options:
   --reg REG             DFL reg layer.
 ```
 
+### C++ Inference Experience
+Before use, please refer to the Readme in reference_hbm_models to download the corresponding model to the folder. After ensuring the model exists, run the following commands:
+```bash
+cd rdk_model_zoo_s/samples/Vision/ultralytics_YOLO_Detect/cpp
+mkdir build && cd build
+cmake .. && make
+./main
+```
+
+If you want to test your own model, please modify the following macro definitions in the code and recompile:
+```c++
+#define MODEL_PATH //Model path
+#define TEST_IMG_PATH //Test image path  
+#define CLASSES_NUM //Number of classes
+std::vector<std::string> object_names //Class labels
+```
+
 
 ## Result Analysis
 
@@ -515,4 +532,3 @@ Model Zoo provides compilation logs, bc Model information logs and hbm model log
 ## References
 
 [ultralytics docs](https://docs.ultralytics.com/)
-

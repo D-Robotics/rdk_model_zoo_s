@@ -51,14 +51,17 @@ $ tree -L 2
 |-- README_cn.md  # Chinese Document
 |-- py
 |   |-- eval_ultralytics_YOLO_Detect_YUV420SP.py # Advance Evaluation
-|   `-- ultralytics_YOLO_Detect_YUV420SP.py      # Quick Start
+|   `-- ultralytics_YOLO_Detect_YUV420SP.py      # Quick Start Python
+|-- cpp
+|   |   |-- CMakeLists.txt # infer C++ CmakeList
+|   |   `-- main.cc # Quick Start C++
 `-- source
-    |-- imgs
-    |-- reference_hbm_models    # Reference HBM Models
-    |-- reference_logs          # Reference logs
-    `-- reference_yamls         # Reference yaml configs
+|   |-- imgs
+|   |-- reference_hbm_models    # Reference HBM Models
+|   |-- reference_logs          # Reference logs
+|   `-- reference_yamls         # Reference yaml configs
 ```
-
+### Python 体验
 直接运行, 会自动下载模型文件.
 
 ```bash
@@ -83,6 +86,22 @@ options:
   --score-thres SCORE_THRES
                         confidence threshold.
   --reg REG             DFL reg layer.
+```
+
+### C++推理体验
+使用前请先参照reference_hbm_models中的Readme下载对应模型至文件夹，模型确保存在后运行以下命令即可
+```bash
+cd rdk_model_zoo_s/samples/Vision/ultralytics_YOLO_Detect/cpp
+mkdir build && cd build
+cmake .. && make
+./main
+```
+若要测试自己的模型请修改代码中以下宏定义后重新编译运行即可
+```c++
+#define MODEL_PATH //模型路径
+#define TEST_IMG_PATH //测试图片路径
+#define CLASSES_NUM //类别数量
+std::vector<std::string> object_names //类别标签
 ```
 
 
