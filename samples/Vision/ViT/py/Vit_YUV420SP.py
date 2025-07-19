@@ -99,7 +99,7 @@ class ViT_Classify():
             logger.debug("\033[1;31m" + "Load D-Robotics Quantize model time = %.2f ms"%(1000*(time() - begin_time)) + "\033[0m")
         except Exception as e:
             logger.error("❌ Failed to load model file: %s"%(opt.model_path))
-            logger.error("You can download the model file from the following docs: ./models/download.md") 
+            logger.error("You can download the model file from the following docs: ./source/reference_hbm_models/download.md") 
             logger.error(e)
             exit(1)
 
