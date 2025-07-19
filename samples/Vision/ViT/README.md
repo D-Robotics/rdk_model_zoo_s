@@ -110,7 +110,7 @@ std::vector<std::string> object_names //Class label
 
 PS：💻 Complete project code is available on Github: [ViT_PyTorch](https://github.com/xiongqi123123/ViT_PyTorch.git). Questions, suggestions, or error reports are welcome in the comments - let's collaborate and improve together!
 
-### 一、Architecture Design: A Paper-Based Approach
+### ONE. Architecture Design: A Paper-Based Approach
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Before formally starting the reproduction, let's begin from the source and read the original Vision Transformer paper: "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale"[[arXiv:2010.11929](https://arxiv.org/abs/2010.11929)]。This is a landmark paper proposed by Google Research in 2020, which first demonstrated that pure Transformer architecture can achieve excellent performance in image classification tasks without relying on any convolutional modules.
 
@@ -235,9 +235,9 @@ $$
 
 
 
-### 二、Practical Implementation of PyTorch Version ViT Network Architecture
+### TWO. Practical Implementation of PyTorch Version ViT Network Architecture
 
-### （一）Module 1: PatchEmbedding Class
+### Module 1. PatchEmbedding Class
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`PatchEmbedding` is the most critical step in ViT, where we use convolution to divide the input image into several non-overlapping small blocks (Patches), each Patch is encoded as a vector, and we implement the division using equal stride convolution and then send it to the Transformer module for subsequent processing.
 
@@ -257,7 +257,7 @@ class VisionPatchEmbedding(nn.Module):
         return x
 ```
 
-### （二）Module 2: PositionEmbedding
+### Module 2. PositionEmbedding
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Since ViT is not a CNN, it lacks a convolutional receptive field, so positional encoding (`pos_embed`) is needed to preserve position information. Each Patch's position information
 
@@ -276,7 +276,7 @@ pos_embed = torch.cat((cls_token_pos_embed, img_token_pos_embed), dim=1)
 x = self.pos_drop(x + pos_embed)
 ```
 
-### （三）Module 3: Multi-head Attention and MLP
+### Module 3. Multi-head Attention and MLP
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Then we implement the most critical multi-head attention mechanism in the Transformer, we define a class `SelfAttention` to implement the multi-head self-attention mechanism. In this module, we first generate Query (Q), Key (K), and Value (V) simultaneously using a linear layer, and then split the dimensions by the number of heads, and then calculate the dot product of Q and K and scale, and then use `softmax` to get the attention weights, use the weighted value (V) to get the final result, and finally concatenate the multi-head results and pass through a linear transformation and `dropout` to make the output have the same feature dimension as the input, completing the dynamic fusion and expression enhancement of information.
 
@@ -334,7 +334,7 @@ class MLP(nn.Module):
         return x
 ```
 
-### （四）Module 4: Encoder Layer Stacking
+### Module 4. Encoder Layer Stacking
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Since PyTorch does not have a ready-made `DropPath` function, we need to implement this usage ourselves, here we use DropPath to randomly drop the entire path to regularize the deep network, and skip the current module with a probability drop_path during training, and scale the remaining paths to maintain the expected value; in the Block class, I encapsulated the complete Transformer layer structure, including LayerNorm normalization, multi-head attention, MLP feedforward network, and residual connection, where the attention part uses my custom SelfAttention module, MLP adopts a structure design of expanding and compressing, both of which integrate DropPath mechanism
 
@@ -386,7 +386,7 @@ class Block(nn.Module):
         return x
 ```
 
-### （五）Module 5: ViT Complete Model Class
+### Module 5. ViT Complete Model Class
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finally, we implement our complete ViT—VisonTransformer, in this `VisonTransformer` class, I integrate all the modules I introduced earlier to implement the complete ViT network. First, I use convolution to cut the input image into fixed-size Patches and map it to the feature space; then, through the introduction of learnable classification tokens and positional encoding, provide position information to compensate for the "receptive field" missing problem of convolution. After that, I stack multiple Transformer encoder Blocks, each Block containing a multi-head self-attention mechanism and an MLP module, through residual connection and normalization to ensure effective information transmission and feature abstraction. Finally, I take the output of the classification token, map it to the target category through a linear layer, and complete the image classification task.
 
@@ -478,7 +478,7 @@ class VisonTransformer(nn.Module):
 
 <font color="red">**Thus, we have completed the complete ViT!**</font>
 
-### （六）Implement Data Loading Code (Data Loading, Loss, Optimizer)
+### Module 6. Implement Data Loading Code (Data Loading, Loss, Optimizer)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The dataset loading part is relatively simple, so I won't elaborate too much. My dataset structure and specific code are as follows:
 
@@ -572,7 +572,7 @@ def ViTDataLoad(root, batch_size, num_workers, img_size):
     return train_loader, val_loader
 ```
 
-### （七）Implement Training Code
+### Module 7. Implement Training Code
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Next, let's complete our training code. I use the `ViTDataLoad` defined in the previous section to load training and validation datasets. During training, I adopt the commonly used cross-entropy loss function (`CrossEntropyLoss`) to measure classification performance, and use `AdamW` optimizer which is more suitable for Transformer. The specific implementation is as follows, without much elaboration:
 
@@ -696,7 +696,7 @@ if __name__ == "__main__":
     train()
 ```
 
-### （八）Implement Validation Code
+### Module 8. Implement Validation Code
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The validation code is also relatively simple. Students with PyTorch and deep learning foundation can implement it quickly, so I won't elaborate here either:
 
@@ -768,9 +768,9 @@ if __name__ == "__main__":
     print(f"The predicted class for image {img_path} is: {pred_class}") 
 ```
 
-### 三、ViT: Training and Testing on Custom Dataset and CIFAR-10
+### THREE. ViT: Training and Testing on Custom Dataset and CIFAR-10
 
-### （一）Custom Dataset
+### 1. Custom Dataset
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We first test on our custom dataset. Please ensure the dataset format is as follows:
 
@@ -796,7 +796,7 @@ Next, we can run `python3 predict.py [img_path]` to perform inference!
 
 ![ViT_SelfPred](source/imgs/readme_img/ViT_SelfPred.png)
 
-### （二）CIFAR-10 Dataset
+### 2. CIFAR-10 Dataset
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After completing the above custom dataset, we can continue to try CIFAR-10! We first download our CIFAR-10 dataset. The CIFAR-10 dataset is already integrated into Torch, so we can use the PyTorch interface to download it directly. The specific download method is as follows, without much elaboration:
 
@@ -1030,7 +1030,7 @@ if __name__ == "__main__":
     export_vit_to_onnx()
 ```
 
-### 四、ViT Deployment on RDK S100
+### FOUR. ViT Deployment on RDK S100
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After obtaining the `onnx` format middleware model, we start implementing deployment on RDKS100. First, make sure you have installed the S100 Docker toolchain or configured the development environment yourself. The conversion on S100 is not much different from X5, except that when exporting the onnx model, we can choose to export `opset=19`. After configuring the calibration data (for specific reference, see the OE documentation), we can use the following command to start the conversion!
 
