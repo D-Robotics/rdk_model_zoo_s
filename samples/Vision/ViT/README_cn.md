@@ -1025,7 +1025,7 @@ if __name__ == "__main__":
 
 ### 四、ViT在RDKX5、RDK S100上的部署
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;得到了`onnx`格式的模中间件模型后接下来我们开始实现在RDKS100上的部署，首先确保你安装了S100的Docker工具链或者是自行配置好了开发环境，S100上的转换和X5没有太大区别，只不过导出onnx模型的时候我们可以选择导出`opset=19`啦，在配置好校准数据后（具体可参考文档：）我们便可以使用如下命令开始转换啦！
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;得到了`onnx`格式的模中间件模型后接下来我们开始实现在RDKS100上的部署，首先确保你安装了S100的Docker工具链或者是自行配置好了开发环境，S100上的转换和X5没有太大区别，只不过导出onnx模型的时候我们可以选择导出`opset=19`啦，在配置好校准数据后（具体可参考工具链文档）我们便可以使用如下命令开始转换啦！
 
 ```bash
 hb_compile -c convert.yaml

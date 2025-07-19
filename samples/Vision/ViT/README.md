@@ -1024,7 +1024,7 @@ if __name__ == "__main__":
 
 ### 四、ViT Deployment on RDK S100
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After obtaining the `onnx` format middleware model, we start implementing deployment on RDKS100. First, make sure you have installed the S100 Docker toolchain or configured the development environment yourself. The conversion on S100 is not much different from X5, except that when exporting the onnx model, we can choose to export `opset=19`. After configuring the calibration data (for specific reference, see the documentation:), we can use the following command to start the conversion!
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;After obtaining the `onnx` format middleware model, we start implementing deployment on RDKS100. First, make sure you have installed the S100 Docker toolchain or configured the development environment yourself. The conversion on S100 is not much different from X5, except that when exporting the onnx model, we can choose to export `opset=19`. After configuring the calibration data (for specific reference, see the OE documentation), we can use the following command to start the conversion!
 
 ```bash
 hb_compile -c convert.yaml
