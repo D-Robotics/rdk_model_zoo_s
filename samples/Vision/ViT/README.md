@@ -11,6 +11,8 @@ $ tree -L 2
 .
 |-- README.md     # English Document
 |-- README_cn.md  # Chinese Document
+|-- py
+|   `-- Vit_YUV420SP.py      # Quick Start
 |-- cpp
 |   |   |-- CMakeLists.txt # infer C++ CmakeList
 |   |   |-- main.cc # Quick Start C++
@@ -20,6 +22,12 @@ $ tree -L 2
 |   |-- reference_hbm_models    # Reference HBM Models
 |   |-- reference_logs          # Reference logs
 |   `-- reference_yamls         # Reference yaml configs
+```
+### Python Inference Experience
+Before using, please refer to the README in reference_hbm_models to download the corresponding model to the folder. After ensuring the model exists, run the following commands:
+```bash
+cd rdk_model_zoo_s/samples/Vision/ViT/py
+python3 Vit_YUV420SP.py
 ```
 
 ### C++ UCP Inference Experience
