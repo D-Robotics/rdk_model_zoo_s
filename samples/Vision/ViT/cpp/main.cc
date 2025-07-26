@@ -189,7 +189,7 @@ int main()
                   << output_properties.validShape.dimensionSize[0] << ", "
                   << output_properties.validShape.dimensionSize[1] << ", "
                   << output_properties.validShape.dimensionSize[2] << ", "
-                  << output_properties.validShape.dimensionSize[3] << "), ";   
+                  << output_properties.validShape.dimensionSize[3] << "), ";
         std::cout << "QuantiType: " << output_properties.quantiType << std::endl;
     }
     // Step 5: 前处理 - 读取图像并转换为YUV420SP
@@ -352,8 +352,8 @@ int main()
     if (wait_ret != 0) {
         std::cout << "[ERROR] hbUCPWaitTaskDone failed with error code: " << wait_ret << std::endl;
         return -1;
-    } 
-    std::cout << "✓ Inference task completed successfully" << std::endl; 
+    }
+    std::cout << "✓ Inference task completed successfully" << std::endl;
     std::cout << "\033[31m forward time = " << std::fixed << std::setprecision(2) 
               << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - begin_time).count() / 1000.0 
               << " ms\033[0m" << std::endl;
@@ -402,7 +402,7 @@ int main()
                       << " (Class " << class_id << ")" 
                       << " - Confidence: " << std::fixed << std::setprecision(4) << confidence << std::endl;
         }
-    } else {
+            } else {
         // 如果输出是float类型，直接处理
         std::vector<float> raw_output(CLASSES_NUM);
         for (int i = 0; i < CLASSES_NUM; ++i) {

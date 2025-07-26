@@ -47,13 +47,16 @@ $ tree -L 2
 |-- README_cn.md  # Chinese Document
 |-- py
 |   `-- ultralitics_YOLO_Pose_YUV420SP.py      # Quick Start
+|-- cpp
+|   |   |-- CMakeLists.txt # infer C++ CmakeList
+|   |   `-- main.cc # Quick Start C++
 `-- source
     |-- imgs
     |-- reference_hbm_models    # Reference HBM Models
     |-- reference_logs          # Reference logs
     `-- reference_yamls         # Reference yaml configs
 ```
-
+### Python Experience
 Run it directly and the model file will be downloaded automatically.
 
 ```bash
@@ -79,6 +82,14 @@ options:
   --reg REG             DFL reg layer.
   --kpt-conf-thres KPT_CONF_THRES
                         confidence threshold.
+```
+
+### C++ Experience
+```bash
+cd rdk_model_zoo_s/samples/Vision/ultralytics_YOLO_Pose/cpp
+mkdir build && cd build
+cmake .. && make
+./main
 ```
 
 
