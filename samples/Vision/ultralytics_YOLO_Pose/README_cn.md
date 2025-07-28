@@ -36,7 +36,6 @@ YOLO (You Only Look Once)是一种流行的物体检测和图像分割模型,由
 
 
 ## 快速体验
-
 ```bash
 # Make Sure your are in this file
 $ cd samples/Vision/ultralytics_YOLO_Pose
@@ -48,13 +47,16 @@ $ tree -L 2
 |-- README_cn.md  # Chinese Document
 |-- py
 |   `-- ultralitics_YOLO_Pose_YUV420SP.py      # Quick Start
+|-- cpp
+|   |   |-- CMakeLists.txt # infer C++ CmakeList
+|   |   `-- main.cc # Quick Start C++
 `-- source
     |-- imgs
     |-- reference_hbm_models    # Reference HBM Models
     |-- reference_logs          # Reference logs
     `-- reference_yamls         # Reference yaml configs
 ```
-
+### Python体验
 直接运行, 会自动下载模型文件.
 
 ```bash
@@ -80,7 +82,14 @@ options:
   --kpt-conf-thres KPT_CONF_THRES
                         confidence threshold.
 ```
-
+### C++推理体验
+使用前请先参照reference_hbm_models中的Readme下载对应模型至文件夹，模型确保存在后运行以下命令即可
+```bash
+cd rdk_model_zoo_s/samples/Vision/ultralytics_YOLO_Pose/cpp
+mkdir build && cd build
+cmake .. && make
+./main
+```
 
 ## 结果分析
 
