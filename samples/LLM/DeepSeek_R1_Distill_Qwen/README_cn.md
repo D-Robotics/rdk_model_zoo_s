@@ -32,8 +32,7 @@ tar -xvf OpenExplorer_LLM_0.9.0.tar.gz
 下载 DeepSeek_R1_Distill_Qwen_1.5B 模型：
 
 ```
-wget -c ftp://oeftp@sdk.d-robotics.cc/oe_llm_v0.9.0/DeepSeek_R1_Distill_Qwen_1.5B_4096.hbm -
--ftp-password=Oeftp~123$%
+wget -c ftp://oeftp@sdk.d-robotics.cc/oe_llm_v0.9.0/DeepSeek_R1_Distill_Qwen_1.5B_4096.hbm --ftp-password='Oeftp~123$%'
 ```
 
 随后，我们在在~/llm/OpenExplorer_LLM_0.9.0/runtime 路径下运行：

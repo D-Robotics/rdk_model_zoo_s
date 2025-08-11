@@ -32,8 +32,7 @@ tar -xvf OpenExplorer_LLM_0.9.0.tar.gz
 Download the DeepSeek_R1_Distill_Qwen_1.5B model: 
 
 ```
-wget -c ftp://oeftp@sdk.d-robotics.cc/oe_llm_v0.9.0/DeepSeek_R1_Distill_Qwen_1.5B_4096.hbm -
--ftp-password=Oeftp~123$%
+wget -c ftp://oeftp@sdk.d-robotics.cc/oe_llm_v0.9.0/DeepSeek_R1_Distill_Qwen_1.5B_4096.hbm --ftp-password='Oeftp~123$%'
 ```
 
 Then, we run the following command under the path ~/llm/OpenExplorer_LLM_0.9.0/runtime: 
