@@ -39,14 +39,19 @@ wget -c ftp://oeftp@sdk.d-robotics.cc/oe_llm_v0.9.0/DeepSeek_R1_Distill_Qwen_1.5
 随后，我们在在~/llm/OpenExplorer_LLM_0.9.0/runtime 路径下运行：
 
 ```
+# 设置性能模式
 sh set_permorfance_mode.sh
+
+# 设置库路径
 lib=~/llm/OpenExplorer_LLM_0.9.0/runtime/lib
 export LD_LIBRARY_PATH=${lib}:${LD_LIBRARY_PATH}
-./bin/xlm_demo --hbm_path 
-~/llm/DeepSeek_R1_Distill_Qwen_1.5B_4096.hbm --
-tokenizer_dir ./config/DeepSeek_R1_Distill_Qwen_1.5B_config/ --
-template_path ./config/DeepSeek_R1_Distill_Qwen_1.5B_config/DeepSe
-ek_R1_Distill_Qwen_1.5B.jinja --model_type 3
+
+# 运行推理 demo
+./bin/xlm_demo \
+  --hbm_path ~/llm/DeepSeek_R1_Distill_Qwen_1.5B_4096.hbm \
+  --tokenizer_dir ./config/DeepSeek_R1_Distill_Qwen_1.5B_config/ \
+  --template_path ./config/DeepSeek_R1_Distill_Qwen_1.5B_config/DeepSeek_R1_Distill_Qwen_1.5B.jinja \
+  --model_type 3
 ```
 
 以下为简单的对话测试：

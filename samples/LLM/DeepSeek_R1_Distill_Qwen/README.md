@@ -40,13 +40,15 @@ Then, we run the following command under the path ~/llm/OpenExplorer_LLM_0.9.0/r
 
 ```
 sh set_permorfance_mode.sh
+
 lib=~/llm/OpenExplorer_LLM_0.9.0/runtime/lib
 export LD_LIBRARY_PATH=${lib}:${LD_LIBRARY_PATH}
-./bin/xlm_demo --hbm_path 
-~/llm/DeepSeek_R1_Distill_Qwen_1.5B_4096.hbm --
-tokenizer_dir ./config/DeepSeek_R1_Distill_Qwen_1.5B_config/ --
-template_path ./config/DeepSeek_R1_Distill_Qwen_1.5B_config/DeepSe
-ek_R1_Distill_Qwen_1.5B.jinja --model_type 3
+
+./bin/xlm_demo \
+  --hbm_path ~/llm/DeepSeek_R1_Distill_Qwen_1.5B_4096.hbm \
+  --tokenizer_dir ./config/DeepSeek_R1_Distill_Qwen_1.5B_config/ \
+  --template_path ./config/DeepSeek_R1_Distill_Qwen_1.5B_config/DeepSeek_R1_Distill_Qwen_1.5B.jinja \
+  --model_type 3
 ```
 
 The following is a simple conversation test: 
