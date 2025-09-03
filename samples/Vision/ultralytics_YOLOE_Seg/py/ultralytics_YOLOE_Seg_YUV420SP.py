@@ -30,7 +30,7 @@ except:
 
 # hobot_dnn
 try:
-    from hobot_dnn import pyeasy_dnn as dnn  # BSP Python API
+    from hbm_runtime import HB_HBMRuntime # BSP Python API
 except:
     print("Your python environment is not ready, please use system python3 to run this program.")
     exit()
@@ -83,9 +83,9 @@ def main():
         raise ValueError(f"Load image failed: {opt.test_img}")
         exit()
     # 准备输入数据
-    input_tensor = model.preprocess_yuv420sp(img)
+    y, uv = model.preprocess_yuv420sp(img)
     # 推理
-    outputs = model.c2numpy(model.forward(input_tensor))
+    outputs = model.forward(y, uv)
     # 后处理
     results = model.postProcess(outputs)
     # 渲染
@@ -127,42 +127,53 @@ def main():
     logger.info("\033[1;32m" + f"saved in path: \"./{opt.img_save_path}\"" + "\033[0m")
 
 
+
 class Ultralytics_YOLOE_Seg():
     def __init__(self, opt):
         # 加载BPU的bin模型, 打印相关参数
         # Load the quantized *.bin model and print its parameters
         try:
             begin_time = time()
-            self.quantize_model = dnn.load(opt.model_path)
+            self.quantize_model = HB_HBMRuntime(opt.model_path)
             logger.debug("\033[1;31m" + "Load D-Robotics Quantize model time = %.2f ms"%(1000*(time() - begin_time)) + "\033[0m")
         except Exception as e:
             logger.error("❌ Failed to load model file: %s"%(opt.model_path))
             logger.error("You can download the model file from the following docs: ./models/download.md") 
             logger.error(e)
             exit(1)
+        
+        logger.info(f"model_name: {self.quantize_model.model_names[0]}")
 
         logger.info("\033[1;32m" + "-> input tensors" + "\033[0m")
-        for i, quantize_input in enumerate(self.quantize_model[0].inputs):
-            logger.info(f"intput[{i}], name={quantize_input.name}, type={quantize_input.properties.dtype}, shape={quantize_input.properties.shape}")
+        for i, input_name in enumerate(self.quantize_model.input_names[self.quantize_model.model_names[0]]):
+            logger.info(f"intput[{i}], name={input_name}, type={self.quantize_model.input_dtypes[self.quantize_model.model_names[0]][input_name]}, shape={self.quantize_model.input_shapes[self.quantize_model.model_names[0]][input_name]}")
 
         logger.info("\033[1;32m" + "-> output tensors" + "\033[0m")
-        for i, quantize_input in enumerate(self.quantize_model[0].outputs):
-            logger.info(f"output[{i}], name={quantize_input.name}, type={quantize_input.properties.dtype}, shape={quantize_input.properties.shape}")
+        for i, output_name in enumerate(self.quantize_model.output_names[self.quantize_model.model_names[0]]):
+            logger.info(f"intput[{i}], name={output_name}, type={self.quantize_model.output_dtypes[self.quantize_model.model_names[0]][output_name]}, shape={self.quantize_model.output_shapes[self.quantize_model.model_names[0]][output_name]}")
 
         # 将反量化系数准备好, 只需要准备一次
         # prepare the quantize scale, just need to generate once
-        self.s_bboxes_scale = self.quantize_model[0].outputs[1].properties.scale_data[np.newaxis, :]
-        self.m_bboxes_scale = self.quantize_model[0].outputs[4].properties.scale_data[np.newaxis, :]
-        self.l_bboxes_scale = self.quantize_model[0].outputs[7].properties.scale_data[np.newaxis, :]
+        self.s_bboxes_scale = self.quantize_model.output_quants[self.quantize_model.model_names[0]][self.quantize_model.output_names[self.quantize_model.model_names[0]][1]].scale[np.newaxis, :]
+        self.m_bboxes_scale = self.quantize_model.output_quants[self.quantize_model.model_names[0]][self.quantize_model.output_names[self.quantize_model.model_names[0]][4]].scale[np.newaxis, :]
+        self.l_bboxes_scale = self.quantize_model.output_quants[self.quantize_model.model_names[0]][self.quantize_model.output_names[self.quantize_model.model_names[0]][7]].scale[np.newaxis, :]
+        # self.s_bboxes_scale = self.quantize_model[0].outputs[1].properties.scale_data[np.newaxis, :]
+        # self.m_bboxes_scale = self.quantize_model[0].outputs[4].properties.scale_data[np.newaxis, :]
+        # self.l_bboxes_scale = self.quantize_model[0].outputs[7].properties.scale_data[np.newaxis, :]
         logger.info(f"{self.s_bboxes_scale.shape=}, {self.m_bboxes_scale.shape=}, {self.l_bboxes_scale.shape=}")
 
-        self.s_mces_scale = self.quantize_model[0].outputs[2].properties.scale_data[np.newaxis, :]
-        self.m_mces_scale = self.quantize_model[0].outputs[5].properties.scale_data[np.newaxis, :]
-        self.l_mces_scale = self.quantize_model[0].outputs[8].properties.scale_data[np.newaxis, :]
+        self.s_mces_scale = self.quantize_model.output_quants[self.quantize_model.model_names[0]][self.quantize_model.output_names[self.quantize_model.model_names[0]][2]].scale[np.newaxis, :]
+        self.m_mces_scale = self.quantize_model.output_quants[self.quantize_model.model_names[0]][self.quantize_model.output_names[self.quantize_model.model_names[0]][5]].scale[np.newaxis, :]
+        self.l_mces_scale = self.quantize_model.output_quants[self.quantize_model.model_names[0]][self.quantize_model.output_names[self.quantize_model.model_names[0]][8]].scale[np.newaxis, :]
+        # self.s_mces_scale = self.quantize_model[0].outputs[2].properties.scale_data[np.newaxis, :]
+        # self.m_mces_scale = self.quantize_model[0].outputs[5].properties.scale_data[np.newaxis, :]
+        # self.l_mces_scale = self.quantize_model[0].outputs[8].properties.scale_data[np.newaxis, :]
         logger.info(f"{self.s_mces_scale.shape=}, {self.m_mces_scale.shape=}, {self.l_mces_scale.shape=}")
 
-        self.mask_scale = self.quantize_model[0].outputs[9].properties.scale_data[0]
+        self.mask_scale = self.l_mces_scale = self.quantize_model.output_quants[self.quantize_model.model_names[0]][self.quantize_model.output_names[self.quantize_model.model_names[0]][9]].scale
+        # self.mask_scale = self.quantize_model[0].outputs[9].properties.scale_data[0]
         logger.info(f"{self.mask_scale = }")
+
 
         # DFL求期望的系数, 只需要生成一次
         # DFL calculates the expected coefficients, which only needs to be generated once.
@@ -186,7 +197,8 @@ class Ultralytics_YOLOE_Seg():
         logger.info("SCORE_THRESHOLD  = %.2f, NMS_THRESHOLD = %.2f"%(self.SCORE_THRESHOLD, self.NMS_THRESHOLD))
         logger.info("CONF_THRES_RAW = %.2f"%self.CONF_THRES_RAW)
 
-        self.input_H, self.input_W = self.quantize_model[0].inputs[0].properties.shape[1:3]
+        self.input_H, self.input_W = self.quantize_model.input_shapes[self.quantize_model.model_names[0]][self.quantize_model.input_names[self.quantize_model.model_names[0]][0]][1:3]
+        # self.input_H, self.input_W = self.quantize_model[0].inputs[0].properties.shape[1:3]
         logger.info(f"{self.input_H = }, {self.input_W = }")
 
         self.Mask_H, self.Mask_W = 160, 160
@@ -223,7 +235,7 @@ class Ultralytics_YOLOE_Seg():
             # 利用resize的方式进行前处理, 准备nv12的输入数据
             begin_time = time()
             input_tensor = cv2.resize(img, (self.input_W, self.input_H), interpolation=cv2.INTER_NEAREST) # 利用resize重新开辟内存节约一次
-            input_tensor = self.bgr2nv12(input_tensor)
+            y, uv = self.bgr_to_nv12_planes(input_tensor)
             self.y_scale = 1.0 * self.input_H / self.img_h
             self.x_scale = 1.0 * self.input_W / self.img_w
             self.y_shift = 0
@@ -248,7 +260,7 @@ class Ultralytics_YOLOE_Seg():
             
             input_tensor = cv2.resize(img, (new_w, new_h))
             input_tensor = cv2.copyMakeBorder(input_tensor, self.y_shift, y_other, self.x_shift, x_other, cv2.BORDER_CONSTANT, value=[127, 127, 127])
-            input_tensor = self.bgr2nv12(input_tensor)
+            y, uv = self.bgr_to_nv12_planes(input_tensor)
             logger.info("\033[1;31m" + f"pre process(letter box) time = {1000*(time() - begin_time):.2f} ms" + "\033[0m")
         else:
             logger.error(f"illegal PREPROCESS_TYPE = {PREPROCESS_TYPE}")
@@ -257,7 +269,7 @@ class Ultralytics_YOLOE_Seg():
         logger.debug("\033[1;31m" + f"pre process time = {1000*(time() - begin_time):.2f} ms" + "\033[0m")
         logger.info(f"y_scale = {self.y_scale:.2f}, x_scale = {self.x_scale:.2f}")
         logger.info(f"y_shift = {self.y_shift:.2f}, x_shift = {self.x_shift:.2f}")
-        return input_tensor
+        return y, uv
 
     def bgr2nv12(self, bgr_img):
         begin_time = time()
@@ -273,17 +285,27 @@ class Ultralytics_YOLOE_Seg():
         logger.debug("\033[1;31m" + f"bgr8 to nv12 time = {1000*(time() - begin_time):.2f} ms" + "\033[0m")
         return nv12
 
-    def forward(self, input_tensor):
+    def bgr_to_nv12_planes(self, image):
         begin_time = time()
-        quantize_outputs = self.quantize_model[0].forward(input_tensor)
+        height, width = image.shape[:2]
+        area = height * width
+        yuv420p = cv2.cvtColor(image, cv2.COLOR_BGR2YUV_I420)
+        yuv420p = yuv420p.reshape((area * 3 // 2,))
+        y = yuv420p[:area].reshape((height, width))
+        u = yuv420p[area:area + area // 4].reshape((height // 2, width // 2))
+        v = yuv420p[area + area // 4:].reshape((height // 2, width // 2))
+        uv = np.stack((u, v), axis=-1)
+        y = y[np.newaxis, :, :, np.newaxis]
+        uv = uv[np.newaxis, :, :, :]
+        logger.debug("\033[1;31m" + f"bgr8 to nv12 time = {1000*(time() - begin_time):.2f} ms" + "\033[0m")
+        return y, uv
+    
+    def forward(self, y, uv):
+        begin_time = time()
+        outputs = [self.quantize_model.run({self.quantize_model.input_names[self.quantize_model.model_names[0]][0]: y, self.quantize_model.input_names[self.quantize_model.model_names[0]][1]: uv})[self.quantize_model.model_names[0]][name] for name in self.quantize_model.output_names[self.quantize_model.model_names[0]]]
         logger.debug("\033[1;31m" + f"forward time = {1000*(time() - begin_time):.2f} ms" + "\033[0m")
-        return quantize_outputs
-
-    def c2numpy(self, outputs):
-        begin_time = time()
-        outputs = [dnnTensor.buffer for dnnTensor in outputs]
-        logger.debug("\033[1;31m" + f"c to numpy time = {1000*(time() - begin_time):.2f} ms" + "\033[0m")
         return outputs
+
 
     def postProcess(self, outputs):
         begin_time = time()
