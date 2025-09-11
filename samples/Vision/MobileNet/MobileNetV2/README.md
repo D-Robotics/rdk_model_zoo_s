@@ -214,7 +214,7 @@ BPU conv original OPs per run: 601,548,544
 
 The python directory provides demos for quick inference on both X86 and S100 platforms:
 * [x86_inference.py](python/x86_inference.py) supports inference on the X86 platform using ONNX, HBIR (.bc), and HBM formats, as well as accuracy validation on the val dataset.
-* [s100_inference.py](python/s100_inference.py) supports inference on the board using the HBM format.
+* [s100_inference.py](python/s100_inference.py) supports inference on the board using the HBM format. using the new HB_HBMRuntime API
 
 For `x86_inference.py`, specify the model and image paths using `-m` and `-i`. Example:
 ```shell
@@ -225,5 +225,3 @@ To run accuracy validation with `x86_inference.py`, use the `--validate` flag. E
 ```shell
 python3 python/x86_inference.py -m model_output/mobilenetv2_224x224_nv12_quantized_model.bc --validate -d ../../../imagenet/val -l ../../../imagenet/val.txt
 ```
-
-s100_inference.py requires modifying the model and image paths in the main function.

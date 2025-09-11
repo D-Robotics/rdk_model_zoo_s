@@ -102,11 +102,13 @@ Total number of parameters in the model: 3487818
 
 ## 3. 部署测试
 
-在下载完毕 .hbm 文件后，可以执行 'test_mobilenetv2.ipynb' 或 pyhton文件夹中的 's100_inference.py' ，在板端实际运行体验实际测试效果。
+在下载完毕 .hbm 文件后，可以执行 'test_mobilenetv2.ipynb' 或 pyhton文件夹中的 's100_inference.py' ，在板端实际运行体验实际测试效果。推理实现已更新为使用新的 `hbm_runtime.HB_HBMRuntime` API 以获得更好的性能。
 
 * 注：若使用地平线参考算法，需要修改 `classification_postprocess_info.use_softmax = False`
 
 若需要更改测试图片，可额外下载数据集后，放入到data文件夹下并更改 jupyter 文件或 python脚本 中图片的路径
+
+**注意**：Jupyter notebook 和 Python 脚本现在都使用现代化的 HB_HBMRuntime API 替代旧的 hobot_dnn API。
 
 ![inference](data/image.png)
 
@@ -218,7 +220,7 @@ BPU conv original OPs per run: 601,548,544
 
 在 python 目录下提供了在 X86 平台和 S100 平台快速进行推理的 demo， 其中：
 * [x86_inference.py](python/x86_inference.py) 支持 ONNX , HBIR(.bc) 和 HBM 格式在 X86 平台的推理以及在val数据集上的精度验证
-* [s100_inference.py](python/s100_inference.py) 支持 HBM 格式在板端的推理。
+* [s100_inference.py](python/s100_inference.py) 支持 HBM 格式在板端使用新的 HB_HBMRuntime API 进行推理。
 
 x86_inference.py 需要通过 -m , -i 传入模型路径和图像路径，示例
 ```shell
@@ -230,5 +232,3 @@ x86_inference.py 使用精度验证需要设置 --validate 启动精度验证模
 ```shell
 python3 python/x86_inference.py -m model_output/mobilenetv2_224x224_nv12_quantized_model.bc --validate -d ../../../imagenet/val -l ../../../imagenet/val.txt
 ```
-
-s100_inference.py 需要修改 main 函数中模型和图像路径

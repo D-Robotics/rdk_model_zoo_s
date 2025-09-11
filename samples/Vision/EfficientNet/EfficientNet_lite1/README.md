@@ -103,7 +103,7 @@ Total number of parameters in the model: 5389850
 
 ## 4. Deployment Test
 
-After downloading the .hbm file, you can run 'test_EfficientNet_lite0.ipynb' or 's100_inference.py' in the python folder to test the model on the board.
+After downloading the .hbm file, you can run 'test_EfficientNet_lite1.ipynb' or 's100_inference.py' in the python folder to test the model on the board.
 
 If you need to change the test image, you can download the dataset, put it in the data folder, and modify the image path in the Jupyter notebook or Python script.
 
@@ -216,7 +216,7 @@ BPU conv original OPs per run: 1,200,370,464
 
 The python directory provides demos for quick inference on both X86 and S100 platforms:
 * [x86_inference.py](python/x86_inference.py) supports ONNX, HBIR (.bc), and HBM formats for inference on X86.
-* [s100_inference.py](python/s100_inference.py) supports HBM format for inference on the board.
+* [s100_inference.py](python/s100_inference.py) supports HBM format for inference on the board. using the new HB_HBMRuntime API using the new HB_HBMRuntime API
 
 x86_inference.py requires -m and -i to specify the model and image paths, for example:
 
@@ -230,5 +230,3 @@ To perform accuracy validation with `x86_inference.py`, use the `--validate` fla
 python3 python/x86_inference.py -m model_output/efficientnet_lite1_240x240_nv12_quantized_model.bc --validate -d ../../../imagenet/val -l ../../../imagenet/val.txt
 ```
 
-
-s100_inference.py requires modifying the model and image paths in the main function.

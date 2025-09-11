@@ -58,13 +58,15 @@ wget https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/mobilenetv1_
 
 ## 4. 部署测试
 
-在下载完毕 .hbm 文件后，可以执行 test_MobileNetV1.ipynb MobileNetV1 模型 jupyter 脚本文件，在板端实际运行体验实际测试效果。需要更改测试图片，可额外下载数据集后，放入到data文件夹下并更改 jupyter 文件中图片的路径
+在下载完毕 .hbm 文件后，可以执行 test_MobileNetV1.ipynb MobileNetV1 模型 jupyter 脚本文件，在板端实际运行体验实际测试效果。
+
+需要更改测试图片，可额外下载数据集后，放入到data文件夹下并更改 jupyter 文件中图片的路径
 
 ![](./data/image.png)
 
 在 python 目录下提供了在 X86 平台和 S100 平台快速进行推理的 demo， 其中：
 * [x86_inference.py](python/x86_inference.py) 支持 ONNX , HBIR(.bc) 和 HBM 格式在 X86 平台的推理以及在val数据集上的精度验证
-* [s100_inference.py](python/s100_inference.py) 支持 HBM 格式在板端的推理。
+* [s100_inference.py](python/s100_inference.py) 支持 HBM 格式在板端使用新的 HB_HBMRuntime API 进行推理。
 
 x86_inference.py 需要通过 -m , -i 传入模型路径和图像路径，示例
 ```shell

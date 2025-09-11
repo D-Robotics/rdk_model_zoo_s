@@ -174,11 +174,9 @@ BPU conv original OPs per run: 22,564,831,232
 
 The python directory provides demos for quick inference on both X86 and S100 platforms:
 * [x86_inference.py](python/x86_inference.py) supports ONNX, HBIR (.bc), and HBM formats for inference on X86.
-* [s100_inference.py](python/s100_inference.py) supports HBM format for inference on the board.
+* [s100_inference.py](python/s100_inference.py) supports HBM format for inference on the board. using the new HB_HBMRuntime API
 
 x86_inference.py requires -m and -i to specify the model and image paths, for example:
 ```shell
 python3 python/x86_inference.py -m model_output/resnet152_224x224_nv12_quantized_model.bc -i data/zebra_cls.jpg
 ```
-
-s100_inference.py requires modifying the model and image paths in the main function.

@@ -46,6 +46,8 @@ For quantization and conversion steps for resnet18, refer to the conversion step
 
 ## 3. Deployment & Testing
 
-After downloading the .hbm file, you can run the `test_resnet18.ipynb` Jupyter notebook on the board to test the model. To change the test image, download your dataset, place it in the `data` folder, and update the image path in the notebook.
+After downloading the .hbm file, you can run the `test_resnet18.ipynb` Jupyter notebook or `s100_inference.py` script on the board to test the model. 
+
+To change the test image, download your dataset, place it in the `data` folder, and update the image path in the notebook or script.
 
 ![](./data/image.png)

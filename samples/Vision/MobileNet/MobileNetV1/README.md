@@ -54,7 +54,10 @@ For quantization and conversion steps of MobileNetV1, refer to the conversion st
 
 ## 4. Deployment and Testing
 
-After downloading the .hbm file, you can run the test_MobileNetV1.ipynb Jupyter notebook to test the MobileNetV1 model on the board. To change the test image, download the dataset and place it in the data folder, then update the image path in the Jupyter notebook.
+After downloading the .hbm file, you can run the test_MobileNetV1.ipynb Jupyter notebook to test the MobileNetV1 model on the board. 
+
+To change the test image, download the dataset and place it in the data folder, then update the image path in the Jupyter notebook
+
 
 ![](./data/image.png)
 
@@ -76,4 +79,3 @@ To enable accuracy validation with `x86_inference.py`, use the `--validate` opti
 python3 python/x86_inference.py -m model_output/mobilenetv1_224x224_nv12_quantized_model.bc --validate -d ../../../imagenet/val -l ../../../imagenet/val.txt
 ```
 
-For `s100_inference.py`, modify the model and image paths directly in the `main` function.

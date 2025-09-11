@@ -48,6 +48,8 @@ wget https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/ResNet/resne
 
 ## 3. 部署测试
 
-在下载完毕 .hbm 文件后，可以执行 test_resnet18.ipynb  jupyter 脚本文件，在板端实际运行体验实际测试效果。需要更改测试图片，可额外下载数据集后，放入到data文件夹下并更改 jupyter 文件中图片的路径
+在下载完毕 .hbm 文件后，可以执行 test_resnet18.ipynb Jupyter 脚本文件或 s100_inference.py 脚本，在板端实际运行体验实际测试效果。
+
+需要更改测试图片，可额外下载数据集后，放入到data文件夹下并更改 Jupyter 文件或脚本中图片的路径。
 
 ![](./data/image.png)

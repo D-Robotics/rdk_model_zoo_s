@@ -104,7 +104,7 @@ Total number of parameters in the model: 12950386
 
 ## 4. 部署测试
 
-在下载完毕 .hbm 文件后，可以执行 'test_EfficientNet_lite4.ipynb' 或 pyhton文件夹中的 's100_inference.py' ，在板端实际运行体验实际测试效果。
+在下载完毕 .hbm 文件后，可以执行 'test_EfficientNet_lite4.ipynb' 或 'python'文件夹中的 's100_inference.py' ，在板端实际运行体验实际测试效果。
 
 若需要更改测试图片，可额外下载数据集后，放入到data文件夹下并更改 jupyter 文件或 python脚本 中图片的路径
 
@@ -218,7 +218,7 @@ BPU conv original OPs per run: 770,375,104
 
 在 python 目录下提供了在 X86 平台和 S100 平台快速进行推理的 demo， 其中：
 * [x86_inference.py](python/x86_inference.py) 支持 ONNX , HBIR(.bc) 和 HBM 格式在 X86 平台的推理。
-* [s100_inference.py](python/s100_inference.py) 支持 HBM 格式在板端的推理。
+* [s100_inference.py](python/s100_inference.py) 支持 HBM 格式在板端使用新的 HB_HBMRuntime API 进行推理。
 
 x86_inference.py 需要通过 -m , -i 传入模型路径和图像路径，示例
 
@@ -231,5 +231,3 @@ x86_inference.py 使用精度验证需要设置 --validate 启动精度验证模
 ```shell
 python3 python/x86_inference.py -m model_output/efficientnet_lite4_380x380_nv12_quantized_model.bc --validate -d ../../../imagenet/val -l ../../../imagenet/val.txt
 ```
-
-s100_inference.py 需要修改 main 函数中模型和图像路径
