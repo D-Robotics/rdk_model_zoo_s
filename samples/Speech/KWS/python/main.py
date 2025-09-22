@@ -1,11 +1,14 @@
 import numpy as np
+from hbm_runtime import HB_HBMRuntime
+inf = HB_HBMRuntime("kws.hbm")
 import time
 import paddle
 import paddleaudio
 from paddleaudio.compliance.kaldi import fbank
-import libmodel_task
+
 
 THRES = 60000
+
 
 def audio_trunc(audio_arr, thres=THRES):
     length = audio_arr.shape[1]
@@ -24,15 +27,11 @@ feat_func = lambda waveform, sr: fbank(
     frame_length=25, 
     n_mels=80)
 
-inf = libmodel_task.ModelTask()
-inf.ModelInit("kws.hbm")
-
 key_test_load = paddleaudio.load('sample.wav')
 key_test_load = (audio_trunc(key_test_load[0]), key_test_load[1])
 keyword_feat = feat_func(*key_test_load)
 key_input = keyword_feat.unsqueeze(0).numpy()
 
-input_data = [key_input]
-out = inf.ModelInfer(input_data)
+out = inf.run(key_input)['kws']['sigmoid_1.tmp_0']
 keyword_score = np.max(out).item()
 print(keyword_score)
