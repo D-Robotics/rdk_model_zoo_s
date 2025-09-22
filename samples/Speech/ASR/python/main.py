@@ -1,9 +1,9 @@
+from hbm_runtime import HB_HBMRuntime
+inf = HB_HBMRuntime("asr.hbm")
 import soundfile as sf
 from scipy.io import wavfile
 import scipy.signal as sps
 import numpy as np
-
-import libmodel_task
 
 
 with open("vocab.json", "r", encoding="utf-8-sig") as f:
@@ -11,9 +11,6 @@ with open("vocab.json", "r", encoding="utf-8-sig") as f:
 res = dict((v, k) for k, v in d.items())
 res[69] = "[PAD]"
 res[68] = "[UNK]"
-
-inf = libmodel_task.ModelTask()
-inf.ModelInit("asr.hbm")
 
 
 def reduce_channel(input_file, output_file):
@@ -56,8 +53,8 @@ if speech.shape[1] < AUDIO_MAXLEN:
 else:
     speech = speech[:,:AUDIO_MAXLEN]
 
-input_data = [speech]
-output_arr = np.array(inf.ModelInfer(input_data)[0]).reshape(1,93,3503)
+inf_res = inf.run(speech)['asr']['modelOutput']
+output_arr = np.array(inf_res)
 prediction = np.argmax(output_arr, axis=-1)
 _t1 = "".join([res[i] for i in list(prediction[0])])
 cleaned_text = _t1.replace("<pad>", "")
