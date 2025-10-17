@@ -106,7 +106,7 @@ std::vector<std::string> object_names //Class labels
 ```
 
 
-## Result Analysis
+## Reference Result
 
 ![](source/imgs/ultralytics_YOLO_Detect_demo.jpg)
 
