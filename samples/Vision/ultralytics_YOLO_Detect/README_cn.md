@@ -105,7 +105,7 @@ std::vector<std::string> object_names //类别标签
 ```
 
 
-## 结果分析
+## 参考运行效果
 
 ![](source/imgs/ultralytics_YOLO_Detect_demo.jpg)
 
