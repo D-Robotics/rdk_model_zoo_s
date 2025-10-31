@@ -36,11 +36,11 @@ We use the following command:
 
 Subsequently, an error message was obtained:
 
-![](images/image-6.png)
+![](images/image-1.png)
 
 The error message indicates that although the toolchain supports the conversion of the Conv3D operator, it does not support the 3D operation of GlobalAveragePooling. Therefore, in order to convert the 3D convolution model, we need to replace the pooling operator Pooling. The following figure shows the 3D pooling operator before replacement.&#x20;
 
-![](images/image-5.png)
+![](images/image.png)
 
 We replaced it with the 2D ReduceMean operator:&#x20;
 
@@ -64,7 +64,7 @@ The video content is the athlete performing archery operations.&#x20;
 
 We save the video as a numpy array in npy format, and then use it as input for the r3d\_18.hbm model to perform inference. After inference, we print the Top5 categories with the highest probabilities in descending order, which are as follows:
 
-![](images/image.png)
+![](images/image-5.png)
 
 It can be seen that the category with the Top1 probability is Archery, which means archery. This confirms that in this test case, the accuracy of the quantized model does not have significant issues.&#x20;
 
@@ -89,7 +89,7 @@ We use the command:
 
 Get other metrics
 
-![](images/image-1.png)
+![](images/image-6.png)
 
 BPU Occupancy: 5.2%
 
