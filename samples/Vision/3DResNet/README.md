@@ -107,6 +107,20 @@ Download and install hbm\_runtime on the RDK S100 board,&#x20;
 
 Next, we install the corresponding dependencies:
 
-After completing the installation of relevant dependencies, we can execute&#x20;
+```
+pip install -r requirements.txt
+```
+
+After completing the installation of relevant dependencies, we can download the model:
+
+```
+wget https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/3dresnet/r3d_18.hbm
+```
+
+we can execute&#x20;
+
+```
+python main.py
+```
 
 Obtain the above Top5 categories with the highest probabilities,&#x20;

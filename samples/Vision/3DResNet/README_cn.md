@@ -123,7 +123,13 @@ ION内存占用：\~91.9M
 pip install -r requirements.txt
 ```
 
-在完成相关依赖的安装后，我们可以执行
+在完成相关依赖的安装后。进行模型获取：
+
+```
+wget https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/3dresnet/r3d_18.hbm
+```
+
+我们可以执行
 
 ```plain&#x20;text
 python main.py
