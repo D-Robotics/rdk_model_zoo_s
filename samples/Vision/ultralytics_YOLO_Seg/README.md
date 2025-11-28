@@ -1,5 +1,10 @@
 English| [简体中文](./README_cn.md)
 
+# Note
+这部分内容将在2026年1月1日从 RDK S100 Model Zoo 移除，请参考最新 YOLO All-in-One 文档和代码: [YOLO All-in-One CN](https://github.com/D-Robotics/rdk_model_zoo_s/blob/s100/samples/Vision/Ultralytics_YOLO/README_cn.md)
+
+This content will be removed from the RDK S100 Model Zoo on January 1, 2026. Please refer to the latest YOLO All-in-One documentation and code: [YOLO All-in-One EN](https://github.com/D-Robotics/rdk_model_zoo_s/blob/s100/samples/Vision/Ultralytics_YOLO/README.md)
+
 # Ultralytics YOLO Instance Segmentation
 
 ## Abstract
