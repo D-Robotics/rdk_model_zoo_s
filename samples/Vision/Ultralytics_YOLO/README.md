@@ -1,14 +1,14 @@
-[English](./README.md) | 简体中文
+English | [简体中文](./README_cn.md)
 
-# Ultralytics YOLO: 你只需要看一次
+
+# Ultralytics YOLO: You Only Look Once
 
 ## Summary
+This article introduces the YOLO model provided based on the 'ultralytics/ultralytics' repository, offering model export, toolchain quantization and compilation methods, as well as Python and CPP deployment on the RDK platform. It includes 6 YOLO versions and 4 algorithm tasks, providing over 1,000 performance and accuracy benchmarks on platforms such as RDK X5, RDK S100, and RDK S100P, as well as usage methods.
 
-本文介绍了基于`ultralytics/ultralytics`仓库提供的YOLO模型, 提供模型导出, 工具链量化和编译方法, RDK平台上的Python和CPP部署. 包含6个YOLO版本, 4种算法任务, 给予了在RDK X5, RDK S100, RDK S100P等平台上的性能和精度BenchMark超1k条, 以及使用方法.
+The BPU model is open-sourced in the HuggingFace repository: [HuggingFace: Cauchy_Ultralytics_YOLO](https://huggingface.co/WuChao-Cauchy/Cauchy_Ultralytics_YOLO)
 
-BPU模型开源在HuggingFace仓库: [HuggingFace: Cauchy_Ultralytics_YOLO](https://huggingface.co/WuChao-Cauchy/Cauchy_Ultralytics_YOLO)
-
-BPU模型也可在地瓜服务器上获取: [downloads/rdk_model_zoo](https://archive.d-robotics.cc/downloads/rdk_model_zoo/)
+BPU offering model can also get on sweet potato server: [downloads/rdk_model_zoo] (https://archive.d-robotics.cc/downloads/rdk_model_zoo/)
 
 
 RDK S Model Zoo: [GitHub: RDK_Model_Zoo_S](https://github.com/D-Robotics/rdk_model_zoo_s)
@@ -17,35 +17,38 @@ RDK X5 Model Zoo: [GitHub: RDK_Model_Zoo](https://github.com/D-Robotics/rdk_mode
 
 ## Suggestions
 
-1. 阅读本文前, 请您确保您已经掌握基本的Linux系统使用, 有一定的机器学习或深度学习基础知识, 掌握基本的Python或者C/C++开发的基础知识. 任何 `No such file or directory`, `No module named "xxx"`, `command not found`, `permission denied`, `SyntaxError: invalid syntax` 等报错请仔细检查, 请勿逐条复制运行.
+1. Before reading this article, please ensure you have a basic understanding of Linux systems, some foundational knowledge in machine learning or deep learning, and basic development skills in Python or C/C++. Carefully check for any errors such as `No such file or directory`, `No module named "xxx"`, `command not found`, `permission denied`, `SyntaxError: invalid syntax`, etc. Do not copy and run commands line by line without understanding.
 
-2. 请确保您已经通读了RDK手册的前3章, 同时也体验了OpenExplore包和BPU算法工具链手册的基础章节, 成功使用OpenExplore包转化过1～2个您喜欢的预置的ONNX模型.
+2. Please make sure you have thoroughly read the first three chapters of the RDK manual, and have also experienced the OpenExplore package and the BPU algorithm toolchain manual's introductory sections. Successfully convert 1–2 of your preferred preset ONNX models using the OpenExplore package.
 
-3. 请注意, 社区的代码本身就是长期和开发者共建的, 没有商业发布物那样严格测试过, 作者能力和精力有限, 暂时无法承诺可以直接长期稳定运行. 如果您有更好的idea, 欢迎给我们issue和PR.
+3. Please note that the community code is collaboratively developed with developers over the long term and has not undergone the same rigorous testing as commercial releases. Due to limited author capacity and resources, we cannot currently guarantee long-term stable operation. If you have better ideas, we welcome your issues and pull requests (PRs).
 
-4. 请注意, Ultralytics YOLO采用AGPL-3.0协议, 请遵循相关协议约定使用, 更多请参考: [https://www.ultralytics.com/license](https://www.ultralytics.com/license)
+4. Please note that Ultralytics YOLO is licensed under the AGPL-3.0 license. Use it in compliance with the relevant license terms. For more information, please refer to: [https://www.ultralytics.com/license](https://www.ultralytics.com/license)
 
 ## Introduction to YOLO
 
 ![](source/imgs/ultralytics_yolo_detect_performance_comparison.png)
 
- - YOLO(You Only Look Once)是一种流行的物体检测和图像分割模型,由华盛顿大学的约瑟夫-雷德蒙(Joseph Redmon)和阿里-法哈迪(Ali Farhadi)开发. YOLO 于 2015 年推出,因其高速度和高精确度而迅速受到欢迎. 
- - 2016 年发布的YOLOv2 通过纳入批量归一化、锚框和维度集群改进了原始模型. 
- - 2018 年推出的YOLOv3 使用更高效的骨干网络、多锚和空间金字塔池进一步增强了模型的性能. 
- - YOLOv4 于 2020 年发布, 引入了 Mosaic 数据增强、新的无锚检测头和新的损失函数等创新技术. 
- - YOLOv5 进一步提高了模型的性能, 并增加了超参数优化、集成实验跟踪和自动导出为常用导出格式等新功能. 
- - YOLOv6 于 2022 年由美团开源, 目前已用于该公司的许多自主配送机器人. 
- - YOLOv7 增加了额外的任务, 如 COCO 关键点数据集的姿势估计. 
- - YOLOv8 是YOLO 的最新版本, 由Ultralytics 提供. YOLOv8支持全方位的视觉 AI 任务, 包括检测、分割、姿态估计、跟踪和分类. 这种多功能性使用户能够在各种应用和领域中利用YOLOv8 的功能. 
- - YOLOv9 引入了可编程梯度信息(PGI) 和广义高效层聚合网络(GELAN)等创新方法. 
- - YOLOv10 是由清华大学的研究人员使用Ultralytics Python 软件包创建的. 该版本通过引入端到端头(End-to-End head),消除了非最大抑制(NMS)要求, 实现了实时目标检测的进步. 
- - Ultralytics YOLO11 是 Ultralytics YOLO 系列实时目标检测器的新迭代版本，它以前沿的精度、速度和效率重新定义了可能性。YOLO11 在之前 YOLO 版本的显著进步基础上，在架构和训练方法上进行了重大改进，使其成为各种计算机视觉任务的多功能选择。
- - YOLO12 构建以注意力为核心的YOLO框架, 通过创新方法和架构改进, 打破CNN模型在YOLO系列中的主导地位, 实现具有快速推理速度和更高检测精度的实时目标检测. 
- - Ultralytics YOLO26（即将发布） 是 YOLO 系列实时对象检测器的最新演进，从头开始专为边缘和低功耗设备而设计。它引入了简化的设计，消除了不必要的复杂性，同时集成了有针对性的创新，以实现更快、更轻、更易于访问的部署。
+
+YOLO (You Only Look Once) is a popular object detection and image segmentation model developed by Joseph Redmon and Ali Farhadi of the University of Washington. YOLO was introduced in 2015 and quickly gained popularity due to its high speed and accuracy.
+
+ - YOLOv2, released in 2016, improved upon the original model by incorporating batch normalization, anchor boxes, and dimension clustering.
+ - YOLOv3: The third iteration of the YOLO model family, originally by Joseph Redmon, known for its efficient real-time object detection capabilities.
+ - YOLOv4: A darknet-native update to YOLOv3, released by Alexey Bochkovskiy in 2020.
+ - YOLOv5: An improved version of the YOLO architecture by Ultralytics, offering better performance and speed trade-offs compared to previous versions.
+ - YOLOv6: Released by Meituan in 2022, and in use in many of the company's autonomous delivery robots.
+ - YOLOv7: Updated YOLO models released in 2022 by the authors of YOLOv4.
+ - YOLOv8: The latest version of the YOLO family, featuring enhanced capabilities such as instance segmentation, pose/keypoints estimation, and classification.
+ - YOLOv9: An experimental model trained on the Ultralytics YOLOv5 codebase implementing Programmable Gradient Information (PGI).
+ - YOLOv10: By Tsinghua University, featuring NMS-free training and efficiency-accuracy driven architecture, delivering state-of-the-art performance and latency.
+ - YOLO11 🚀: Ultralytics' latest YOLO models delivering state-of-the-art (SOTA) performance across multiple tasks.
+ - YOLO12 builds a YOLO framework centered around attention mechanisms, employing innovative methods and architectural improvements to break the dominance of CNN models within the YOLO series. This enables real-time object detection with faster inference speeds and higher detection accuracy.
+ - Ultralytics YOLO26 (upcoming release) is the latest evolution of the YOLO series of real-time object detectors, designed from the ground up specifically for edge and low-power devices. It introduces a simplified design, eliminates unnecessary complexity, and integrates targeted innovations to achieve faster, lighter, and more accessible deployments.
+
 
 ## Quick Experience
 
-快速体验环境为RDK板卡烧录社区提供的最新的RDK OS系统后, 正常联网和更新, 下载RDK Model Zoo的`samples/Vision/Ultralytics_YOLO`文件夹, 即可使用系统的全局Python解释器来体验. 如果您想使用conda等虚拟环境体验, 可以参考本文后的"模型部署"章节.
+Fast experience environment for RDK board burn the community to provide the latest RDK OS system, and update the normal network, download the RDK Model of Zoo ` samples/Vision/Ultralytics_YOLO ` folder, global systems can be used to experience the Python interpreter. If you want to experience virtual environments such as conda, you can refer to the "Model Deployment" section at the end of this article.
 
 ```bash
 # Download RDK Model Zoo
@@ -69,9 +72,9 @@ python3 -m py.rdk_yolo_app --yolo-type yolo11 --model-type classification --work
 
 ### Result Alalysis
 
-程序自动下载YOLO11的对应的模型, 对文件夹内所有的图片进行推理, 推理和可视化结果保存在当前目录 `--workspace` 指定的文件夹内.
+The program automatically downloads the corresponding model of YOLO11, performs reasoning on all the images in the folder, and saves the reasoning and visualization results in the folder specified by the current directory '--workspace'.
 
-运行日志参考:
+Reference for operation logs
 ```bash
 # python3 -m py.rdk_yolo_app --yolo-type yolo11 --model-type classification --workspace result_classification_workspace
 [RDK_YOLO] [15:26:26.435] [INFO] Namespace(model_path='BPU/Nash-e/yolo11n_seg_nashe_640x640_nv12.hbm', source='../../../resource/datasets/COCO2017/assets/', workspace='result_classification_workspace', mode='default', mode_save_name='result_bpu.txt', yolo_type='yolo11', model_type='classification', classes_num=80, nms_thres=0.7, score_thres=0.25, reg=16, strides=[8, 16, 32], mc=32, is_open=True, is_point=False, pose_classes_num=1, nkpt=17, kpt_conf_thres=0.5)
@@ -249,50 +252,72 @@ YOLOv8 - CLS, Size: n, s, m, l, x
     Python Version: 3.10.18
 ```
 
-
 ## BenchMark Instructions
 
 ### Performance Test Instructions
-1. `Device`列表示测试的平台, S100P表示RDK S100P, S100表示RDK S100, X5表示RDK X5 (Module).
-2. `Model`列表示测试的模型, 与本文`Support Models`章节所列模型是对应关系.
-3. `Size(Pixels)`列表示的是模型的算法分辨率, 是导出ONNX模型的输入分辨率, 其他分辨率的图像一般是经过前处理缩放到此分辨率, 再送入网络推理.
-4. `Classes`列表示的是模型的检测目标数量, 这里使用的都是Ultralytics YOLO基于COCO2017数据集或者ImageNet-1k数据集训练出来的权重, 类别数量与对应的数据集的类别数量是一致的.
-5. `BPU Task Latency / BPU Throughput (Threads)`列列举了BPU延迟与BPU吞吐量的情况.
- - 单线程延迟为单帧,单线程,单BPU核心的延迟,BPU推理一个任务最理想的情况. 
- - 多线程帧率为多个线程同时向BPU塞任务, 每个BPU核心可以处理多个线程的任务, 一般工程中2个线程可以控制单帧延迟较小,同时吃满所有BPU到100%,在吞吐量(FPS)和帧延迟间得到一个较好的平衡.
- - 表格中一般记录到吞吐量不再随线程数明显增加的数据. 
- - BPU延迟和BPU吞吐量使用以下命令在板端实验, hrt_model_exec工具由OE包提供, 其源码在OE包的`package/board/hrt_model_exec/src`目录下.
-```bash
-hrt_model_exec perf --thread_num 2 --model_file < model.bin / model.hbm >
-```
- - 由于实验的条件不同, 复现的的结果可能不同, 这里统一参照本文的`Platform Details`中的设备状态, 在平台状态最佳时进行实验.
- - hrt_model_exec工具的性能实验中, 充分考虑了缓存预热, 多线程程序设计等性能测试的内容, 测量的时间为用户程序向BPU提交BPU任务到等待BPU任务结束的时间。
- - 在流式数据推理时, 输入输出内存可以开辟一次, 反复使用, 请不要将开辟和回收内存的时间纳入推理时间, 也不要在流式数据推理中反复开辟和回收内存, 这是不科学的程序设计方法.
-6. `CPU Latency (Single Core)`指的是后处理时间, 目前对后处理有做性能优化, 后处理时间与有效目标的个数正相关, 这里的后处理时间一般是目标图片中有效目标的个数小于100时的性能数据. Python和C/C++的后处理时间会有一点差距, 但是由于Python后处理程序基本也是numpy深度优化了, 所以两者差距并不是很大.
-7. `params(M)`和`FLOPs(B)`是原始浮点模型的参数量和计算量, 使用Ultralytics YOLO软件包在加载完pt模型后, 使用YOLO.export方法时日志中打印的浮点模型参数量和计算量信息. 由于最终生成的BPU定点模型的参数量和计算量与模型结构优化, 图优化, 编译器优化有关系, 与浮点模型的参数量和计算量正相关但是不一定成正比例, 所以这里统一记录浮点计算量为参考.
 
+1. The Device column indicates the test platform:
+S100P refers to RDK S100P,
+S100 refers to RDK S100,
+X5 refers to RDK X5 (Module).
 
-### Accuracy Test Instructions
-1. `Device`列和`Model`列含义与`Performance Test Instructions`章节的含义相同.
-2. 精度数据使用微软官方的无修改的`pycocotools`库进行计算, 目标检测(`Obeject Detection`)任务的测评模式为iouType="bbox", 和实例分割(`Instance Segmentation`)任务的测评模式为`iouType="bbox"`和`iouType="segm"`, 人体关键点估计的测评模式为`iouType="keypoints"`. 
- - `Accuracy bbox-all mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ]`.
- - `Accuracy bbox-small mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ]`.
- - `Accuracy bbox-medium mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ]`.
- - `Accuracy bbox-large mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ]`.
- - `Accuracy mask-all mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ]`.
- - `Accuracy mask-small mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ]`.
- - `Accuracy mask-medium mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ]`.
- - `Accuracy mask-large mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ]`.
- - `Accuracy pose-all mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets= 20 ]`.
- - `Accuracy pose-medium mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets= 20 ]`.
- - `Accuracy pose-large mAP@.50:.95` 取自 `Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets= 20 ]`.
-3. AP 更关注“质量”：既要找到目标(recall), 又要框得准, 类别对(precision), AR 更关注“数量”: 只要框住就算，不惩罚误检. 一个模型可以有高 AR 但低 AP, 比如疯狂输出大量低质量框, 找得全但不准. 也可以有高 AP 但低 AR, 比如只输出高置信度结果, 很准但漏很多. 这里取的均为AP指标来衡量模型的精度.
-4. 测试数据均使用`COCO2017`数据集的val验证集的5000张照片, 在板端直接推理, dump保存为json文件, 送入第三方测试工具`pycocotools`库进行计算, 分数的阈值为0.25, nms的阈值为0.7. 
-5. pycocotools计算的精度比ultralytics计算的精度会低一些是正常现象, 主要原因是在计算AP曲线下面积时, pycocotools是取矩形面积, ultralytics是取梯形面积, 我们主要是关注同样的一套计算方式去测试定点模型和浮点模型的精度, 从而来评估量化过程中的精度损失. 
-6. 分类任务使用的数据集为`ImageNet-1k`, 使用TOP1和TOP5两个指标来评估量化过程中的精度损失.
-7. BPU模型在量化NCHW-RGB888输入转换为YUV420SP(nv12)输入后, 也会有一部分精度损失, 这是由于色彩空间转化导致的, 在训练时加入这种色彩空间转化的损失可以避免这种精度损失. 
-8. Python接口和C/C++接口的精度结果有细微差异, 主要在于Python和C/C++的一些数据结构进行memcpy和转化的过程中, 对浮点数的处理方式不同, 导致的细微差异.
-9. 本表格是使用PTQ(训练后量化)使用50张图片进行校准和编译的结果, 用于模拟普通开发者第一次直接编译的精度情况, 并没有进行精度调优或者QAT(量化感知训练), 满足常规使用验证需求, 不代表精度上限.
+2. The Model column specifies the tested model, which corresponds directly to the models listed in the "Supported Models" section of this document.
+
+3. The Size (Pixels) column denotes the algorithmic input resolution of the model—i.e., the input resolution of the exported ONNX model. Input images with other resolutions are typically preprocessed (resized) to this resolution before being fed into the network for inference.
+
+4. The Classes column indicates the number of detection categories supported by the model. All models listed here use weights trained by Ultralytics YOLO on either the COCO2017 dataset or the ImageNet-1k dataset; thus, the number of classes matches that of the respective training dataset.
+
+5. The BPU Task Latency / BPU Throughput (Threads) column reports BPU latency and throughput under various threading conditions:
+Single-thread latency: measured per frame, using a single thread and a single BPU core—representing the ideal-case latency for a single BPU inference task.
+Multi-thread throughput: multiple threads concurrently submit tasks to the BPU. Each BPU core can handle tasks from multiple threads. In practical engineering scenarios, using 2 threads typically achieves minimal per-frame latency while fully utilizing all BPU cores (100% utilization), striking a good balance between throughput (FPS) and frame latency.
+The table generally records results up to the point where throughput no longer increases significantly with additional threads.
+BPU latency and throughput were measured on-device using the following command. The hrt_model_exec tool is provided by the OE package, with source code located in package/board/hrt_model_exec/src within the OE package:
+bash
+hrt_model_exec perf --thread_num 2 --model_file <model.bin / model.hbm>
+Due to varying experimental conditions, reproduced results may differ. All measurements reported here were conducted under the optimal device state specified in the "Platform Details" section.
+The hrt_model_exec performance test accounts for cache warm-up and proper multi-threaded program design. The measured time spans from when the user application submits a BPU task until the task completes.
+For streaming inference, input and output memory buffers should be allocated once and reused across frames. Do not include memory allocation/deallocation time in inference timing, nor repeatedly allocate/free memory during streaming inference—this constitutes poor software design.
+
+6. CPU Latency (Single Core) refers to post-processing time. Current implementations include performance optimizations for post-processing, whose duration scales linearly with the number of valid detected objects. The reported values assume fewer than 100 valid objects per image. While Python and C/C++ implementations may show slight differences in post-processing time, the gap is small because the Python version heavily relies on highly optimized NumPy operations.
+
+7. params(M) and FLOPs(B) represent the parameter count and computational complexity (in floating-point operations) of the original floating-point model. These values are obtained from logs printed by the Ultralytics YOLO package when calling YOLO.export() after loading a .pt model. Note that the final fixed-point BPU model’s parameters and FLOPs depend on model structure optimization, graph optimization, and compiler optimizations. Although correlated with the floating-point model’s metrics, they are not strictly proportional. Therefore, floating-point FLOPs are uniformly recorded here as a reference.
+
+Accuracy Test Instructions
+
+1. The meanings of the Device and Model columns are identical to those described in the "Performance Test Instructions" section.
+
+2. Accuracy metrics were computed using Microsoft’s official, unmodified pycocotools library:
+For Object Detection, evaluation uses iouType="bbox".
+For Instance Segmentation, evaluation uses both iouType="bbox" and iouType="segm".
+For Human Pose Estimation (Keypoint Detection), evaluation uses iouType="keypoints".
+
+Specific metrics are derived as follows:
+Accuracy bbox-all mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=all maxDets=100 ]
+Accuracy bbox-small mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=small maxDets=100 ]
+Accuracy bbox-medium mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=medium maxDets=100 ]
+Accuracy bbox-large mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=large maxDets=100 ]
+Accuracy mask-all mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=all maxDets=100 ]
+Accuracy mask-small mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=small maxDets=100 ]
+Accuracy mask-medium mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=medium maxDets=100 ]
+Accuracy mask-large mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=large maxDets=100 ]
+Accuracy pose-all mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=all maxDets=20 ]
+Accuracy pose-medium mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=medium maxDets=20 ]
+Accuracy pose-large mAP@.50:.95: Average Precision (AP) @[ IoU=0.50:0.95 area=large maxDets=20 ]
+
+3. AP (Average Precision) emphasizes quality: it requires both high recall (finding targets) and high precision (accurate bounding boxes and correct classification). In contrast, AR (Average Recall) emphasizes quantity: it counts any detection that overlaps a ground truth, without penalizing false positives. Thus, a model can have high AR but low AP (e.g., by generating many low-quality detections) or high AP but low AR (e.g., by only outputting high-confidence predictions and missing many targets). This document uses AP as the primary accuracy metric.
+
+4. All tests used the 5,000 images from the COCO2017 validation set. Inference was performed directly on the device, and results were dumped to JSON files for evaluation using the third-party pycocotools library. A confidence threshold of 0.25 and an NMS IoU threshold of 0.7 were applied.
+
+5. It is normal for pycocotools to report slightly lower accuracy than Ultralytics’ own evaluation tools. This discrepancy arises because pycocotools computes the AP integral using rectangular approximation, whereas Ultralytics uses trapezoidal approximation. Our focus is on using a consistent evaluation method to compare fixed-point (quantized) and floating-point models, thereby assessing quantization-induced accuracy loss.
+
+6. For classification tasks, the ImageNet-1k dataset was used, with Top-1 and Top-5 accuracy reported to evaluate quantization-induced accuracy degradation.
+
+7. Converting BPU model input from NCHW-RGB888 to YUV420SP (NV12) introduces minor accuracy loss due to color-space transformation. This loss can be mitigated by incorporating such color-space conversion during model training.
+
+8. Minor numerical discrepancies may exist between Python and C/C++ API results, primarily due to subtle differences in how floating-point data is handled during memory copying and type conversions between the two implementations.
+
+9. The results in this table were obtained using Post-Training Quantization (PTQ) with calibration on 50 images, simulating the typical experience of a developer performing their first direct compilation without further accuracy tuning or Quantization-Aware Training (QAT). These results satisfy general validation requirements but do not represent the upper bound of achievable accuracy.
+
 
 ## Performance
 ### RDK S100P
@@ -803,50 +828,52 @@ hrt_model_exec perf --thread_num 2 --model_file < model.bin / model.hbm >
 | X5       | YOLOv8x CLS | 0.790 / 0.741 (93.8 %)                  | 0.945 / 0.921 (97.5 %)                  |
 
 
-## 进阶开发
-### 高性能计算流程介绍
-#### 目标检测 (Obeject Detection)
+
+## Advanced Development
+### High-Performance Computing Process Introduction
+#### Object Detection
 ![](source/imgs/ultralytics_YOLO_Detect_DataFlow.png)
 
-公版处理流程中, 是会对8400个bbox完全计算分数, 类别和xyxy坐标, 这样才能根据GT去计算损失函数. 但是我们在部署中, 只需要合格的bbox就好了, 并不需要对8400个bbox完全计算. 
-优化处理流程中, 主要就是利用Sigmoid函数单调性做到了先筛选, 再计算. 对DFL和特征解码的部分也做到了先筛选, 再计算, 节约了大量的计算. 从而使得inference time大大缩短.  
+In the standard processing flow, scores, categories, and xyxy coordinates are fully computed for all 8400 bounding boxes (bbox) to calculate the loss function based on ground truth (GT). However, during deployment, we only need the qualified bboxes, so it's unnecessary to compute all 8400 bboxes completely. 
 
- - Classify部分,ReduceMax操作
-ReduceMax操作是沿着Tensor的某一个维度找到最大值,此操作用于找到8400个Grid Cell的80个分数的最大值. 操作对象是每个Grid Cell的80类别的值,在C维度操作. 注意,这步操作给出的是最大值,并不是80个值中最大值的索引. 
-激活函数Sigmoid具有单调性,所以Sigmoid作用前的80个分数的大小关系和Sigmoid作用后的80个分数的大小关系不会改变. 
+The optimization primarily leverages the monotonicity of the Sigmoid function to perform filtering before calculation. This approach also applies to the DFL and feature decoding stages—filtering first, then computing—which saves substantial computational effort. As a result, the inference time is significantly reduced.
+
+ - Classify part, ReduceMax operation
+The ReduceMax operation finds the maximum value along a specific dimension of a Tensor. This operation is used to find the maximum value among the 80 scores of 8,400 Grid Cells. The operation object is the 80 category values of each Grid Cell, operating on the C dimension. Note, this operation provides the maximum value, not the index of the maximum value among the 80 values.
+The activation function Sigmoid has monotonicity, so the relative magnitude relationship of the 80 scores before and after the Sigmoid function remains unchanged.
 $$Sigmoid(x)=\frac{1}{1+e^{-x}}$$
 $$Sigmoid(x_1) > Sigmoid(x_2) \Leftrightarrow x_1 > x_2$$
-综上,bin模型直接输出的最大值(反量化完成)的位置就是最终分数最大值的位置,bin模型输出的最大值经过Sigmoid计算后就是原来onnx模型的最大值. 
+In summary, the position of the maximum value output directly by the bin model (after dequantization) is the same as the position of the final score's maximum value. The maximum value output by the bin model, after Sigmoid calculation, is the same as the original maximum value from the onnx model.
 
- - Classify部分,Threshold(TopK)操作
-此操作用于找到8400个Grid Cell中,符合要求的Grid Cell. 操作对象为8400个Grid Cell,在H和W的维度操作. 如果您有阅读我的程序,你会发现我将后面H和W维度拉平了,这样只是为了程序设计和书面表达的方便,它们并没有本质上的不同. 
-我们假设某一个Grid Cell的某一个类别的分数记为$x$,激活函数作用完的整型数据为$y$,阈值筛选的过程会给定一个阈值,记为$C$,那么此分数合格的**充分必要条件**为: 
+ - Classify part, Threshold(TopK) operation
+This operation is used to find Grid Cells among 8,400 that meet the requirements. The operation object is the 8,400 Grid Cells, operating on the H and W dimensions. If you have read my program, you will notice that I flatten the H and W dimensions later, which is only for convenience in program design and written expression; there is no essential difference.
+We assume the score of a certain category for a certain Grid Cell is $x$, the integer data after the activation function is $y$, and the threshold filtering process provides a threshold denoted as $C$. The **necessary and sufficient condition** for this score to be qualified is:
 
 $$y=Sigmoid(x)=\frac{1}{1+e^{-x}}>C$$
 
-由此可以得出此分数合格的**充分必要条件**为: 
+From this, we can derive the **necessary and sufficient condition** for this score to be qualified:
 
 $$x > -ln\left(\frac{1}{C}-1\right)$$
 
-此操作会符合条件的Grid Cell的索引(indices)和对应Grid Cell的最大值,这个最大值经过Sigmoid计算后就是这个Grid Cell对应类别的分数了. 
+This operation will obtain the indices of the qualified Grid Cells and their corresponding maximum values. After Sigmoid calculation, this maximum value becomes the score of the category for this Grid Cell.
 
- - Classify部分,GatherElements操作和ArgMax操作
-使用Threshold(TopK)操作得到的符合条件的Grid Cell的索引(indices),在GatherElements操作中获得符合条件的Grid Cell,使用ArgMax操作得到具体是80个类别中哪一个最大,得到这个符合条件的Grid Cell的类别. 
+ - Classify part, GatherElements operation and ArgMax operation
+Using the indices of the qualified Grid Cells obtained from the Threshold(TopK) operation, the GatherElements operation retrieves the qualified Grid Cells, and the ArgMax operation determines which of the 80 categories is the largest, obtaining the category of this qualified Grid Cell.
 
- - Bounding Box部分,GatherElements操作
-使用Threshold(TopK)操作得到的符合条件的Grid Cell的索引(indices), 在GatherElements操作中获得符合条件的Grid Cell, 得到1×64×k×1的bbox信息. 
+ - Bounding Box part, GatherElements operation:  
+Using the indices of qualified grid cells obtained from the Threshold (TopK) operation, the GatherElements operation retrieves these qualified grid cells, resulting in bbox information of shape 1×64×k×1.
 
- - Bounding Box部分,DFL: SoftMax+Conv操作
-每一个Grid Cell会有4个数字来确定这个框框的位置,DFL结构会对每个框的某条边基于anchor的位置给出16个估计,对16个估计求SoftMax,然后通过一个卷积操作来求期望,这也是Anchor Free的核心设计,即每个Grid Cell仅仅负责预测1个Bounding box. 假设在对某一条边偏移量的预测中,这16个数字为 $ l_p $ 或者$(t_p, t_p, b_p)$,其中$p = 0,1,...,15$那么偏移量的计算公式为: 
+ - Bounding Box part, DFL: SoftMax+Conv operation
+Each Grid Cell will have 4 numbers to determine the position of this box. The DFL structure provides 16 estimates for the offset of a certain edge of the box based on the anchor position. SoftMax is applied to the 16 estimates, and then a convolution operation is used to calculate the expectation. This is the core design of Anchor Free, meaning each Grid Cell is only responsible for predicting 1 Bounding box. Assuming in the prediction of the offset of a certain edge, these 16 numbers are $ l_p $ or $(t_p, t_p, b_p)$, where $p = 0,1,...,15$, the calculation formula for the offset is:
 
 $$\hat{l} = \sum_{p=0}^{15}{\frac{p·e^{l_p}}{S}}, S =\sum_{p=0}^{15}{e^{l_p}}$$
 
- - Bounding Box部分,Decode: dist2bbox(ltrb2xyxy)操作
-此操作将每个Bounding Box的ltrb描述解码为xyxy描述,ltrb分别表示左上右下四条边距离相对于Grid Cell中心的距离,相对位置还原成绝对位置后,再乘以对应特征层的采样倍数,即可还原成xyxy坐标,xyxy表示Bounding Box的左上角和右下角两个点坐标的预测值. 
+ - Bounding Box part, Decode: dist2bbox(ltrb2xyxy) operation
+This operation decodes the ltrb description of each Bounding Box into an xyxy description. ltrb represents the distance of the left, top, right, and bottom edges relative to the center of the Grid Cell. After restoring the relative position to absolute position and multiplying by the sampling factor of the corresponding feature layer, the xyxy coordinates can be restored. xyxy represents the predicted coordinates of the top-left and bottom-right corners of the Bounding Box.
 ![](imgs/ltrb2xyxy.jpg)
 
-图片输入为$Size=640$,对于Bounding box预测分支的第$i$个特征图$(i=1, 2, 3)$,对应的下采样倍数记为$Stride(i)$,在YOLOv8 - Detect中,$Stride(1)=8, Stride(2)=16, Stride(3)=32$,对应特征图的尺寸记为$n_i = {Size}/{Stride(i)}$,即尺寸为$n_1 = 80, n_2 = 40 ,n_3 = 20$三个特征图,一共有$n_1^2+n_2^2+n_3^3=8400$个Grid Cell,负责预测8400个Bounding Box. 
-对特征图i,第x行y列负责预测对应尺度Bounding Box的检测框,其中$x,y \in [0, n_i)\bigcap{Z}$,$Z$为整数的集合. DFL结构后的Bounding Box检测框描述为$ltrb$描述,而我们需要的是$xyxy$描述,具体的转化关系如下: 
+The input image size is $Size=640$. For the $i$th feature map $(i=1, 2, 3)$ of the Bounding box prediction branch, the corresponding downsampling factor is denoted as $Stride(i)$. In YOLOv8 - Detect, $Stride(1)=8, Stride(2)=16, Stride(3)=32$, corresponding to feature map sizes of $n_i = {Size}/{Stride(i)}$, i.e., sizes of $n_1 = 80, n_2 = 40 ,n_3 = 20$ for three feature maps, totaling $n_1^2+n_2^2+n_3^3=8400$ Grid Cells, responsible for predicting 8,400 Bounding Boxes.
+For feature map i, the $x$th row and $y$th column are responsible for predicting the detection box of the corresponding scale Bounding Box, where $x,y \in [0, n_i)\bigcap{Z}$, $Z$ is the set of integers. The DFL structure's Bounding Box detection box description is in ltrb format, while we need the $xyxy$ format. The specific transformation relationship is as follows:
 
 $$x_1 = (x+0.5-l)\times{Stride(i)}$$
 
@@ -856,19 +883,19 @@ $$x_2 = (x+0.5+r)\times{Stride(i)}$$
 
 $$y_1 = (y+0.5+b)\times{Stride(i)}$$
 
-最终的检测结果,包括类别(id),分数(score)和位置(xyxy). 
+The final detection results include category (id), score, and position (xyxy).
 
-#### 实例分割 (Instance Segmentation)
+#### Instance Segmentation
 ![](source/imgs/ultralytics_YOLO_Seg_DataFlow.png)
 
- - Mask Coefficients 部分, 两次GatherElements操作,
-用于得到最终符合要求的Grid Cell的Mask Coefficients信息, 也就是32个系数.
-这32个系数与Mask Protos部分作一个线性组合, 也可以认为是加权求和, 就可以得到这个Grid Cell对应目标的Mask信息. 
+ - Mask Coefficients part, two GatherElements operations,
+used to obtain the Mask Coefficients information of the final qualified Grid Cell, i.e., the 32 coefficients.
+These 32 coefficients are linearly combined with the Mask Protos part, or can be considered as a weighted sum, to obtain the Mask information of the target corresponding to this Grid Cell.
 
-#### 姿态估计 (Pose Estimation)
+#### Pose Estimation
 ![](source/imgs/ultralytics_YOLO_Pose_DataFlow.png)
 
-Ultralytics YOLO Pose 的关键点基于目标检测, kpt的定义参考如下
+The keypoints of Ultralytics YOLO Pose are based on object detection. The definition of kpt is as follows:
 ```python
 COCO_keypoint_indexes = {
     0: 'nose',
@@ -891,72 +918,68 @@ COCO_keypoint_indexes = {
 }
 ```
 
-Ultralytics YOLO Pose 模型的目标检测部分与 Ultralytics YOLO Detect一致, 对应的感受野会多出Channel = 57的特征图, 对应着17个Key Points, 分别是相对于特征图下采样倍数的坐标x, y和这个点对应的分数score.
+The object detection part of the Ultralytics YOLO Pose model is consistent with Ultralytics YOLO Detect, with an additional feature map of Channel = 57 corresponding to 17 Key Points, which are the coordinates x, y relative to the feature map's downsampling factor and the score of this point.
 
-我们通过目标检测部分, 得知在某个位置的Key Points符合要求后, 将其乘以对应感受野的下采样倍数, 即可得到基于输入尺寸的Key Points坐标.
+After determining through the object detection part that the Key Points at a certain location meet the requirements, multiplying them by the downsampling factor of the corresponding receptive field yields the Key Points coordinates based on the input size.
 
+### Environment Preparation and Model Training
 
-### 环境准备与模型训练
+Note: This operation is performed on an x86 machine. It is recommended to use a machine with hardware acceleration, such as a GPU supporting CUDA, where torch.cuda.is_available() is True. It is recommended to use Ubuntu 22.04 with a Python 3.10 environment.
 
-注: 此操作在x86机器进行, 推荐使用含有硬件加速的机器进行训练, 例如支持CUDA的GPU, torch.cuda.is_available() 为 True的机器. 推荐使用Ubuntu 22.04, Python 3.10的环境.
-
-下载ultralytics/ultralytics仓库, 并参考ultralytics官方文档, 配置好环境. 
+Download the ultralytics/ultralytics repository and refer to the ultralytics official documentation to configure the environment.
 ```bash
 git clone https://github.com/ultralytics/ultralytics.git
 ```
 
-模型训练请参考ultralytics官方文档, 这个文档由ultralytics维护, 质量非常的高. 网络上也有非常多的参考材料, 得到一个像官方一样的预训练权重的模型并不困难. 请注意, 训练时无需修改任何程序, 无需修改forward方法. 
+For model training, refer to the ultralytics official documentation, which is maintained by ultralytics and of very high quality. There are also numerous reference materials available online, making it not difficult to obtain a pre-trained model similar to the official one. Note that no program modifications are needed during training, and the forward method should not be modified.
 
-Ultralytics YOLO 官方文档: 
+Ultralytics YOLO Official Documentation:
 
-- 快速入门: [https://docs.ultralytics.com/quickstart/](https://docs.ultralytics.com/quickstart/)
-- 模型训练: [https://docs.ultralytics.com/modes/train/](https://docs.ultralytics.com/modes/train/)
+- Quick Start: [https://docs.ultralytics.com/quickstart/](https://docs.ultralytics.com/quickstart/)
+- Model Training: [https://docs.ultralytics.com/modes/train/](https://docs.ultralytics.com/modes/train/)
 
+### Model Export
 
-### 模型导出
+Note: This operation is performed on an x86 machine. It is recommended to use Ubuntu 22.04 with a Python 3.10 environment.
 
-注: 此操作在x86机器进行, 推荐使用Ubuntu 22.04, Python 3.10的环境.
-
-进入本地仓库, 下载ultralytics官方的预训练权重, 这里以YOLO11n-Detect模型为例. 
+Enter the local repository and download the pre-trained weights from the ultralytics official site. Here, we take the YOLO11n-Detect model as an example.
 ```bash
 cd ultralytics
 wget https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n.pt
 ```
 
-在Ultralytics YOLO的训练环境中, 运行RDK Model Zoo 提供的一键YOLO导出脚本`https://github.com/D-Robotics/rdk_model_zoo/blob/main/demos/Vision/ultralytics_YOLO/x86/export_monkey_patch.py`, 对模型进行导出. 这个脚本会使用`ultralytics.YOLO`类对YOLO的`pt`模型进行加载, 使用猴子补丁(Monkey Patch)的方法对模型在PyTorch层面进行替换, 进行并调用`ultralytics.YOLO.export`方法对模型进行导出. 导出的ONNX模型会保存在pt模型同级目录下.
+In the Ultralytics YOLO training environment, run the one-click YOLO export script provided by RDK Model Zoo `https://github.com/D-Robotics/rdk_model_zoo/blob/main/demos/Vision/ultralytics_YOLO/x86/export_monkey_patch.py` to export the model. This script uses the `ultralytics.YOLO` class to load the YOLO `pt` model, applies a monkey patch to replace the model at the PyTorch level, and then calls the `ultralytics.YOLO.export` method to export the model. The exported ONNX model will be saved in the same directory as the pt model.
 
 ```bash
 python3 export_monkey_patch.py --pt yolo11n.pt
 ```
 
-### 模型编译
+### Model Compilation
 
-#### RDK X5 工具链环境安装
+Install the RDK X5 OpenExplore toolchain environment. Two installation methods are provided here:
 
-安装RDK X5的OpenExplore的工具链环境, 这里提供两种安装方式
+- Docker Installation (Recommended)
 
-- Docker安装 (推荐)
-
-RDK X5 OpenExplore 1.2.8版本
+RDK X5 OpenExplore version 1.2.8
 ```bash
 docker pull openexplorer/ai_toolchain_ubuntu_20_x5_cpu:v1.2.8
 ```
 
-或者前往地瓜开发者社区获取离线版本的Docker镜像: [https://forum.d-robotics.cc/t/topic/28035](https://forum.d-robotics.cc/t/topic/28035)
+Or obtain the offline version of the Docker image from the Digua Developer Community: [https://forum.d-robotics.cc/t/topic/28035](https://forum.d-robotics.cc/t/topic/28035)
 
-- pip安装裁剪的工具链 (备选)
+- pip Installation of the Trimmed Toolchain (Alternative)
 
-注: 此操作在x86机器进行, 推荐使用Ubuntu 22.04, Python 3.10的环境. 注意, 模型转换和编译涉及到多种优化策略和程序, 请不要在板端安装运行.
+Note: This operation is performed on an x86 machine. It is recommended to use Ubuntu 22.04 with a Python 3.10 environment. Note that model conversion and compilation involve various optimization strategies and programs; do not install and run them on the device.
 ```bash
 pip install rdkx5-yolo-mapper
 ```
 
-如果您访问PyPI下载失败, 可以使用阿里源来安装
+If you encounter download failures from PyPI, you can use the Alibaba source to install:
 ```bash
 pip install rdkx5-yolo-mapper -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 ```
 
-常见问题: 出现以下问题一般是在安装较大的包, 例如torch时, 网络连接不稳定导致的, 这时只需要重新运行安装命令即可, 已经安装过的包会自动跳过, 不会重复安装.
+Common Issue: The following issue generally occurs when installing larger packages, such as torch, due to unstable network connections. In this case, simply re-run the installation command. Already installed packages will be automatically skipped and not reinstalled.
 ```bash
 error: incomplete-download
 
@@ -967,33 +990,20 @@ note: This is an issue with network connectivity, not pip.
 hint: Consider using --resume-retries to enable download resumption
 ```
 
-键入hb_mapper命令验证安装成功
+Enter the hb_mapper command to verify successful installation
 ```bash
 $ hb_mapper --version
 hb_mapper, version 1.24.3
 ```
 
-#### RDK S100 工具链环境安装
-
-安装 RDK S100 / S100P 的OpenExplore的工具链环境, 这里提供两种安装方式
-
-- Docker安装 (推荐)
-
-RDK S100 / S100P OpenExplore 3.2.0版本
-
-前往地瓜开发者社区获取离线版本的Docker镜像: [S100开发工具包](https://developer.d-robotics.cc/rdk_doc/rdk_s/Advanced_development/toolchain_development/overview)
-
-
-#### 模型编译
-
-在OpenExplore的工具链环境中运行一键YOLO转化脚本, 对于这个脚本, 您需要准备用于校准的图片和ONNX模型. 然后就是正常的帮您准备校准数据和编译的yaml配置文件, 最后转换好的bin / hbm模型会在onnx模型同级目录下.
+Run the one-click YOLO conversion script provided by RDK Model Zoo `https://github.com/D-Robotics/rdk_model_zoo/blob/main/demos/Vision/ultralytics_YOLO/x86/mapper.py` in the OpenExplore toolchain environment.
+For this script, you need to prepare calibration images and the ONNX model. Then, it normally prepares the calibration data and the compilation yaml configuration file for you. Finally, the converted bin model will be in the same directory as the onnx model.
 
 ```bash
-python3 mapper.py --onnx [*.onnx] --cal-images [cal images path] --march [BPU March, X5: bayes-e, S100: nash-e, S100P: nash-m]
+python3 mapper.py --onnx [*.onnx] --cal-images [cal images path]
 ```
 
-
-这个脚本暴露了一些常见的参数, 默认值已经满足大多数需求.
+This script exposes some common parameters, with default values already satisfying most requirements.
 
 ```bash
 $ python3 mapper.py -h
@@ -1004,7 +1014,6 @@ options:
   -h, --help                        show this help message and exit
   --cal-images CAL_IMAGES           *.jpg, *.png calibration images path, 20 ~ 50 pictures is OK.
   --onnx ONNX                       origin float onnx model path.
-  --march MARCH                     X5: bayes-e, S100: nash-e, S100P: nash-m
   --quantized QUANTIZED             int8 first / int16 first
   --jobs JOBS                       model combine jobs.
   --optimize-level OPTIMIZE_LEVEL   O0, O1, O2, O3
@@ -1015,14 +1024,15 @@ options:
   --ws WS                           temporary workspace
 ```
 
+### Model Deployment
 
-### 模型部署
+#### Python Program Deployment
 
-#### RDK X5 Python程序部署
+Note: This operation is performed on the board, using the board's global Python interpreter. Ensure you are using the latest RDK X5 system image and miniboot provided by [Digua Developer Community](developer.d-robotics.cc).
 
-注: 此操作在板卡进行, 使用板卡的全局Python解释器. 请确保您使用的是[地瓜开发者社区](developer.d-robotics.cc)提供的最新的RDK X5的系统镜像和miniboot. 
+Use the scripts in `https://github.com/D-Robotics/rdk_model_zoo/tree/main/demos/Vision/ultralytics_YOLO/py`. The running effect refers to the quick experience section of this document.
 
-如果您想完整的安装这个环境, 可以参考以下步骤.
+If you want to install this environment completely, you can refer to the following steps.
 
 ```bash
 # Download RDK Model Zoo
@@ -1045,13 +1055,7 @@ pip install hobot_dnn_rdkx5 numpy==1.26.4 opencv-python scipy
 pip install hobot_dnn_rdkx5 numpy==1.26.4 opencv-python scipy -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 ```
 
-随后, 便可以在这个环境中使用hobot_dnn_rdkx5库了. 请注意, 系统内自带的库的名称为hobot_dnn, 从PyPI源上安装的库的名称为hobot_dnn_rdkx5. 除此之外, 两者的使用方法完全相同. 当然, 您也可以在系统的全局Python解释器中安装hobot_dnn_rdkx5库, 以确保您的使用习惯一致.
-
-#### RDK S100 / S100P Python环境部署
-
-注: 此操作在板卡进行, 使用板卡的全局Python解释器. 请确保您使用的是[地瓜开发者社区](developer.d-robotics.cc)提供的最新的RDK S100的系统镜像, 如果遇到异常, 请先完整烧录最新的系统后再试. 
-
-如果您想完整的安装这个环境, 可以参考RDK S100文档关于BPU接口的相关内容.
+Then, the hobot_dnn_rdkx5 library can be used in this environment. Please note that the name of the library built into the system is hobot_dnn, and the name of the library installed from the PyPI source is hobot_dnn_rdkx5. In addition, the usage methods of the two are exactly the same. Of course, you can also install the hobot_dnn_rdkx5 library in the system's global Python interpreter to ensure that your usage habits are consistent.
 
 ## Contributors
 
@@ -1079,3 +1083,5 @@ pip install hobot_dnn_rdkx5 numpy==1.26.4 opencv-python scipy -i https://mirrors
 [YOLOv10: Real-Time End-to-End Object Detection](https://arxiv.org/abs/2405.14458)
 
 [YOLOv12: Attention-Centric Real-Time Object Detectors](https://arxiv.org/abs/2502.12524)
+
+[YOLOv13: Real-Time Object Detection with Hypergraph-Enhanced Adaptive Visual Perception](https://arxiv.org/abs/2506.17733)
