@@ -70,6 +70,25 @@ python3 -m py.rdk_yolo_app --yolo-type yolo11 --model-type pose --workspace resu
 python3 -m py.rdk_yolo_app --yolo-type yolo11 --model-type classification --workspace result_classification_workspace
 ```
 
+### C++ Experience
+
+Please ensure that CMake and compilation tools are installed.
+
+```bash
+# Enter the C++ example directory (taking Nash-E architecture object detection as an example)
+cd cpp/nash-e/detect
+
+# Create build directory and compile
+mkdir build && cd build
+cmake .. && make
+
+# Get model file
+wget https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-e/yolo11n_detect_nashe_640x640_nv12.hbm
+
+# Run
+./ultralytics_yolo_detect
+```
+
 ### Result Alalysis
 
 The program automatically downloads the corresponding model of YOLO11, performs reasoning on all the images in the folder, and saves the reasoning and visualization results in the folder specified by the current directory '--workspace'.
@@ -1055,7 +1074,23 @@ pip install hobot_dnn_rdkx5 numpy==1.26.4 opencv-python scipy
 pip install hobot_dnn_rdkx5 numpy==1.26.4 opencv-python scipy -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 ```
 
-Then, the hobot_dnn_rdkx5 library can be used in this environment. Please note that the name of the library built into the system is hobot_dnn, and the name of the library installed from the PyPI source is hobot_dnn_rdkx5. In addition, the usage methods of the two are exactly the same. Of course, you can also install the hobot_dnn_rdkx5 library in the system's global Python interpreter to ensure that your usage habits are consistent.
+If you want to install this environment completely, you can refer to the RDK S100 documentation regarding the BPU interface.
+
+#### RDK S100 / S100P C++ Environment Deployment
+
+Note: This operation is performed on the board.
+
+The `cpp` directory contains C++ example code adapted for different architectures:
+- `bayes-e`: Suitable for the RDK X5 platform.
+- `nash-e`: Suitable for the RDK S100 / S100P platforms.
+
+Each architecture directory contains four subdirectories corresponding to different tasks:
+- `classify`: Image Classification
+- `detect`: Object Detection
+- `pose`: Pose Estimation
+- `segment`: Instance Segmentation
+
+You can enter the corresponding directory and use CMake to compile and run.
 
 ## Contributors
 

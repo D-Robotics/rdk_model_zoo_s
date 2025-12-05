@@ -67,6 +67,25 @@ python3 -m py.rdk_yolo_app --yolo-type yolo11 --model-type pose --workspace resu
 python3 -m py.rdk_yolo_app --yolo-type yolo11 --model-type classification --workspace result_classification_workspace
 ```
 
+### C++ 体验
+
+请先确保您已安装 CMake 和编译工具。
+
+```bash
+# 进入 C++ 示例目录 (以 Nash-E 架构的目标检测为例)
+cd cpp/nash-e/detect
+
+# 创建构建目录并编译
+mkdir build && cd build
+cmake .. && make
+
+# 获取模型文件
+wget https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-e/yolo11n_detect_nashe_640x640_nv12.hbm
+
+# 运行
+./ultralytics_yolo_detect
+```
+
 ### Result Alalysis
 
 程序自动下载YOLO11的对应的模型, 对文件夹内所有的图片进行推理, 推理和可视化结果保存在当前目录 `--workspace` 指定的文件夹内.
@@ -1052,6 +1071,22 @@ pip install hobot_dnn_rdkx5 numpy==1.26.4 opencv-python scipy -i https://mirrors
 注: 此操作在板卡进行, 使用板卡的全局Python解释器. 请确保您使用的是[地瓜开发者社区](developer.d-robotics.cc)提供的最新的RDK S100的系统镜像, 如果遇到异常, 请先完整烧录最新的系统后再试. 
 
 如果您想完整的安装这个环境, 可以参考RDK S100文档关于BPU接口的相关内容.
+
+#### RDK S100 / S100P C++环境部署
+
+注: 此操作在板卡进行.
+
+`cpp` 目录下包含适配不同架构的 C++ 示例代码：
+- `bayes-e`: 适用于 RDK X5 平台。
+- `nash-e`: 适用于 RDK S100 / S100P 平台。
+
+每个架构目录下包含四个子目录，分别对应不同的任务：
+- `classify`: 图像分类
+- `detect`: 目标检测
+- `pose`: 姿态估计
+- `segment`: 实例分割
+
+您可以进入相应的目录，使用 CMake 进行编译和运行。
 
 ## Contributors
 
