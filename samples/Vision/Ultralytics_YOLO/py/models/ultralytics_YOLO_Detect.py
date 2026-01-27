@@ -49,8 +49,8 @@ class Ultralytics_YOLO_Detect(Ultralytics_YOLO_RDK_Base):
             self.grids.append(
                 np.stack(
                     [
-                        np.tile(np.linspace(0.5, grid_H - 0.5, grid_H), reps=grid_H),
-                        np.repeat(np.arange(0.5, grid_W + 0.5, 1), grid_W),
+                        np.tile(np.linspace(0.5, grid_W - 0.5, grid_W), reps=grid_H),
+                        np.repeat(np.arange(0.5, grid_H + 0.5, 1), grid_W),
                     ],
                     axis=0,
                 ).transpose(1, 0)
