@@ -6,7 +6,7 @@ This directory contains the unified Python inference script for the YOLO26 model
 
 ## Prerequisites
 
-1. **Hardware**: RDK X5, RDK S100, or compatible BPU-based platforms.
+1. **Hardware**: RDK S100 / S100P
 2. **System**: RDK Ubuntu OS with `hbm_runtime` installed (usually pre-installed).
 3. **Python Libraries**:
    ```bash
@@ -96,7 +96,7 @@ python main.py --task obb \
 | `--label-file` | Path to the label file (`.names`). Defaults are loaded automatically based on task. | `None` |
 | `--img-save-path`| Path to save the result visualization (except for `cls`). | `result.jpg` |
 | `--score-thres` | Confidence threshold for detection/seg/obb/pose. | `0.25` |
-| `--nms-thres` | IoU threshold for NMS. | `0.65` |
+| `--nms-thres` | IoU threshold for NMS. | `0.7` |
 | `--topk` | (Cls only) Number of top classes to display. | `5` |
 | `--kpt-conf-thres`| (Pose only) Threshold for keypoint visibility. | `0.5` |
 | `--angle-sign` | (OBB only) Angle decoding multiplier. | `1.0` |

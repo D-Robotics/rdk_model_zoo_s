@@ -238,7 +238,7 @@ class YOLO26Pose:
         
         # Load Model and extract metadata
         self.model = hbm_runtime.HB_HBMRuntime(self.cfg.model_path)
-        logger.info(f"\033[1;31m[Pose] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Pose] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
 
         self.model_name = self.model.model_names[0]
         self.input_names = self.model.input_names[self.model_name]
@@ -305,7 +305,7 @@ class YOLO26Pose:
         else:
             raise ValueError(f"Unsupported image_format: {image_format}")
 
-        logger.info(f"\033[1;31m[Pose] Pre Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Pose] Pre Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
 
         return {
             self.model_name: {
@@ -326,7 +326,7 @@ class YOLO26Pose:
         """
         t0 = time.time()
         outputs = self.model.run(input_tensor)
-        logger.info(f"\033[1;31m[Pose] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Pose] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
 
         return outputs
 
@@ -422,7 +422,7 @@ class YOLO26Pose:
         kpts = scale_kpts_back(kpts, ori_img_w, ori_img_h,
                                self.input_w, self.input_h, self.cfg.resize_type)
 
-        logger.info(f"\033[1;31m[Pose] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Pose] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         
         # Cast cls to int for type safety
         return xyxy, score, cls.astype(int), kpts

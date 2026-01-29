@@ -95,7 +95,7 @@ class YOLO26Cls:
         
         try:
             self.model = hbm_runtime.HB_HBMRuntime(self.cfg.model_path)
-            logger.info(f"\033[1;31m[Cls] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+            logger.debug(f"\033[1;31m[Cls] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         except Exception as e:
             logger.error(f"❌ Failed to load model from {self.cfg.model_path}: {e}")
             raise e
@@ -180,7 +180,7 @@ class YOLO26Cls:
                 }
             }
         
-        logger.info(f"\033[1;31m[Cls] Pre-process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Cls] Pre-process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         return input_feed
 
     def forward(self, input_tensor: Dict[str, Dict[str, np.ndarray]]) -> Dict[str, np.ndarray]:
@@ -194,7 +194,7 @@ class YOLO26Cls:
         """
         t0 = time.time()
         outputs = self.model.run(input_tensor)
-        logger.info(f"\033[1;31m[Cls] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Cls] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         return outputs
 
     def post_process(self, 
@@ -230,7 +230,7 @@ class YOLO26Cls:
         for idx in top_indices:
             results.append((int(idx), float(probs[idx])))
         
-        logger.info(f"\033[1;31m[Cls] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Cls] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         return results
 
     def predict(self, 

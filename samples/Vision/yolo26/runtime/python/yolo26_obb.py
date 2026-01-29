@@ -99,7 +99,7 @@ class YOLO26OBB:
         t0 = time.time()
         try:
             self.model = hbm_runtime.HB_HBMRuntime(self.cfg.model_path)
-            logger.info(f"\033[1;31m[OBB] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+            logger.debug(f"\033[1;31m[OBB] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         except Exception as e:
             logger.error(f"❌ Failed to load model from {self.cfg.model_path}: {e}")
             raise e
@@ -169,14 +169,14 @@ class YOLO26OBB:
                 }
             }
         
-        logger.info(f"\033[1;31m[OBB] Pre-process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[OBB] Pre-process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         return input_feed
 
     def forward(self, input_tensor: Dict) -> Dict:
         """Execute model inference."""
         t0 = time.time()
         outputs = self.model.run(input_tensor)
-        logger.info(f"\033[1;31m[OBB] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[OBB] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         return outputs
 
     def post_process(self, outputs: Dict, 
@@ -283,7 +283,7 @@ class YOLO26OBB:
                 # Fallback: Return raw top-k or just all (risky)
                 pass
 
-        logger.info(f"\033[1;31m[OBB] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[OBB] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         return final_res
 
     def predict(self, 

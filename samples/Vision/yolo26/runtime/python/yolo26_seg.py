@@ -295,7 +295,7 @@ class YOLO26Seg:
         
         # Load Model and extract metadata
         self.model = hbm_runtime.HB_HBMRuntime(self.cfg.model_path)
-        logger.info(f"\033[1;31m[Seg] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Seg] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
 
         self.model_name = self.model.model_names[0]
         self.input_names = self.model.input_names[self.model_name]
@@ -359,7 +359,7 @@ class YOLO26Seg:
         else:
             raise ValueError(f"Unsupported image_format: {image_format}")
 
-        logger.info(f"\033[1;31m[Seg] Pre-process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Seg] Pre-process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         
         return {
             self.model_name: {
@@ -380,7 +380,7 @@ class YOLO26Seg:
         """
         t0 = time.time()
         outputs = self.model.run(input_tensor)
-        logger.info(f"\033[1;31m[Seg] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Seg] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         return outputs
 
     def post_process(self,
@@ -495,7 +495,7 @@ class YOLO26Seg:
             
             cropped_masks.append(m)
 
-        logger.info(f"\033[1;31m[Seg] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Seg] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
         
         # Return cropped_masks instead of full_masks
         return xyxy, score, cls.astype(int), cropped_masks

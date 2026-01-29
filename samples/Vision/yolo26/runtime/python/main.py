@@ -46,7 +46,7 @@ import utils.py_utils.visualize as visualize
 import utils.py_utils.inspect as inspect
 
 # Configure logger
-logging.basicConfig(level=logging.INFO, format='%(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(message)s')
 logger = logging.getLogger("RDK_YOLO")
 
 def main():

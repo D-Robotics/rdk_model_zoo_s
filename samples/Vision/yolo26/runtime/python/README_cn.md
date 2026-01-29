@@ -6,7 +6,7 @@
 
 ## 环境准备
 
-1. **硬件**: RDK X5, RDK S100 或兼容的 BPU 平台。
+1. **硬件**: RDK S100 / S100P
 2. **系统**: RDK Ubuntu 系统，需预装 `hbm_runtime`。
 3. **Python 库**:
    ```bash
@@ -95,7 +95,7 @@ python main.py --task obb \
 | `--label-file` | 类别标签文件 (`.names`). 默认会根据任务类型自动加载. | `None` |
 | `--img-save-path`| 结果可视化图片的保存路径 (分类任务除外). | `result.jpg` |
 | `--score-thres` | 置信度阈值 (用于 detect/seg/obb/pose). | `0.25` |
-| `--nms-thres` | NMS 的 IoU 阈值. | `0.65` |
+| `--nms-thres` | NMS 的 IoU 阈值. | `0.7` |
 | `--topk` | (仅 Cls) 显示前 K 个分类结果. | `5` |
 | `--kpt-conf-thres`| (仅 Pose) 关键点可见性阈值. | `0.5` |
 | `--angle-sign` | (仅 OBB) 角度解码乘数. | `1.0` |

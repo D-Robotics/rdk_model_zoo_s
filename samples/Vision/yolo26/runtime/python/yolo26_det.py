@@ -231,7 +231,7 @@ class YOLO26Detect:
         t0 = time.time()
         # Load model and extract metadata
         self.model = hbm_runtime.HB_HBMRuntime(config.model_path)
-        logger.info(f"\033[1;31m[Detect] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Detect] Load Model time = {1000 * (time.time() - t0):.2f} ms\033[0m")
 
         self.model_name = self.model.model_names[0]
         self.input_names = self.model.input_names[self.model_name]
@@ -306,7 +306,7 @@ class YOLO26Detect:
         else:
             raise ValueError(f"Unsupported image_format: {image_format}")
         
-        logger.info(f"\033[1;31m[Detect] Pre Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Detect] Pre Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
 
         return {
             self.model_name: {
@@ -327,7 +327,7 @@ class YOLO26Detect:
         """
         t0 = time.time()
         outputs = self.model.run(input_tensor)
-        logger.info(f"\033[1;31m[Detect] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Detect] Forward time = {1000 * (time.time() - t0):.2f} ms\033[0m")
 
         return outputs
 
@@ -394,7 +394,7 @@ class YOLO26Detect:
         xyxy = post_utils.scale_coords_back(xyxy_boxes, ori_img_w, ori_img_h,
                                             self.input_w, self.input_h, self.cfg.resize_type)
 
-        logger.info(f"\033[1;31m[Detect] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
+        logger.debug(f"\033[1;31m[Detect] Post Process time = {1000 * (time.time() - t0):.2f} ms\033[0m")
 
         return xyxy, score, cls
 
