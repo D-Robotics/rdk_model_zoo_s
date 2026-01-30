@@ -88,7 +88,7 @@ def main():
     
     parser.add_argument('--quantized', type=str, default="int8", help='Quantization precision: "int8" (default) or "int16".')
     parser.add_argument('--jobs', type=int, default=16, help='Number of parallel compilation jobs.')
-    parser.add_argument('--optimize-level', type=str, default='O3', help='Optimization level. Nash: O0-O2.')
+    parser.add_argument('--optimize-level', type=str, default='O2', help='Optimization level. Nash: O0-O2.')
     
     # Calibration sampling
     parser.add_argument('--cal-sample', type=bool, default=True, help='Enable random sampling of calibration images.') 
@@ -107,6 +107,9 @@ def main():
     
     # Dispatch based on architecture
     if 'nash' in opt.march:
+        if opt.optimize_level == 'O3':
+            logger.error(f"Error: Optimization level 'O3' is not supported for {opt.march} architecture. Please use O0, O1, or O2.")
+            exit(-1)
         logger.info(f"Detected Nash architecture ({opt.march}). Using run_nash workflow.")
         run_nash(opt)
     else:

@@ -71,7 +71,7 @@ def main():
     parser.add_argument('--march', type=str, default="nash-e", help='X5: bayes-e, S100: nash-e, S100P: nash-m')
     parser.add_argument('--quantized', type=str, default="int8", help='int8 first / int16 first')
     parser.add_argument('--jobs', type=int, default=16, help='model combine jobs.')
-    parser.add_argument('--optimize-level', type=str, default='O3', help='Bayes: O0, O1, O2, O3, Nash: O0, O1, O2')
+    parser.add_argument('--optimize-level', type=str, default='O2', help='Bayes: O0, O1, O2, O3, Nash: O0, O1, O2')
     parser.add_argument('--cal-sample', type=bool, default=True, help='sample calibration data or not.') 
     parser.add_argument('--cal-sample-num', type=int, default=20, help='num of sample calibration data.') 
     parser.add_argument('--save-cache', type=bool, default=False, help='remove bpu output files or not.') 
@@ -82,8 +82,13 @@ def main():
     
     logger.info(opt)
     if 'bayes' in opt.march:
+        logger.info(f"Detected Bayes architecture ({opt.march}). Using run_bayes workflow.")
         run_bayes(opt)
     elif 'nash' in opt.march:
+        if opt.optimize_level == 'O3':
+            logger.error(f"Error: Optimization level 'O3' is not supported for {opt.march} architecture. Please use O0, O1, or O2.")
+            exit(-1)
+        logger.info(f"Detected Nash architecture ({opt.march}). Using run_nash workflow.")
         run_nash(opt)
     else:
         logger.error("Error: Unsupported march type.")
