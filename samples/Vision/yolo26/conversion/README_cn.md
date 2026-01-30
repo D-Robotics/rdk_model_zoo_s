@@ -1,6 +1,6 @@
-# YOLO26 模型转换与编译指南
-
 [English](./README.md) | 简体中文
+
+# YOLO26 模型转换与编译指南
 
 本目录提供了将 YOLO26 模型（源自 Ultralytics 框架）转换为适配地瓜机器人（D-Robotics）RDK 硬件的 BPU 量化模型的工具与说明。
 

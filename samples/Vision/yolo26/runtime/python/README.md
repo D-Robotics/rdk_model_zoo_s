@@ -1,3 +1,5 @@
+English | [简体中文](./README_cn.md)
+
 # YOLO26 Python Runtime
 
 This directory contains the unified Python inference script for the YOLO26 model series on the RDK platform. A single entry point (`main.py`) supports all major tasks: Object Detection, Instance Segmentation, Pose Estimation, Image Classification, and Oriented Bounding Box (OBB) detection.

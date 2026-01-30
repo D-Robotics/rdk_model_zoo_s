@@ -1,3 +1,5 @@
+[English](./README.md) | 简体中文
+
 # YOLO26 模型评估 (Evaluation)
 
 本目录包含用于评估 YOLO26 各类任务模型精度的脚本，支持在 RDK 硬件上直接运行并输出标准指标。
@@ -87,7 +89,6 @@ python3 eval_yolo26_pose.py \
 python3 eval_yolo26_obb.py \
   --model-path ../model/yolo26n_obb_640x640_nv12.hbm \
   --image-dir ../../../../datasets/dotav1/val \
-  --annotation ../../../../datasets/dotav1/annotations/instances_val.json
 ```
 
 ## 基准测试结果 (Benchmark Results)
@@ -137,7 +138,7 @@ python3 eval_yolo26_obb.py \
 | S100 | YOLO26l Detect | 0.456 / 0.440 (96.5 %) | 0.260 / 0.230 (88.5 %) | 0.499 / 0.489 (98.0 %) | 0.627 / 0.623 (99.4 %) |
 | S100 | YOLO26x Detect | 0.484 / 0.449 (92.8 %) | 0.292 / 0.246 (84.2 %) | 0.528 / 0.488 (92.4 %) | 0.669 / 0.646 (96.6 %) |
 
-### RDK S100P 精度数据 (Accuracy @ NV12 - Detection)
+### RDK S100P 精度数据 (Accuracy @ RGB - Detection)
 
 | Device | Model | Accuracy bbox-all <br> mAP @.50:.95 <br> (FP32 / BPU Python) | Accuracy bbox-small <br> mAP @.50:.95 <br> (FP32 / BPU Python) | Accuracy bbox-medium <br> mAP @.50:.95 <br> (FP32 / BPU Python) | Accuracy bbox-large <br> mAP @.50:.95 <br> (FP32 / BPU Python) |
 | :--- | :--- | :--- | :--- | :--- | :--- |

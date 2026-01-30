@@ -1,6 +1,6 @@
-# YOLO26 Model Conversion and Compilation Guide
-
 English | [简体中文](./README_cn.md)
+
+# YOLO26 Model Conversion and Compilation Guide
 
 This directory provides tools and instructions for converting YOLO26 models (originated from the Ultralytics framework) into BPU-quantized models compatible with D-Robotics RDK hardware.
 

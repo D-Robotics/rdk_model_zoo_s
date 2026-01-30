@@ -1,3 +1,5 @@
+[English](./README.md) | 简体中文
+
 # YOLO26 Python 推理示例
 
 本目录提供了 YOLO26 系列模型在 RDK 平台上的统一 Python 推理脚本。通过单一入口 `main.py` 即可支持所有主流任务：目标检测、实例分割、姿态估计、图像分类以及旋转框检测 (OBB)。

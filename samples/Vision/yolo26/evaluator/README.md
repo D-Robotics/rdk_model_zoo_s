@@ -1,3 +1,5 @@
+English | [简体中文](./README_cn.md)
+
 # YOLO26 Model Evaluation
 
 This directory contains scripts for evaluating the accuracy of various YOLO26 task models. It supports direct execution on RDK hardware and outputs industry-standard metrics.
@@ -87,7 +89,6 @@ Use the `eval_yolo26_obb.py` script to evaluate the oriented object detection mo
 python3 eval_yolo26_obb.py \
   --model-path ../model/yolo26n_obb_640x640_nv12.hbm \
   --image-dir ../../../../datasets/dotav1/val \
-  --annotation ../../../../datasets/dotav1/annotations/instances_val.json
 ```
 
 ## Benchmark Results
@@ -137,7 +138,7 @@ python3 eval_yolo26_obb.py \
 | S100 | YOLO26l Detect | 0.456 / 0.440 (96.5 %) | 0.260 / 0.230 (88.5 %) | 0.499 / 0.489 (98.0 %) | 0.627 / 0.623 (99.4 %) |
 | S100 | YOLO26x Detect | 0.484 / 0.449 (92.8 %) | 0.292 / 0.246 (84.2 %) | 0.528 / 0.488 (92.4 %) | 0.669 / 0.646 (96.6 %) |
 
-### RDK S100P Accuracy Data (Accuracy @ NV12 - Detection)
+### RDK S100P Accuracy Data (Accuracy @ RGB - Detection)
 
 | Device | Model | Accuracy bbox-all <br> mAP @.50:.95 <br> (FP32 / BPU Python) | Accuracy bbox-small <br> mAP @.50:.95 <br> (FP32 / BPU Python) | Accuracy bbox-medium <br> mAP @.50:.95 <br> (FP32 / BPU Python) | Accuracy bbox-large <br> mAP @.50:.95 <br> (FP32 / BPU Python) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
