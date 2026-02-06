@@ -47,7 +47,7 @@ def main():
     parser.add_argument('--reg', type=int, default=16, help='DFL reg layer.')
     parser.add_argument('--nms-thres', type=float, default=0.7, help='IoU threshold.')
     parser.add_argument('--score-thres', type=float, default=0.25, help='confidence threshold.')
-    parser.add_argument('--image-path', type=str, default="../../../resource/datasets/COCO2017/val2017", help='COCO2017 val source image path.')
+    parser.add_argument('--image-path', type=str, default="../../../../datasets/coco/val2017", help='COCO2017 val source image path.')
     parser.add_argument('--result-image-dump', type=bool, default=False, help='dump image result or not')
     parser.add_argument('--result-image-path', type=str, default="coco2017_image_result", help='COCO2017 val image result saving path.')
     parser.add_argument('--json-path', type=str, default="yolo13n_detect_nashe_640x640_nv12_coco2017_val_pridect.json", help='convert to json save path.')

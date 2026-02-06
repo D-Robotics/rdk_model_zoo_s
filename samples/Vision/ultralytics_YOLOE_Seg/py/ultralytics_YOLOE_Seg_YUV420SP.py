@@ -56,7 +56,7 @@ def main():
                                 RDK X5(Module): Bayes-e.
                                 RDK S100: Nash-e.
                                 RDK S100P: Nash-m.""") 
-    parser.add_argument('--test-img', type=str, default='../../../resource/datasets/COCO2017/assets/office_desk.jpg', help='Path to Load Test Image.')
+    parser.add_argument('--test-img', type=str, default='../../../../datasets/coco/assets/office_desk.jpg', help='Path to Load Test Image.')
 
     parser.add_argument('--img-save-path', type=str, default='py_result.jpg', help='Path to Load Test Image.')
     parser.add_argument('--classes-num', type=int, default=4585, help='Classes Num to Detect.')

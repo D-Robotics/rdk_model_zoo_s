@@ -59,7 +59,7 @@ def main():
                                 RDK X5(模块): Bayes-e.
                                 RDK S100: Nash-e.
                                 RDK S100P: Nash-m.""")
-    parser.add_argument('--input', type=str, default='../../../resource/datasets/COCO2017/assets/bus.jpg',
+    parser.add_argument('--input', type=str, default='../../../../datasets/coco/assets/bus.jpg',
                         help='要加载的测试图像或视频路径。使用 "camera" 表示摄像头。')
     parser.add_argument('--output', type=str, default='py_result.avi',
                         help='处理结果的保存路径，可以是图像或视频文件。')
