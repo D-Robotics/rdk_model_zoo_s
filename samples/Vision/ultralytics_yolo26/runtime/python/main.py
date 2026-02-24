@@ -101,10 +101,10 @@ def main():
             # Fallback defaults
             project_root = os.path.abspath("../../../../../")
             defaults = {
-                'detect': 'datasets/coco/coco_classes.names',
-                'seg': 'datasets/coco/coco_classes.names',
-                'cls': 'datasets/imagenet/imagenet_classes.names',
-                'obb': 'datasets/dotav1/dota_classes.names'
+                'detect': '../../../../../datasets/coco/coco_classes.names',
+                'seg': '../../../../../datasets/coco/coco_classes.names',
+                'cls': '../../../../../datasets/imagenet/imagenet_classes.names',
+                'obb': '../../../../../datasets/dotav1/dota_classes.names'
             }
             if opt.task in defaults:
                 def_path = os.path.join(project_root, defaults[opt.task])
