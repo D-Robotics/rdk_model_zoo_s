@@ -26,9 +26,9 @@ Model Structure Assumption (based on provided logs):
         0: images_y (1, 640, 640, 1)
         1: images_uv (1, 320, 320, 2)
     Outputs (9 tensors):
-        Stride 8:  [0] Box(4), [1] Cls(1), [2] Kpt(51)
-        Stride 16: [3] Box(4), [4] Cls(1), [5] Kpt(51)
-        Stride 32: [6] Box(4), [7] Cls(1), [8] Kpt(51)
+        Stride 8:  [0] Cls(1), [1] Box(4), [2] Kpt(51)
+        Stride 16: [3] Cls(1), [4] Box(4), [5] Kpt(51)
+        Stride 32: [6] Cls(1), [7] Box(4), [8] Kpt(51)
 """
 
 import os
@@ -366,16 +366,16 @@ class YOLO26Pose:
 
         # Iterate strictly based on known output order
         # Model Output Layout:
-        # Stride 8:  Indices 0 (Box), 1 (Cls), 2 (Kpt)
-        # Stride 16: Indices 3 (Box), 4 (Cls), 5 (Kpt)
-        # Stride 32: Indices 6 (Box), 7 (Cls), 8 (Kpt)
+        # Stride 8:  Indices 0 (Cls), 1 (Box), 2 (Kpt)
+        # Stride 16: Indices 3 (Cls), 4 (Box), 5 (Kpt)
+        # Stride 32: Indices 6 (Cls), 7 (Box), 8 (Kpt)
         
         for i, stride in enumerate(self.cfg.strides):
             base_idx = i * 3
             
             # Retrieve feature maps by name using index
-            box_name = self.output_names[base_idx]
-            cls_name = self.output_names[base_idx + 1]
+            cls_name = self.output_names[base_idx]
+            box_name = self.output_names[base_idx + 1]
             kpt_name = self.output_names[base_idx + 2]
             
             box_feat = raw_outputs[box_name]

@@ -26,9 +26,9 @@ Model Structure Assumption (based on provided logs):
         0: images_y (1, 640, 640, 1)
         1: images_uv (1, 320, 320, 2)
     Outputs (10 tensors):
-        Stride 8:  [0] Box(4), [1] Cls(80), [2] MaskCoef(32)
-        Stride 16: [3] Box(4), [4] Cls(80), [5] MaskCoef(32)
-        Stride 32: [6] Box(4), [7] Cls(80), [8] MaskCoef(32)
+        Stride 8:  [0] Cls(80), [1] Box(4), [2] MaskCoef(32)
+        Stride 16: [3] Cls(80), [4] Box(4), [5] MaskCoef(32)
+        Stride 32: [6] Cls(80), [7] Box(4), [8] MaskCoef(32)
         Proto:     [9] ProtoMaps (1, 160, 160, 32)
 """
 
@@ -419,14 +419,14 @@ class YOLO26Seg:
 
         # Step 1: Decode Detection Layers (Strides 8, 16, 32)
         # Assuming fixed order from model logs:
-        # Stride 8: [0]Box, [1]Cls, [2]MaskCoef
-        # Stride 16:[3]Box, [4]Cls, [5]MaskCoef
-        # Stride 32:[6]Box, [7]Cls, [8]MaskCoef
+        # Stride 8: [0]Cls, [1]Box, [2]MaskCoef
+        # Stride 16:[3]Cls, [4]Box, [5]MaskCoef
+        # Stride 32:[6]Cls, [7]Box, [8]MaskCoef
         
         for i, stride in enumerate(self.cfg.strides):
             base_idx = i * 3
-            box_feat = raw_outputs[self.output_names[base_idx]]
-            cls_feat = raw_outputs[self.output_names[base_idx + 1]]
+            cls_feat = raw_outputs[self.output_names[base_idx]]
+            box_feat = raw_outputs[self.output_names[base_idx + 1]]
             mc_feat = raw_outputs[self.output_names[base_idx + 2]]
             
             layer_pred = decode_seg_layer(box_feat, cls_feat, mc_feat, 

@@ -44,7 +44,7 @@ def bpu_pose_forward(self, x):
     """Modified forward method for YOLO26 Pose Head (BPU-Optimized).
 
     Returns:
-        List[torch.Tensor]: 9 tensors ( [Box, Cls, Kpts] * 3 scales ).
+        List[torch.Tensor]: 9 tensors ( [Cls, Box, Kpts] * 3 scales ).
         Layout is NHWC.
     """
     res = []
@@ -65,8 +65,8 @@ def bpu_pose_forward(self, x):
 
     for i in range(self.nl):
         feat = x[i]
-        res.append(box_layers[i](feat).permute(0, 2, 3, 1))
         res.append(cls_layers[i](feat).permute(0, 2, 3, 1))
+        res.append(box_layers[i](feat).permute(0, 2, 3, 1))
         if is_pose26:
             kpts = kpts_head_layers[i](pose_feat_layers[i](feat)).permute(0, 2, 3, 1)
         else:

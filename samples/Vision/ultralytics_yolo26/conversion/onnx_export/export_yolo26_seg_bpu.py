@@ -48,7 +48,7 @@ def bpu_segment_forward(self, x):
     """Modified forward method for YOLO26 Segment Head (BPU-Optimized).
 
     Returns:
-        List[torch.Tensor]: 10 tensors ( [Box, Cls, MC] * 3 + Proto ).
+        List[torch.Tensor]: 10 tensors ( [Cls, Box, MC] * 3 + Proto ).
         Layout is NHWC.
     """
     res = []
@@ -64,8 +64,8 @@ def bpu_segment_forward(self, x):
 
     for i in range(self.nl):
         feat = x[i]
-        res.append(box_layers[i](feat).permute(0, 2, 3, 1))
         res.append(cls_layers[i](feat).permute(0, 2, 3, 1))
+        res.append(box_layers[i](feat).permute(0, 2, 3, 1))
         res.append(mc_layers[i](feat).permute(0, 2, 3, 1))
         
     proto = self.proto(x[0] if isinstance(x, list) else x) 

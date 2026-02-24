@@ -26,27 +26,38 @@ fi
 
 # 2. Run Main Detection Task
 echo "Running YOLO26 Detection..."
+
 # Default to bus.jpg if available, else standard asset path
 TEST_IMG="./bus.jpg"
 if [ ! -f "$TEST_IMG" ]; then
-    TEST_IMG="/app/res/assets/bus.jpg"
+    TEST_IMG="../../../resource/assets/bus.jpg"
 fi
 
-# If local image missing, try to download or warn
-if [ ! -f "$TEST_IMG" ]; then
-    echo "Warning: Test image not found. Using dummy path."
-fi
+# Determine MARCH for model path
+BOARD_TYPE=$(cat /sys/class/boardinfo/board_type 2>/dev/null || echo "s100")
+BOARD_TYPE=${BOARD_TYPE,,}
 
-# Determine SoC for model path (simple heuristic)
-SOC_NAME=$(cat /sys/class/boardinfo/soc_name 2>/dev/null || echo "s100")
-SOC_NAME=${SOC_NAME,,} # to lowercase
+MARCH="nash-e"
+SUFFIX="nashe"
+if [[ "$BOARD_TYPE" == *"p"* ]]; then
+    MARCH="nash-m"
+    SUFFIX="nashm"
+fi
 
 # Construct default model path
-# Note: This path should match the one in main.py or be a valid path
-MODEL_PATH="../../model/${SOC_NAME}/basic/yolo26n_detect_640x640_nv12.hbm"
+MODEL_PATH="../../model/${MARCH}/yolo26n_detect_${SUFFIX}_640x640_nv12.hbm"
 
-echo "Using SoC: ${SOC_NAME}"
+# 3. Download model if missing
+if [ ! -f "$MODEL_PATH" ]; then
+    echo "Model not found at ${MODEL_PATH}, attempting to download..."
+    pushd ../../model/ > /dev/null
+    ./download_model.sh
+    popd > /dev/null
+fi
+
+echo "Using MARCH: ${MARCH}"
 echo "Model Path: ${MODEL_PATH}"
+echo "Test Image: ${TEST_IMG}"
 
 # Run script
 python3 main.py --task detect --model-path "${MODEL_PATH}" --test-img "${TEST_IMG}"

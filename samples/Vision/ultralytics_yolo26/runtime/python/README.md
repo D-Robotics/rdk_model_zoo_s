@@ -46,17 +46,23 @@ python main.py --task <TASK_NAME> --model-path <PATH_TO_HBM> --test-img <PATH_TO
 ### 1. Object Detection (`detect`)
 
 ```bash
+# RDK S100 (nash-e)
 python main.py --task detect \
-    --model-path ../../model/yolo26n_detect.hbm \
+    --model-path ../../model/nash-e/yolo26n_detect_nashe_640x640_nv12.hbm \
     --test-img /path/to/image.jpg \
     --score-thres 0.25
+
+# RDK S100P (nash-m)
+python main.py --task detect \
+    --model-path ../../model/nash-m/yolo26n_detect_nashm_640x640_nv12.hbm \
+    --test-img /path/to/image.jpg
 ```
 
 ### 2. Instance Segmentation (`seg`)
 
 ```bash
 python main.py --task seg \
-    --model-path ../../model/yolo26n_seg.hbm \
+    --model-path ../../model/nash-e/yolo26n_seg_nashe_640x640_nv12.hbm \
     --test-img /path/to/image.jpg
 ```
 
@@ -64,7 +70,7 @@ python main.py --task seg \
 
 ```bash
 python main.py --task pose \
-    --model-path ../../model/yolo26n_pose.hbm \
+    --model-path ../../model/nash-e/yolo26n_pose_nashe_640x640_nv12.hbm \
     --test-img /path/to/person.jpg \
     --kpt-conf-thres 0.5
 ```
@@ -73,7 +79,7 @@ python main.py --task pose \
 
 ```bash
 python main.py --task cls \
-    --model-path ../../model/yolo26n_cls.hbm \
+    --model-path ../../model/nash-e/yolo26n_cls_nashe_224x224_nv12.hbm \
     --test-img /path/to/animal.jpg \
     --topk 5
 ```
@@ -82,7 +88,7 @@ python main.py --task cls \
 
 ```bash
 python main.py --task obb \
-    --model-path ../../model/yolo26n_obb.hbm \
+    --model-path ../../model/nash-e/yolo26n_obb_nashe_640x640_nv12.hbm \
     --test-img /path/to/aerial.jpg
 ```
 

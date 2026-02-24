@@ -48,7 +48,7 @@ def bpu_detect_forward(self, x):
         x (List[torch.Tensor]): Input feature maps from the neck.
 
     Returns:
-        List[torch.Tensor]: A list of 6 tensors (for 3 scales): [Box, Cls] * 3.
+        List[torch.Tensor]: A list of 6 tensors (for 3 scales): [Cls, Box] * 3.
         Layout is NHWC.
     """
     res = []
@@ -62,13 +62,13 @@ def bpu_detect_forward(self, x):
         cls_layers = self.cv3
 
     for i in range(self.nl):
-        # Box Branch: NCHW -> NHWC
-        bboxes = box_layers[i](x[i]).permute(0, 2, 3, 1)
         # Cls Branch: NCHW -> NHWC
         scores = cls_layers[i](x[i]).permute(0, 2, 3, 1)
+        # Box Branch: NCHW -> NHWC
+        bboxes = box_layers[i](x[i]).permute(0, 2, 3, 1)
         
-        res.append(bboxes)
         res.append(scores)
+        res.append(bboxes)
         
     return res
 

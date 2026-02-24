@@ -51,7 +51,7 @@ def bpu_obb_forward(self, x):
 
     Returns:
         List[torch.Tensor]: A list of 9 tensors (for 3 scales):
-            - [Box, Cls, Angle] * 3 scales
+            - [Cls, Box, Angle] * 3 scales
         All tensors are in NHWC layout.
     """
     res = []
@@ -68,15 +68,15 @@ def bpu_obb_forward(self, x):
 
     for i in range(self.nl):
         feat = x[i]
-        # 1. Box Branch: NCHW -> NHWC
-        bboxes = box_layers[i](feat).permute(0, 2, 3, 1)
-        # 2. Cls Branch: NCHW -> NHWC
+        # 1. Cls Branch: NCHW -> NHWC
         scores = cls_layers[i](feat).permute(0, 2, 3, 1)
+        # 2. Box Branch: NCHW -> NHWC
+        bboxes = box_layers[i](feat).permute(0, 2, 3, 1)
         # 3. Angle Branch: NCHW -> NHWC
         angles = angle_layers[i](feat).permute(0, 2, 3, 1)
         
-        res.append(bboxes)
         res.append(scores)
+        res.append(bboxes)
         res.append(angles)
         
     return res
@@ -136,7 +136,7 @@ def export_obb_bpu(model_path: str, output_name: str = "yolo26_obb_bpu.onnx", im
         print("\n=== Output Node Description ===")
         print("Model has 9 outputs:")
         print("  Layout: NHWC")
-        print("  0-8: [Box(4), Cls(NC), Angle(1)] per scale")
+        print("  0-8: [Cls(NC), Box(4), Angle(1)] per scale")
         print("===============================")
     else:
         print("❌ Export failed.")

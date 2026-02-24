@@ -26,9 +26,9 @@ Model Structure Assumption (based on provided logs):
         0: images_y (1, 640, 640, 1)
         1: images_uv (1, 320, 320, 2)
     Outputs (9 tensors):
-        Stride 8:  [0] Box(4), [1] Cls(15), [2] Angle(1)
-        Stride 16: [3] Box(4), [4] Cls(15), [5] Angle(1)
-        Stride 32: [6] Box(4), [7] Cls(15), [8] Angle(1)
+        Stride 8:  [0] Cls(15), [1] Box(4), [2] Angle(1)
+        Stride 16: [3] Cls(15), [4] Box(4), [5] Angle(1)
+        Stride 32: [6] Cls(15), [7] Box(4), [8] Angle(1)
 """
 
 import os
@@ -122,7 +122,7 @@ class YOLO26OBB:
             # Shift to center of grid cell
             self.grids[s] = grid.reshape(-1, 2).astype(np.float32) + 0.5
         
-        # Output mapping: {stride: (box_idx, cls_idx, angle_idx)}
+        # Output mapping: {stride: (cls_idx, box_idx, angle_idx)}
         # Assuming sequential order based on typical structure
         self.map_idx = {8: (0, 1, 2), 16: (3, 4, 5), 32: (6, 7, 8)}
 
@@ -197,7 +197,7 @@ class YOLO26OBB:
         for stride in self.cfg.strides:
             if stride not in self.map_idx: continue
             
-            bi, ci, ai = self.map_idx[stride]
+            ci, bi, ai = self.map_idx[stride]
             if max(bi, ci, ai) >= len(self.output_names): continue
 
             box_feat = raw_outputs[self.output_names[bi]].reshape(-1, 4)

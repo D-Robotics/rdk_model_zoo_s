@@ -150,7 +150,7 @@ def decode_outputs(output_names: list[str],
     This function iterates over decoupled detection heads, decodes each 
     feature map using `decode_layer`, and concatenates the results.
 
-    Assumes output order: [Box_8, Cls_8, Box_16, Cls_16, Box_32, Cls_32]
+    Assumes output order: [Cls_8, Box_8, Cls_16, Box_16, Cls_32, Box_32]
 
     Args:
         output_names: List of output tensor names.
@@ -164,12 +164,12 @@ def decode_outputs(output_names: list[str],
     """
     decoded = []
     
-    # Iterate in pairs (Box, Class) for each stride
-    # Assuming output_names are sorted or ordered as [Box0, Cls0, Box1, Cls1...]
-    # Map indices: Box is 0, 2, 4... Cls is 1, 3, 5...
+    # Iterate in pairs (Class, Box) for each stride
+    # Assuming output_names are sorted or ordered as [Cls0, Box0, Cls1, Box1...]
+    # Map indices: Cls is 0, 2, 4... Box is 1, 3, 5...
     for i, stride in enumerate(strides):
-        box_name = output_names[i * 2]
-        cls_name = output_names[i * 2 + 1]
+        cls_name = output_names[i * 2]
+        box_name = output_names[i * 2 + 1]
         
         box_feat = fp32_outputs[box_name]
         cls_feat = fp32_outputs[cls_name]
