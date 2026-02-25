@@ -37,7 +37,7 @@ echo "Detected SoC: ${SOC_NAME}, Board: ${BOARD_TYPE}"
 echo "Selected architecture (MARCH): ${MARCH}"
 
 # Define Base URL
-BASE_URL="https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/YOLO26/${MARCH}"
+BASE_URL="https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/YOLO26_OE_3.7.0/${MARCH}"
 
 # Suffix for filename based on MARCH
 SUFFIX="nashe"
