@@ -22,7 +22,7 @@
 ```
 
 > **注意**：脚本会自动检测当前硬件环境。如果需要手动下载，可以访问以下地址：
-> [https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/YOLO26_OE_3.7.0/](https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/YOLO26_OE_3.7.0/)
+> [https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/](https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/)
 
 ## 模型列表示例 (以 nash-e 为例)
 

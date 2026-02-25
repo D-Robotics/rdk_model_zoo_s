@@ -172,9 +172,9 @@ def download_default_model(opt):
             m = None
         elif opt.yolo_type in ["yolov5u", "yolov8", "yolov9", "yolo11", "yolo12"]:
             url = {
-                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/Bayes-e/yolo11n_detect_bayese_640x640_nv12.bin",
-                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-e/yolo11n_detect_nashe_640x640_nv12.hbm",
-                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-m/yolo11n_detect_nashm_640x640_nv12.hbm",
+                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/yolo11n_detect_bayese_640x640_nv12.bin",
+                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-e/yolo11n_detect_nashe_640x640_nv12.hbm",
+                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-m/yolo11n_detect_nashm_640x640_nv12.hbm",
             }[device()]
             os.system(f"wget -c {url}")
             return {
@@ -184,9 +184,9 @@ def download_default_model(opt):
             }[device()]
         elif opt.yolo_type in ["yolov10"]:
             url = {
-                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/Bayes-e/yolov10n_detect_bayese_640x640_nv12.bin",
-                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-e/yolov10n_detect_nashe_640x640_nv12.hbm",
-                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-m/yolov10n_detect_nashm_640x640_nv12.hbm",
+                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/yolov10n_detect_bayese_640x640_nv12.bin",
+                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-e/yolov10n_detect_nashe_640x640_nv12.hbm",
+                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-m/yolov10n_detect_nashm_640x640_nv12.hbm",
             }[device()]
             os.system(f"wget -c {url}")
             return {
@@ -201,9 +201,9 @@ def download_default_model(opt):
             m = None
         elif opt.yolo_type in ["yolov8", "yolov9", "yolo11"]:
             url = {
-                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/Bayes-e/yolo11n_seg_bayese_640x640_nv12.bin",
-                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-e/yolo11n_seg_nashe_640x640_nv12.hbm",
-                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-m/yolo11n_seg_nashm_640x640_nv12.hbm",
+                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/yolo11n_seg_bayese_640x640_nv12.bin",
+                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-e/yolo11n_seg_nashe_640x640_nv12.hbm",
+                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-m/yolo11n_seg_nashm_640x640_nv12.hbm",
             }[device()]
             os.system(f"wget -c {url}")
             return {
@@ -218,9 +218,9 @@ def download_default_model(opt):
             m = None
         elif opt.yolo_type in ["yolov8", "yolo11"]:
             url = {
-                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/Bayes-e/yolo11n_pose_bayese_640x640_nv12.bin",
-                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-e/yolo11n_pose_nashe_640x640_nv12.hbm",
-                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-m/yolo11n_pose_nashm_640x640_nv12.hbm",
+                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/yolo11n_pose_bayese_640x640_nv12.bin",
+                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-e/yolo11n_pose_nashe_640x640_nv12.hbm",
+                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-m/yolo11n_pose_nashm_640x640_nv12.hbm",
             }[device()]
             os.system(f"wget -c {url}")
             return {
@@ -235,9 +235,9 @@ def download_default_model(opt):
             m = None
         elif opt.yolo_type in ["yolov8", "yolo11"]:
             url = {
-                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/Bayes-e/yolo11n_cls_bayese_640x640_nv12.bin",
-                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-e/yolo11s_cls_nashe_640x640_nv12.hbm",
-                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.5.0/Nash-m/yolo11n_cls_nashm_640x640_nv12.hbm",
+                "rdkx5": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_x5/Ultralytics_YOLO_OE_1.2.8/yolo11n_cls_bayese_640x640_nv12.bin",
+                "rdks100": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-e/yolo11s_cls_nashe_640x640_nv12.hbm",
+                "rdks100p": "https://archive.d-robotics.cc/downloads/rdk_model_zoo/rdk_s100/Ultralytics_YOLO_OE_3.7.0/nash-m/yolo11n_cls_nashm_640x640_nv12.hbm",
             }[device()]
             os.system(f"wget -c {url}")
             return {
